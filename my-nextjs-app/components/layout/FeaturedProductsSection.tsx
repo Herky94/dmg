@@ -77,91 +77,128 @@ function ProductsCarousel() {
     }
   ]
 
-  const [startIndex, setStartIndex] = useState(0)
+  const [translateX, setTranslateX] = useState(0)
   const [isAutoPlay, setIsAutoPlay] = useState(true)
-  const itemsToShow = 4
+  const [isTransitioning, setIsTransitioning] = useState(true)
+  
+  // Create infinite array with 3 sets for seamless loop
+  const infiniteProducts = [...products, ...products, ...products]
+  const cardWidth = 25 // 100% / 4 cards = 25%
+  
+  // Start from middle set to allow backward scrolling
+  const initialOffset = products.length * cardWidth
+
+  useEffect(() => {
+    setTranslateX(-initialOffset)
+  }, [initialOffset])
 
   // Auto-advance carousel
   useEffect(() => {
     if (!isAutoPlay) return
     
     const interval = setInterval(() => {
-      setStartIndex(prev => (prev + 1) % products.length)
+      nextSlide()
     }, 4000)
 
     return () => clearInterval(interval)
-  }, [isAutoPlay, products.length])
+  }, [isAutoPlay])
 
   const nextSlide = () => {
-    setStartIndex(prev => (prev + 1) % products.length)
+    setIsTransitioning(true)
+    setTranslateX(prev => prev - cardWidth)
   }
 
   const prevSlide = () => {
-    setStartIndex(prev => (prev - 1 + products.length) % products.length)
+    setIsTransitioning(true)
+    setTranslateX(prev => prev + cardWidth)
   }
 
-  // Get 4 visible products with infinite loop
-  const getVisibleProducts = () => {
-    const visible = []
-    for (let i = 0; i < itemsToShow; i++) {
-      const productIndex = (startIndex + i) % products.length
-      visible.push({ ...products[productIndex], displayIndex: i + 1 })
+  // Handle infinite loop reset
+  useEffect(() => {
+    const handleTransitionEnd = () => {
+      // If we've scrolled past the last set, jump back to the middle set
+      if (translateX <= -(initialOffset + products.length * cardWidth)) {
+        setIsTransitioning(false)
+        setTranslateX(-initialOffset)
+      }
+      // If we've scrolled before the first set, jump to the middle set
+      else if (translateX >= -initialOffset + cardWidth) {
+        setIsTransitioning(false)
+        setTranslateX(-(initialOffset + (products.length - 1) * cardWidth))
+      }
     }
-    return visible
-  }
 
-  const visibleProducts = getVisibleProducts()
+    const timer = setTimeout(() => {
+      if (isTransitioning) {
+        handleTransitionEnd()
+      }
+    }, 700) // Match transition duration
+
+    return () => clearTimeout(timer)
+  }, [translateX, isTransitioning, initialOffset, products.length, cardWidth])
+
+
 
   return (
     <div className="relative">
       {/* Products Grid */}
       <div 
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        className="relative overflow-hidden"
         onMouseEnter={() => setIsAutoPlay(false)}
         onMouseLeave={() => setIsAutoPlay(true)}
       >
-        {visibleProducts.map((product, index) => (
-          <div key={`${product.id}-${startIndex}-${index}`} className="bg-white">
-            {/* Product Image */}
-            <div className="relative h-64 bg-gray-50">
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                className="object-contain p-6"
-              />
-            </div>
+        <div 
+          className={`flex ${isTransitioning ? 'transition-transform duration-700 ease-in-out' : ''}`}
+          style={{ transform: `translateX(${translateX}%)` }}
+        >
+          {infiniteProducts.map((product, index) => (
+            <div 
+              key={`${product.id}-${index}`} 
+              className="w-1/4 flex-shrink-0 px-3 transform transition-all duration-500 hover:scale-105"
+            >
+              <div className="bg-white h-full">
+                {/* Product Image */}
+                <div className="relative h-64 bg-gray-50 overflow-hidden group">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-contain p-6 transition-transform duration-300 group-hover:scale-110"
+                  />
+                </div>
 
-            {/* Product Info with border */}
-            <div className="p-6 border-t border-gray-200">
-              {/* Circled Number */}
-              <div className="flex justify-start mb-4">
-                <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
-                  <span className="text-sm text-gray-600 font-medium">
-                    {product.displayIndex}
-                  </span>
+                {/* Product Info with border */}
+                <div className="p-6  border-l border-r border-b border-gray-200">
+                  {/* Circled Number */}
+                  <div className="flex justify-start mb-4">
+                    <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center transition-colors duration-200 hover:border-gray-500 hover:bg-gray-50">
+                      <span className="text-sm text-gray-600 font-medium">
+                        {(index % products.length) + 1}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Title */}
+                  <h3 className="text-lg font-medium text-gray-900 text-left mb-3 transition-colors duration-200 hover:text-gray-700">
+                    {product.name}
+                  </h3>
+                  
+                  {/* Description */}
+                  <p className="text-sm text-gray-600 leading-relaxed text-left transition-colors duration-200 hover:text-gray-800">
+                    {product.description}
+                  </p>
                 </div>
               </div>
-              
-              {/* Title */}
-              <h3 className="text-lg font-medium text-gray-900 text-left mb-3">
-                {product.name}
-              </h3>
-              
-              {/* Description */}
-              <p className="text-sm text-gray-600 leading-relaxed text-left">
-                {product.description}
-              </p>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-      {/* Navigation Arrow - Right side outside carousel */}
-      <div className="absolute top-1/2 -translate-y-1/2 -right-16">
+      {/* Navigation Arrow */}
+      <div className="absolute top-1/2 -translate-y-1/2 left-full ml-8 z-20">
         <button 
           onClick={nextSlide}
-          className="w-12 h-12 rounded-full bg-black hover:bg-gray-800 transition-colors duration-200 flex items-center justify-center"
+          className="w-12 h-12 rounded-full bg-black hover:bg-gray-800 transition-colors duration-200 flex items-center justify-center shadow-lg"
         >
           <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
