@@ -1,4 +1,4 @@
-import { Header, Hero, LeadershipSection, ProductsSection } from '@/components/layout'
+import { Header, Hero, LeadershipSection, ProductsSection, FeaturedProductsSection } from '@/components/layout'
 
 export default function Home() {
   return (
@@ -7,51 +7,9 @@ export default function Home() {
       <Hero />
       <LeadershipSection />
       <ProductsSection />
+      <FeaturedProductsSection />
 
-      <section className="py-20 bg-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">I nostri Prodotti</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-xl font-semibold mb-4">Dispositivi Medici</h3>
-              <p className="text-gray-600">Soluzioni innovative per la diagnostica e il trattamento.</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-xl font-semibold mb-4">Integratori Alimentari</h3>
-              <p className="text-gray-600">Prodotti per il benessere e la salute quotidiana.</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-xl font-semibold mb-4">Farmaci</h3>
-              <p className="text-gray-600">Terapie farmacologiche di alta qualità.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">Presenza Internazionale</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="text-center">
-              <h4 className="font-semibold">Italia</h4>
-              <p className="text-gray-600">Sede principale</p>
-            </div>
-            <div className="text-center">
-              <h4 className="font-semibold">Bulgaria</h4>
-              <p className="text-gray-600">Filiale europea</p>
-            </div>
-            <div className="text-center">
-              <h4 className="font-semibold">Polonia</h4>
-              <p className="text-gray-600">Hub dell'est Europa</p>
-            </div>
-            <div className="text-center">
-              <h4 className="font-semibold">Turchia</h4>
-              <p className="text-gray-600">Ponte verso l'Asia</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
