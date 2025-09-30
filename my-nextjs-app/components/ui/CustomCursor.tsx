@@ -6,7 +6,7 @@ export default function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [circlePosition, setCirclePosition] = useState({ x: 0, y: 0 })
   const [isVisible, setIsVisible] = useState(false)
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number | undefined>(undefined)
 
   useEffect(() => {
     setIsVisible(true)
@@ -75,11 +75,11 @@ export default function CustomCursor() {
         style={{
           left: circlePosition.x,
           top: circlePosition.y,
-          transform: 'translate(-50%, -50%)',
+          transform: 'translate(-50%, -50%)',   
         }}
       >
-        {/* Large very thin black circle that follows cursor */}
-        <div className="w-16 h-16 border-[0.5px] border-black rounded-full" />
+        {/* Small very thin black circle that follows cursor */}
+        <div className="w-12 h-12 border-[0.1px] border-black rounded-full" />
       </div>
     </>
   )

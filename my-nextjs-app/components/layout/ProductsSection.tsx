@@ -11,7 +11,7 @@ export default function ProductsSection() {
 
         {/* Main Title */}
         <div className="text-center mb-8">
-          <h2 className="text-8xl lg:text-9xl font-light text-gray-900">
+          <h2 className="text-8xl lg:text-9xl font-light text-gray-900 animate-fade-in-up">
          soluzioni terapeutiche.
           </h2>
         </div>
@@ -55,9 +55,7 @@ export default function ProductsSection() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
                   {/* Number Circle */}
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-900 text-white rounded-full text-lg font-semibold">
-                    1
-                  </div>
+                  
                   
                   {/* Title */}
                   <h3 className="text-2xl lg:text-3xl font-light text-gray-900">
@@ -110,9 +108,7 @@ export default function ProductsSection() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
                   {/* Number Circle */}
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-900 text-white rounded-full text-lg font-semibold">
-                    2
-                  </div>
+         
                   
                   {/* Title */}
                   <h3 className="text-2xl lg:text-3xl font-light text-gray-900">
@@ -165,9 +161,7 @@ export default function ProductsSection() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
                   {/* Number Circle */}
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-900 text-white rounded-full text-lg font-semibold">
-                    3
-                  </div>
+         
                   
                   {/* Title */}
                   <h3 className="text-2xl lg:text-3xl font-light text-gray-900">

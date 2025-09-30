@@ -55,7 +55,7 @@ export default function StorySection() {
           
           {/* First row - Large "Story" text on the left */}
           <div className="flex justify-start">
-            <h2 className="text-8xl lg:text-9xl font-extralight text-gray-900">
+            <h2 className="text-8xl lg:text-9xl font-extralight text-gray-900 animate-fade-in-up">
               milestones.
             </h2>
           </div>
@@ -199,14 +199,14 @@ function HorizontalTimeline() {
                 animationDelay: `${index * 100}ms`
               }}
             >
-              <div className="p-6 rounded-lg">
+              <div className="p-6 card-timeline rounded-lg">
                 <div className="flex items-center gap-3 mb-4">
                   <img src="/images/usefull-icons/arrow.svg" alt="Arrow Icon" className="w-4 h-4" />
                   <div className="text-black text-2xl font-medium">
                     {card.year}
                   </div>
                 </div>
-                <p className="text-gray-700 text-sm leading-relaxed">
+                <p className="text-gray-700 leading-relaxed">
                   {card.subtitle}
                 </p>
               </div>

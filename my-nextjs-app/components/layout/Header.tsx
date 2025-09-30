@@ -32,9 +32,9 @@ export default function Header() {
               <Image
                 src="/images/logos/DMG-logo-white.png"
                 alt="DMG Logo"
-                width={80}
-                height={30}
-                className="h-8 w-auto"
+                width={120}
+                height={60}
+                className="h-11 w-auto"
                 priority
               />
             </Link>
