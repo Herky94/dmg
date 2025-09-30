@@ -47,7 +47,7 @@ export default function StorySection() {
   }, [])
 
   return (
-    <section className="bg-[#f1f1f1] py-40">
+    <section className="bg-[#f1f1f1] pt-40">
       {/* Story Header */}
       <div ref={headerRef} className="max-w-6xl mx-auto mb-20">
         {/* Main layout container */}
@@ -122,7 +122,7 @@ function HorizontalTimeline() {
     { year: '2024', subtitle: 'Con la crescente presenza sul mercato italiano ed estero, D.M.G. ITALIA avvia un processo di notevole ampliamento dei suoi spazi destinati sia agli uffici sia alla produzione.' }
   ]
 
-  const totalSets = Math.ceil(allCards.length / 4)
+  const totalCards = allCards.length
 
   // Gestione scroll per controllare le card e il progresso della barra
   useEffect(() => {
@@ -137,28 +137,28 @@ function HorizontalTimeline() {
           
           if (e.deltaY > 0) {
             // Scroll verso il basso
-            if (currentCardSet < totalSets - 1) {
-              // Ancora set da mostrare, previeni scroll normale
+            if (currentCardSet < totalCards - 4) {
+              // Ancora card da mostrare, previeni scroll normale
               e.preventDefault()
               setCurrentCardSet(prev => {
-                const newSet = prev + 1
-                setScrollProgress((newSet / (totalSets - 1)) * 100)
-                return newSet
+                const newCard = prev + 1
+                setScrollProgress((newCard / (totalCards - 4)) * 100)
+                return newCard
               })
             }
-            // Se siamo all'ultimo set, permetti scroll normale verso il basso
+            // Se siamo all'ultima card, permetti scroll normale verso il basso
           } else {
             // Scroll verso l'alto
             if (currentCardSet > 0) {
-              // Ancora set precedenti da mostrare, previeni scroll normale
+              // Ancora card precedenti da mostrare, previeni scroll normale
               e.preventDefault()
               setCurrentCardSet(prev => {
-                const newSet = prev - 1
-                setScrollProgress((newSet / (totalSets - 1)) * 100)
-                return newSet
+                const newCard = prev - 1
+                setScrollProgress((newCard / (totalCards - 4)) * 100)
+                return newCard
               })
             }
-            // Se siamo al primo set, permetti scroll normale verso l'alto
+            // Se siamo alla prima card, permetti scroll normale verso l'alto
           }
         }
       }
@@ -166,13 +166,13 @@ function HorizontalTimeline() {
 
     window.addEventListener('wheel', handleScroll, { passive: false })
     return () => window.removeEventListener('wheel', handleScroll)
-  }, [totalSets, currentCardSet])
+  }, [totalCards, currentCardSet])
 
-  // Card attualmente visibili (4 per set)
-  const currentCards = allCards.slice(currentCardSet * 4, (currentCardSet + 1) * 4)
+  // Card attualmente visibili (4 alla volta, scorrimento di 1)
+  const currentCards = allCards.slice(currentCardSet, currentCardSet + 4)
 
   return (
-    <div ref={sectionRef} className="text-black min-h-screen" style={{ backgroundColor: '#f1f1f1' }}>
+    <div ref={sectionRef} className="text-black" style={{ backgroundColor: '#f1f1f1' }}>
       
       {/* Timeline Bar sopra - si riempie con il progresso */}
       <div className="w-full max-w-6xl mx-auto px-8 pt-0 pb-6">
@@ -189,7 +189,7 @@ function HorizontalTimeline() {
       </div>
 
       {/* Cards Section */}
-      <div className="w-full max-w-6xl mx-auto px-8 pb-20">
+      <div className="w-full max-w-6xl mx-auto px-8 pb-40">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {currentCards.map((card, index) => (
             <div
@@ -200,8 +200,11 @@ function HorizontalTimeline() {
               }}
             >
               <div className="p-6 rounded-lg">
-                <div className="text-black text-2xl font-medium mb-4">
-                  {card.year}
+                <div className="flex items-center gap-3 mb-4">
+                  <img src="/images/usefull-icons/arrow.svg" alt="Arrow Icon" className="w-4 h-4" />
+                  <div className="text-black text-2xl font-medium">
+                    {card.year}
+                  </div>
                 </div>
                 <p className="text-gray-700 text-sm leading-relaxed">
                   {card.subtitle}

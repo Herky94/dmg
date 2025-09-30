@@ -5,10 +5,10 @@ export default function Home() {
     <div className="min-h-screen">
       <Header />
       <Hero />
-      <LeadershipSection />
       <ProductsSection />
-      <FeaturedProductsSection />
       <StorySection />
+      <LeadershipSection />
+      <FeaturedProductsSection />
       <Footer />
     </div>
   )
