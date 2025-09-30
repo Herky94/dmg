@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Lexend_Deca } from "next/font/google";
 import "./globals.css";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${lexendDeca.variable} font-inter antialiased`}
       >
+        <CustomCursor />
         {children}
       </body>
     </html>

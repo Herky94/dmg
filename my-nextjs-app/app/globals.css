@@ -23,3 +23,23 @@ body {
   color: var(--foreground);
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
 }
+
+/* Custom Cursor Styles */
+* {
+  cursor: none !important;
+}
+
+/* Ensure interactive elements have proper hover states */
+a, button, [role="button"], input, textarea, select {
+  transition: all 0.2s ease;
+}
+
+/* Add subtle scale effect on hover for better interaction feedback */
+a:hover, button:hover, [role="button"]:hover {
+  transform: translateY(-1px);
+}
+
+/* Smooth transitions for all interactive elements */
+.cursor-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
