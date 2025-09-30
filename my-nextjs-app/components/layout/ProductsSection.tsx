@@ -11,7 +11,7 @@ export default function ProductsSection() {
 
         {/* Main Title */}
         <div className="text-center mb-8">
-          <h2 className="text-8xl lg:text-9xl font-light text-gray-900 animate-fade-in-up">
+          <h2 className="text-8xl lg:text-9xl font-extralight text-gray-900 animate-fade-in-up">
          soluzioni terapeutiche.
           </h2>
         </div>

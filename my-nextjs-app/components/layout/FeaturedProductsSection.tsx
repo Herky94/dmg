@@ -15,7 +15,7 @@ export default function FeaturedProductsSection() {
 
         {/* Main Title with number and year */}
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-8xl lg:text-9xl font-light text-gray-900 text-center flex-1 animate-fade-in-up">
+          <h2 className="text-8xl lg:text-9xl font-extralight text-gray-900 text-center flex-1 animate-fade-in-up">
             prodotti.
           </h2>
         </div>

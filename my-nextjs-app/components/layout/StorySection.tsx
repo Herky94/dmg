@@ -199,14 +199,14 @@ function HorizontalTimeline() {
                 animationDelay: `${index * 100}ms`
               }}
             >
-              <div className="p-6 card-timeline rounded-lg">
+              <div className="p-6 rounded-lg">
                 <div className="flex items-center gap-3 mb-4">
                   <img src="/images/usefull-icons/arrow.svg" alt="Arrow Icon" className="w-4 h-4" />
                   <div className="text-black text-2xl font-medium">
                     {card.year}
                   </div>
                 </div>
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-gray-700 card-timeline  leading-relaxed">
                   {card.subtitle}
                 </p>
               </div>

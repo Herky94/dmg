@@ -6,11 +6,14 @@ import { gsap } from 'gsap'
 
 export default function InternationalSection() {
   const [virtualScroll, setVirtualScroll] = useState(0)
-  const [isScrollDisabled, setIsScrollDisabled] = useState(false)
-  const [isInView, setIsInView] = useState(false)
+  const [isActive, setIsActive] = useState(false)
+  const [allAnimationsCompleted, setAllAnimationsCompleted] = useState(false)
+  const [canExit, setCanExit] = useState(false) // 🔓 Variabile per bloccare/sbloccare il fix di posizione
   const sectionRef = useRef<HTMLElement>(null)
   const phrasesRef = useRef<(HTMLDivElement | null)[]>([])
   const maxScrollForEffect = 300
+  const extraScrollAfterEnd = 300 // 300px aggiuntivi dopo la fine
+  const positionCheckIntervalRef = useRef<NodeJS.Timeout | null>(null)
   
   const phrases = [
     "Consapevolezza e rispetto culturale",
@@ -19,87 +22,181 @@ export default function InternationalSection() {
     "Mindset di crescita reciproca"
   ]
 
+  // 🆘 SISTEMA DI EMERGENZA - Sblocca automaticamente dopo 10 secondi
+  useEffect(() => {
+    let emergencyTimeout: NodeJS.Timeout
+    
+    if (isActive) {
+      emergencyTimeout = setTimeout(() => {
+        console.log('🆘 SBLOCCO DI EMERGENZA - 10 secondi scaduti')
+        setIsActive(false)
+        setCanExit(false)
+        setAllAnimationsCompleted(false)
+        setVirtualScroll(0)
+        document.body.style.overflow = 'auto'
+      }, 10000)
+    }
+
+    return () => {
+      if (emergencyTimeout) {
+        clearTimeout(emergencyTimeout)
+      }
+    }
+  }, [isActive])
+  
+  // 🆘 TASTO ESC per uscita immediata
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isActive) {
+        console.log('🆘 USCITA FORZATA CON ESC')
+        setIsActive(false)
+        setCanExit(false)
+        setAllAnimationsCompleted(false)
+        setVirtualScroll(0)
+        document.body.style.overflow = 'auto'
+      }
+    }
+
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [isActive])
+
+  // 🔒 CONTROLLO POSIZIONE OTTIMIZZATO - Meno aggressivo per evitare rimbalzi
+  useEffect(() => {
+    if (isActive && sectionRef.current && !canExit) {
+      positionCheckIntervalRef.current = setInterval(() => {
+        if (sectionRef.current && !canExit) {
+          const rect = sectionRef.current.getBoundingClientRect()
+          
+          // Correzione solo se si è spostata MOLTO (10px) per evitare micro-correzioni
+          if (Math.abs(rect.top) > 10) {
+            console.log('🔧 CORREZIONE MAGGIORE: top era', rect.top)
+            const sectionOffsetTop = sectionRef.current.offsetTop
+            window.scrollTo({
+              top: sectionOffsetTop,
+              behavior: 'auto'
+            })
+          }
+        }
+      }, 100) // Controllo meno frequente (10 FPS) per ridurre interferenze
+    } else {
+      if (positionCheckIntervalRef.current) {
+        clearInterval(positionCheckIntervalRef.current)
+      }
+    }
+
+    return () => {
+      if (positionCheckIntervalRef.current) {
+        clearInterval(positionCheckIntervalRef.current)
+      }
+    }
+  }, [isActive, canExit])
+
+  // 🎯 RILEVAMENTO PRECISO E CORREZIONE AUTOMATICA DELLA POSIZIONE
   useEffect(() => {
     const handleScroll = () => {
       if (sectionRef.current) {
         const rect = sectionRef.current.getBoundingClientRect()
-        const windowHeight = window.innerHeight
         
-        // Rileva quando la sezione è completamente visibile (top <= 0 e bottom >= windowHeight)
-        const sectionIsFullyVisible = rect.top <= 0 && rect.bottom >= windowHeight
+        // ATTIVAZIONE: quando il top della sezione è vicino al top (50px di anticipo)
+        const shouldActivate = rect.top <= 50 && rect.bottom > 0
         
-        console.log('Section rect:', rect.top, rect.bottom, 'Window height:', windowHeight, 'Fully visible:', sectionIsFullyVisible)
-        
-        setIsInView(sectionIsFullyVisible)
-        
-        // Se non siamo più completamente visibili e lo scroll era disabilitato, resetta tutto
-        if (!sectionIsFullyVisible && isScrollDisabled) {
-          setIsScrollDisabled(false)
+        if (shouldActivate && !isActive) {
+          console.log('🎯 ATTIVAZIONE SEZIONE - controllo posizione...')
+          
+          const rect = sectionRef.current.getBoundingClientRect()
+          
+          // CORREZIONE SOLO se necessaria (se non è già a top = 0)
+          if (Math.abs(rect.top) > 5) {
+            const currentScrollY = window.scrollY
+            const sectionOffsetTop = sectionRef.current.offsetTop
+            const targetScrollY = sectionOffsetTop
+            
+            // Scroll istantaneo alla posizione ESATTA
+            window.scrollTo({
+              top: targetScrollY,
+              behavior: 'auto'
+            })
+            
+            console.log(`📍 POSIZIONE CORRETTA: da scrollY=${currentScrollY} a scrollY=${targetScrollY}`)
+          } else {
+            console.log('📍 POSIZIONE GIÀ CORRETTA: top =', rect.top)
+          }
+          
+          setIsActive(true)
+          document.body.style.overflow = 'hidden'
+          
+        } else if (!shouldActivate && isActive) {
+          setIsActive(false)
           setVirtualScroll(0)
+          setAllAnimationsCompleted(false) // Reset del tracking animazioni
+          setCanExit(false) // Reset della variabile di uscita
           document.body.style.overflow = 'auto'
-          document.body.style.height = 'auto'
+          console.log('📤 Sezione disattivata - reset completo')
         }
       }
     }
 
     window.addEventListener('scroll', handleScroll)
-    handleScroll() // Controlla subito lo stato iniziale
+    handleScroll() // Check initial state
     
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-      // Cleanup finale
-      document.body.style.overflow = 'auto'
-      document.body.style.height = 'auto'
-    }
-  }, [isScrollDisabled])
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [isActive])
 
+  // 🎯 GESTIONE WHEEL OTTIMIZZATA - Movimento fluido senza salti
   useEffect(() => {
-    const handleWheel = (event: WheelEvent) => {
-      if (!isInView) return
+    const handleWheel = (e: WheelEvent) => {
+      if (!isActive) return
+
+      e.preventDefault()
+      e.stopPropagation()
       
-      // Se siamo in view ma lo scroll non è ancora disabilitato, disabilitalo
-      if (isInView && !isScrollDisabled) {
-        setIsScrollDisabled(true)
-        document.body.style.overflow = 'hidden'
-        document.body.style.height = '100vh'
-      }
-      
-      if (isScrollDisabled && isInView) {
-        event.preventDefault()
+      // 🎯 NON correggere la posizione durante il wheel - evita rimbalzi
+      // La correzione avviene solo tramite l'interval, non ad ogni wheel event
+
+      setVirtualScroll(prev => {
+        const totalMaxScroll = maxScrollForEffect + extraScrollAfterEnd
+        const newScroll = Math.max(0, Math.min(totalMaxScroll, prev + e.deltaY * 0.4)) // Velocità bilanciata
         
-        setVirtualScroll(prev => {
-          let newScroll
-          
-          if (event.deltaY > 0) {
-            // Scroll verso il basso - aumenta l'animazione (più fluido)
-            newScroll = Math.min(prev + Math.abs(event.deltaY) * 0.4, maxScrollForEffect)
+        console.log('🎡 Virtual scroll:', newScroll, '/', totalMaxScroll)
+        
+        // 🎯 USCITA VERSO IL BASSO: 
+        if (e.deltaY > 0) {
+          // Se può uscire O se lo scroll virtuale ha raggiunto il massimo, permetti uscita
+          if (canExit || newScroll >= maxScrollForEffect) {
+            console.log('✅ USCITA AUTORIZZATA - VERSO IL FOOTER!')
+            setIsActive(false)
+            setCanExit(false)
+            setAllAnimationsCompleted(false)
+            document.body.style.overflow = 'auto'
+            setTimeout(() => window.scrollBy(0, 50), 50)
           } else {
-            // Scroll verso l'alto - diminuisce l'animazione (più fluido)
-            newScroll = Math.max(0, prev - Math.abs(event.deltaY) * 0.4)
+            console.log('🚫 USCITA BLOCCATA - Le scritte non sono ancora tutte passate!')
           }
-          
-          // Se raggiungiamo il 100%, riabilita lo scroll e permetti di uscire dalla sezione
-          if (newScroll >= maxScrollForEffect) {
-            setTimeout(() => {
-              setIsScrollDisabled(false)
-              document.body.style.overflow = 'auto'
-              document.body.style.height = 'auto'
-              // Scorri la pagina per uscire dalla sezione
-              window.scrollBy(0, 100)
-            }, 200)
-          }
-          
-          return newScroll
-        })
-      }
+        }
+        
+        // Uscita verso l'alto: permetti sempre
+        if (newScroll <= 0 && e.deltaY < 0) {
+          console.log('⬆️ USCITA VERSO L\'ALTO - rilascio scroll')
+          setTimeout(() => {
+            setIsActive(false)
+            setAllAnimationsCompleted(false) // Reset del tracking
+            setCanExit(false) // Reset della variabile di uscita
+            document.body.style.overflow = 'auto'
+            window.scrollBy(0, -50) // Scroll più dolce
+          }, 100)
+        }
+        
+        return newScroll
+      })
     }
-    
-    window.addEventListener('wheel', handleWheel, { passive: false })
-    
-    return () => {
-      window.removeEventListener('wheel', handleWheel)
+
+    if (isActive) {
+      window.addEventListener('wheel', handleWheel, { passive: false })
     }
-  }, [isScrollDisabled, isInView, maxScrollForEffect])
+
+    return () => window.removeEventListener('wheel', handleWheel)
+  }, [isActive, virtualScroll, maxScrollForEffect])
 
   // Inizializza GSAP per le frasi
   useEffect(() => {
@@ -115,13 +212,19 @@ export default function InternationalSection() {
     })
   }, [])
 
-  // Anima le frasi in base al virtual scroll con GSAP
+  // 🎬 ANIMA LE FRASI E TRACCIA IL COMPLETAMENTO
   useEffect(() => {
     const progress = virtualScroll / maxScrollForEffect
+    let completedCount = 0
 
     phrasesRef.current.forEach((phrase, index) => {
       if (phrase) {
         const phraseProgress = Math.max(0, Math.min(1, (progress - index * 0.15) * 1.5))
+        
+        // 🔍 TRACKING: Una frase è "completata" quando ha completato tutto il suo ciclo (phraseProgress >= 1)
+        if (phraseProgress >= 1) {
+          completedCount++
+        }
         
         // Calcolo della posizione Y più fluido
         const startY = 100 // Inizia da sotto lo schermo
@@ -173,7 +276,20 @@ export default function InternationalSection() {
         }
       }
     })
-  }, [virtualScroll, maxScrollForEffect])
+
+    // 🎯 VERIFICA COMPLETAMENTO: Tutte le frasi devono aver completato il loro ciclo
+    const allCompleted = completedCount === phrases.length
+    
+    if (allCompleted && !allAnimationsCompleted) {
+      console.log('🎉 TUTTE LE ANIMAZIONI COMPLETATE! Sblocco uscita e disabilito fix posizione')
+      setAllAnimationsCompleted(true)
+      setCanExit(true) // 🔓 SBLOCCA L'USCITA e disabilita il fix di posizione
+    } else if (!allCompleted && allAnimationsCompleted) {
+      setAllAnimationsCompleted(false)
+      setCanExit(false) // 🔒 Riabilita il fix se non sono più complete
+    }
+    
+  }, [virtualScroll, maxScrollForEffect, phrases.length, allAnimationsCompleted])
 
   return (
     <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden">
@@ -220,7 +336,7 @@ export default function InternationalSection() {
             </div>
 
             {/* CTA Button - styled like Hero button */}
-            <div className="pt-2">
+            <div className="pt-6">
               <Link 
                 href="/scopri-di-piu"
                 className="group inline-flex items-center gap-3 bg-transparent border border-white text-white px-6 py-3 rounded-full text-base font-medium hover:bg-white hover:text-black transition-all duration-300"
