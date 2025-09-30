@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Lexend_Deca } from "next/font/google";
 import "./globals.css";
-import CustomCursor from "@/components/ui/CustomCursor";
 
 const lexendDeca = Lexend_Deca({
   variable: "--font-lexend-deca",
@@ -29,7 +28,6 @@ export default function RootLayout({
       <body
         className={`${lexendDeca.variable} antialiased`}
       >
-        <CustomCursor />
         {children}
       </body>
     </html>
