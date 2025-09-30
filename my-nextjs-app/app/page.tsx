@@ -1,41 +1,10 @@
-import { Header } from '@/components/layout'
+import { Header, Hero } from '@/components/layout'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Header />
-      
-      {/* Hero Section */}
-      <main className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="py-20">
-          {/* Hero Content */}
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl md:text-6xl">
-              Welcome to{' '}
-              <span className="text-blue-600">DMG</span>
-            </h1>
-            <p className="mt-6 max-w-2xl mx-auto text-lg text-gray-600">
-              Your modern Next.js application with Tailwind CSS, built for performance and designed for scale.
-            </p>
-            
-            {/* CTA Buttons */}
-            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/get-started"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-medium transition-colors duration-200"
-              >
-                Get Started
-              </a>
-              <a
-                href="/about"
-                className="border border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 px-8 py-3 rounded-lg text-lg font-medium transition-colors duration-200"
-              >
-                Learn More
-              </a>
-            </div>
-          </div>
-        </div>
-      </main>
+      <Hero />
       
       {/* Content Sections per testare la barra di progresso */}
       <section className="py-20 bg-white">
