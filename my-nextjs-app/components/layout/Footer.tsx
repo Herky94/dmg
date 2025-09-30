@@ -68,26 +68,26 @@ export default function Footer() {
                 <h4 className="text-base font-medium text-gray-900 mb-2">DMG ITALIA S.R.L.</h4>
                 <img src="/images/usefull-icons/arrow.svg" alt="Arrow Icon" className="w-4 h-4 mb-4" />
                 <div className="text-base text-gray-600 space-y-1">
-                  <p>Sede legale</p>
+                  <p >Sede legale</p>
                   <p>Via Laurentina km. 26,700</p>
                   <p>00071 Pomezia (RM)</p>
                   <p><a href="mailto:info@dmgitalia.com" className=" hover:underline">info@dmgitalia.com</a></p>
                 </div>
                 <div className="text-base text-gray-600 space-y-1">
-                  <p>Filiale</p>
-                  <p>S. Ufficio Amministrativo</p>
-                  <p>Via Mazzagno, 76</p>
+                  
+                  <p >Sede operativae Uffici Amministrativi</p>
+                  <p>Via Nicaragua, 10</p>
                   <p>00071 Pomezia (RM)</p>
                 </div>
                 <div className="text-base text-gray-600 space-y-1">
-                  <p>[+39] 06 91886038</p>
-                  <p>[+39] 06 91886093</p>
-                  <p>[+39] 06 91886093</p>
+                  <p>(+39) 06 91968038 </p>
+                  <p>(+39) 06 91969082</p>
+                  <p>(+39) 06 9145963</p>
                   <p><a href="mailto:info@dmgitalia.com" className=" hover:underline">info@dmgitalia.com</a></p>
                 </div>
                 <div className="text-base text-gray-600 space-y-1">
-                  <p>Magazzino</p>
-                  <p>Via dei Opifici, 22</p>
+                  <p >Magazzino</p>
+                  <p>Via dei Cedri, 22</p>
                   <p>00071 Pomezia (RM)</p>
                   <p><a href="mailto:magazzino@dhool.com" className=" hover:underline">magazzino@dhool.com</a></p>
                 </div>
@@ -100,8 +100,8 @@ export default function Footer() {
                 <div className="text-xs text-gray-600 space-y-1">
                   <p>Sede legale</p>
                   <p>Al. Jerozolimskie 65/79 lok.</p>
-                  <p>U 26, 00-697 Warszawa</p>
-                  <p>(Polonia)</p>
+                  <p>1219, 00-697 Warszawa</p>
+                  <p> (Polska)</p>
                 </div>
                 <div className="text-xs text-gray-600 space-y-1">
                   <p><a href="mailto:biuro@dmgpolska.eu" className=" hover:underline">biuro@dmgpolska.eu</a></p>
@@ -114,8 +114,8 @@ export default function Footer() {
                 <img src="/images/usefull-icons/arrow.svg" alt="Arrow Icon" className="w-4 h-4 mb-4" />
                 <div className="text-xs text-gray-600 space-y-1">
                   <p>Sede legale</p>
-                  <p>Tsar Simeon st Ш2,</p>
-                  <p>ent 6, fl 5 – zona 1404</p>
+                  <p>IlkaPopova st.№2</p>
+                  <p>ent.B, fl.5 - Sofia 1404 </p>
                   <p>Lozenets, Bulgaria</p>
                 </div>
                 <div className="text-xs text-gray-600 space-y-1">
@@ -129,9 +129,9 @@ export default function Footer() {
                 <img src="/images/usefull-icons/arrow.svg" alt="Arrow Icon" className="w-4 h-4 mb-4" />
                 <div className="text-xs text-gray-600 space-y-1">
                   <p>Sede legale</p>
-                  <p>Buyukdere Cad. Vadistanbul</p>
-                  <p>odt. No:54 D:9№. Sar.</p>
-                  <p>Istanbul Turchia</p>
+                  <p>Teşvikiye mah. Valikonağı</p>
+                  <p>cad. No:74 D:7/A, Şişli, </p>
+                  <p>İstanbul (Turkey)</p>
                 </div>
                 <div className="text-xs text-gray-600 space-y-1">
                   <p><a href="mailto:info@dmgturkiye.com.tr" className=" hover:underline">info@dmgturkiye.com.tr</a></p>
@@ -143,12 +143,12 @@ export default function Footer() {
                 <h4 className="text-base font-medium text-gray-900 mb-2">D.M.G. ITALIA S.R.L.</h4>
                 <img src="/images/usefull-icons/arrow.svg" alt="Arrow Icon" className="w-4 h-4 mb-4" />
                 <div className="text-xs text-gray-600 space-y-1">
-                  <p>Reference</p>
+                  <p>Sede Legale</p>
                   <p>Via Laurentina km. 26,700</p>
-                  <p>00071 Pomezia (RM)</p>
+                  <p>– 00071 Pomezia (RM)</p>
                 </div>
                 <div className="text-xs text-gray-600 space-y-1">
-                  <p>Reference.com</p>
+                  <p>italdevice.com</p>
                   <p><a href="mailto:info@dmgitalia.com" className=" hover:underline">info@dmgitalia.com</a></p>
                 </div>
               </div>

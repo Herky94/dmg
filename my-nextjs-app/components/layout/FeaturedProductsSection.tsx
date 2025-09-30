@@ -1,10 +1,45 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 import Image from 'next/image'
 
 export default function FeaturedProductsSection() {
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    // Imposta stato iniziale del titolo
+    if (titleRef.current) {
+      gsap.set(titleRef.current, {
+        opacity: 0,
+        x: -200
+      })
+    }
+
+    // Intersection Observer per l'animazione del titolo
+    const observer = new IntersectionObserver(
+      ([entry]) => {        
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+          // Anima il titolo da sinistra
+          gsap.to(titleRef.current, {
+            opacity: 1,
+            x: 0,
+            duration: 1.2,
+            ease: "power2.out"
+          })
+        }
+      },
+      { threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5] }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
   return (
-    <section className="py-40 bg-white">
+    <section ref={sectionRef} className="py-40 bg-white">
       <div className="max-w-[1650px] mx-auto px-12">
         {/* Pre-title */}
         <div className="text-center mb-6">

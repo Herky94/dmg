@@ -1,9 +1,117 @@
+'use client'
+
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+
 export default function ProductsSection() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const preTitleRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLDivElement>(null)
+  const paragraph1Ref = useRef<HTMLDivElement>(null)
+  const paragraph2Ref = useRef<HTMLDivElement>(null)
+  const paragraph3Ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    // Imposta stati iniziali degli elementi
+    if (preTitleRef.current) {
+      gsap.set(preTitleRef.current, {
+        opacity: 0,
+        y: -50
+      })
+    }
+    
+    if (titleRef.current) {
+      gsap.set(titleRef.current, {
+        opacity: 0,
+        x: -200
+      })
+    }
+    
+    if (paragraph1Ref.current) {
+      gsap.set(paragraph1Ref.current, {
+        opacity: 0,
+        y: -30
+      })
+    }
+    
+    if (paragraph2Ref.current) {
+      gsap.set(paragraph2Ref.current, {
+        opacity: 0,
+        y: -30
+      })
+    }
+    
+    if (paragraph3Ref.current) {
+      gsap.set(paragraph3Ref.current, {
+        opacity: 0,
+        y: -30
+      })
+    }
+
+    // Intersection Observer per triggerare le animazioni
+    const observer = new IntersectionObserver(
+      ([entry]) => {        
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
+          
+          // Timeline GSAP per sequenza di animazioni
+          const tl = gsap.timeline()
+          
+          // 1. Pre-titolo dall'alto al basso
+          tl.to(preTitleRef.current, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out"
+          })
+          
+          // 2. Titolo da fuori schermo a sinistra
+          .to(titleRef.current, {
+            opacity: 1,
+            x: 0,
+            duration: 1.2,
+            ease: "power2.out"
+          }, "-=0.3")
+          
+          // 3. Paragrafo 1 dall'alto al basso
+          .to(paragraph1Ref.current, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out"
+          }, "-=0.2")
+          
+          // 4. Paragrafo 2 dall'alto al basso
+          .to(paragraph2Ref.current, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out"
+          }, "-=0.6")
+          
+          // 5. Paragrafo 3 dall'alto al basso
+          .to(paragraph3Ref.current, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out"
+          }, "-=0.6")
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <section className="py-20 bg-gray-50">
+    <section ref={sectionRef} className="py-20 bg-gray-50">
       <div className="mx-auto px-20">
         {/* Pre-title */}
-        <div className="text-center mb-4">
+        <div ref={preTitleRef} className="text-center mb-4">
           <span className="text-sm text-gray-500 uppercase tracking-wider font-medium">
             Innovazione. Sicurezza. Efficacia.
           </span>
@@ -20,21 +128,21 @@ export default function ProductsSection() {
         <div className="text-center mb-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-18 max-w-6xl mx-auto px-8">
             {/* Column 1 */}
-            <div className="text-justify">
+            <div ref={paragraph1Ref} className="text-justify">
               <p className="text-gray-700 leading-relaxed">
                 Siamo un'azienda farmaceutica italiana specializzata nella ricerca, sviluppo e commercializzazione di dispositivi medici, integratori alimentari e farmaci.
               </p>
             </div>
             
             {/* Column 2 */}
-            <div className="text-justify">
+            <div ref={paragraph2Ref} className="text-justify">
               <p className="text-gray-700 leading-relaxed">
                 Il nostro obiettivo principale è quello di offrire soluzioni terapeutiche innovative, sicure ed efficaci a pazienti e a operatori sanitari, nonché nuove opportunità di business ad aziende farmaceutiche italiane ed estere.
               </p>
             </div>
             
             {/* Column 3 */}
-            <div className="text-justify">
+            <div ref={paragraph3Ref} className="text-justify">
               <p className="text-gray-700 leading-relaxed">
                Condividiamo con i nostri partner un solido know-how, acquisito negli anni, per aiutarli a sviluppare il loro business in tutto il mondo.
               </p>

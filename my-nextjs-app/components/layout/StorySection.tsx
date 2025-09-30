@@ -1,12 +1,43 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
+import { gsap } from 'gsap'
 
 export default function StorySection() {
   const [firstDivVisible, setFirstDivVisible] = useState(false)
   const [secondDivVisible, setSecondDivVisible] = useState(false)
   const headerRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
+    // Imposta stato iniziale del titolo
+    if (titleRef.current) {
+      gsap.set(titleRef.current, {
+        opacity: 0,
+        x: -200
+      })
+    }
+
+    // Intersection Observer per l'animazione del titolo
+    const observer = new IntersectionObserver(
+      ([entry]) => {        
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
+          // Anima il titolo da sinistra
+          gsap.to(titleRef.current, {
+            opacity: 1,
+            x: 0,
+            duration: 1.2,
+            ease: "power2.out"
+          })
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
     const handleScroll = () => {
       if (headerRef.current) {
         const rect = headerRef.current.getBoundingClientRect()
@@ -43,11 +74,14 @@ export default function StorySection() {
     window.addEventListener('scroll', handleScroll)
     handleScroll() // Controlla subito lo stato iniziale
     
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      observer.disconnect()
+    }
   }, [])
 
   return (
-    <section className="bg-[#f1f1f1] pt-40">
+    <section ref={sectionRef} className="bg-[#f1f1f1] pt-40">
       {/* Story Header */}
       <div ref={headerRef} className="max-w-6xl mx-auto mb-20">
         {/* Main layout container */}
@@ -55,7 +89,7 @@ export default function StorySection() {
           
           {/* First row - Large "Story" text on the left */}
           <div className="flex justify-start">
-            <h2 className="text-8xl lg:text-9xl font-extralight text-gray-900 animate-fade-in-up">
+            <h2 ref={titleRef} className="text-8xl lg:text-9xl font-extralight text-gray-900">
               milestones.
             </h2>
           </div>

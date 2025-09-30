@@ -1,5 +1,5 @@
-import { Header, Hero, LeadershipSection, ProductsSection, FeaturedProductsSection, StorySection, InternationalSection, Footer } from '@/components/layout'
-
+import { Header, Hero, LeadershipSection, ProductsSection, FeaturedProductsSection, StorySection, LogosHorizontalSection, InternationalSection, Footer } from '@/components/layout'
+import EcoMode from '@/components/ui/EcoMode'
 
 export default function Home() {
   return (
@@ -10,8 +10,12 @@ export default function Home() {
       <StorySection />
       <LeadershipSection />
       <FeaturedProductsSection />
-      <InternationalSection /> 
+      {/* <LogosHorizontalSection /> */}
+      <InternationalSection />
       <Footer />
+      
+      {/* Eco Mode Overlay */}
+      <EcoMode />
     </div>
   )
 }
