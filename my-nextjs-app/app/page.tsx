@@ -1,4 +1,4 @@
-import { Header, Hero, LeadershipSection, ProductsSection, FeaturedProductsSection, StorySection, InternationalSection, Footer } from '@/components/layout'
+import { Header, Hero, LeadershipSection, ProductsSection, FeaturedProductsSection, StorySection, LogosHorizontalSection, InternationalSection, Footer } from '@/components/layout'
 
 
 export default function Home() {
@@ -9,8 +9,9 @@ export default function Home() {
       <LeadershipSection />
       <ProductsSection />
       <FeaturedProductsSection />
-      <StorySection />    
-       <InternationalSection />
+      <StorySection />
+      {/* <LogosHorizontalSection /> */}
+      <InternationalSection />
     
       <Footer />
     </div>
