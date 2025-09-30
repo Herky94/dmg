@@ -20,28 +20,33 @@ export default function InternationalSection() {
   ]
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const newIsInView = entry.isIntersecting && entry.intersectionRatio >= 0.8
-        setIsInView(newIsInView)
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect()
+        const windowHeight = window.innerHeight
         
-        // Se non siamo più in view, resetta tutto
-        if (!newIsInView && isScrollDisabled) {
+        // Rileva quando la sezione è completamente visibile (top <= 0 e bottom >= windowHeight)
+        const sectionIsFullyVisible = rect.top <= 0 && rect.bottom >= windowHeight
+        
+        console.log('Section rect:', rect.top, rect.bottom, 'Window height:', windowHeight, 'Fully visible:', sectionIsFullyVisible)
+        
+        setIsInView(sectionIsFullyVisible)
+        
+        // Se non siamo più completamente visibili e lo scroll era disabilitato, resetta tutto
+        if (!sectionIsFullyVisible && isScrollDisabled) {
           setIsScrollDisabled(false)
           setVirtualScroll(0)
           document.body.style.overflow = 'auto'
           document.body.style.height = 'auto'
         }
-      },
-      { threshold: [0, 0.2, 0.5, 0.8, 1] }
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+      }
     }
 
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // Controlla subito lo stato iniziale
+    
     return () => {
-      observer.disconnect()
+      window.removeEventListener('scroll', handleScroll)
       // Cleanup finale
       document.body.style.overflow = 'auto'
       document.body.style.height = 'auto'
@@ -192,32 +197,30 @@ export default function InternationalSection() {
       <div className="relative z-10 w-full px-6 lg:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text Content */}
-          <div className="space-y-8">
+          <div className="space-y-4">
             {/* Title with line breaks */}
-            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-extralight text-white leading-tight">
-              <span className="block">La</span>
-              <span className="block">nostra</span>
-              <span className="block">vocazione</span>
+            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-[2] text-white leading-[1] mb-10">
+              <span className="block">La nostra vocazione</span>
               <span className="block">internazionale</span>
             </h1>
 
             {/* Paragraphs */}
-            <div className="space-y-6 text-white/90 font-extralight">
-              <p className="text-sm lg:text-base leading-relaxed">
+            <div className="space-y-4 text-white/90 font-extralight">
+              <p className="text-sm lg:text-base leading-[1.5]">
                 Sin dalla sua internazionalizzazione nel 2004, D.M.G. ITALIA è sempre stata pronta ad accogliere nuovi partner che desiderano arricchire il loro portafoglio con prodotti unici. Grazie a una rete di distributori e filiali in continua crescita, l'azienda ha costruito negli anni una solida presenza internazionale, coprendo più di 50 paesi dentro e fuori l'Europa.
               </p>
               
-              <p className="text-sm lg:text-base leading-relaxed">
+              <p className="text-sm lg:text-base leading-[1.5]">
                 Con l'obiettivo di stabilire partnership durature e fruttuose, D.M.G. ITALIA offre a tutti i suoi clienti la sua esperienza e le sue migliori qualità:
               </p>
               
-              <p className="text-sm lg:text-base leading-relaxed">
+              <p className="text-sm lg:text-base leading-[1.5]">
                 Queste caratteristiche, insieme all'elevata qualità dei nostri prodotti, rendono D.M.G. ITALIA il partner di riferimento di oltre 25 aziende nel mondo. Con l'obiettivo di stabilire partnership durature e fruttuose, D.M.G. ITALIA offre a tutti i suoi clienti la sua esperienza e le sue migliori qualità:
               </p>
             </div>
 
             {/* CTA Button - styled like Hero button */}
-            <div className="pt-4">
+            <div className="pt-2">
               <Link 
                 href="/scopri-di-piu"
                 className="group inline-flex items-center gap-3 bg-transparent border border-white text-white px-6 py-3 rounded-full text-base font-medium hover:bg-white hover:text-black transition-all duration-300"

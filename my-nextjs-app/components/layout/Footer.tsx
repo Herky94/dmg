@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-50 py-16 w-full">
+    <footer className="footer bg-gray-50 py-16 pt-30 w-full">
       <div className="w-full px-24">
         <div className="grid grid-cols-12 ">
           
@@ -12,48 +12,48 @@ export default function Footer() {
             {/* Navigation Links */}
             <div className="flex-1">
               <div className="space-y-2">
-                <Link href="#" className="block text-sm text-gray-600 hover:text-gray-900">
+                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
                   HOMEPAGE
                 </Link>
-                <Link href="#" className="block text-sm text-gray-600 hover:text-gray-900">
+                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
                   STORIA
                 </Link>
-                <Link href="#" className="block text-sm text-gray-600 hover:text-gray-900">
+                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
                   MESSAGGIO DEL CEO
                 </Link>
-                <Link href="#" className="block text-sm text-gray-600 hover:text-gray-900">
+                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
                   CERTIFICAZIONI
                 </Link>
-                <Link href="#" className="block text-sm text-gray-600 hover:text-gray-900">
+                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
                   DISPOSITIVI MEDICI
                 </Link>
-                <Link href="#" className="block text-sm text-gray-600 hover:text-gray-900">
+                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
                   INTEGR. ALIMENTARI
                 </Link>
-                <Link href="#" className="block text-sm text-gray-600 hover:text-gray-900">
+                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
                   FARMACI
                 </Link>
-                <Link href="#" className="block text-sm text-gray-600 hover:text-gray-900">
+                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
                   FARMACOVIGILANZA
                 </Link>
-                <Link href="#" className="block text-sm text-gray-600 hover:text-gray-900">
-                  VIOLANZA E SORVEGLIANZA
+                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
+                  VILANZA E SORVEGLIANZA
                 </Link>
-                <Link href="#" className="block text-sm text-gray-600 hover:text-gray-900">
+                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
                   LAVORA CON NOI
                 </Link>
-                <Link href="#" className="block text-sm text-gray-600 hover:text-gray-900">
+                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
                   CONTATTI
                 </Link>
               </div>
             </div>
             
             {/* ISO Logos - Distanziati dal bordo */}
-            <div className="flex flex-col space-y-4 ml-16 mr-8">
-              <div className="w-12 h-12 rounded flex items-center justify-center">
+            <div className="flex gap-6 flex-col space-y-4 ml-16 mr-8">
+              <div className="w-24 h-24 rounded flex items-center justify-center">
                 <img src="/images/logos/209_isocertifiedcologoblue.svg" alt="ISO 9001" className="max-w-full max-h-full" />
               </div>
-              <div className="w-12 h-12 rounded flex items-center justify-center">
+              <div className="w-24 h-24 rounded flex items-center justify-center">
                 <img src="/images/logos/ISO13485-2012-w.svg" alt="ISO 13485" className="max-w-full max-h-full" />
               </div>
             </div>
@@ -65,85 +65,91 @@ export default function Footer() {
               
               {/* DMG ITALIA S.R.L. */}
               <div className="col-span-2 space-y-4 border-l border-[#D4D4D4] pl-8">
-                <h4 className="text-sm font-medium text-gray-900 mb-2">DMG ITALIA S.R.L.</h4>
-                <img src="/images/usefull-icons/arrow-up-1--arrow-up-keyboard.svg" alt="Arrow Icon" className="w-4 h-4 mb-4" />
-                <div className="text-xs text-gray-600 space-y-1">
-                  <p>Sede legale</p>
-                  <p>Via Lamontone km. 26,700</p>
-                  <p>-00071 Pomezia (RM)</p>
-                  <p><a href="mailto:info@dmgitalia.com" className="text-blue-600 hover:underline">info@dmgitalia.com</a></p>
-                </div>
-                <div className="text-xs text-gray-600 space-y-1">
-                  <p>Filiale</p>
-                  <p>S.Ufficio Amministrativo</p>
-                  <p>Via Mazzagno, 76</p>
-                  <p>-00071 Pomezia (RM)</p>
-                </div>
-                <div className="text-xs text-gray-600 space-y-1">
-                  <p>+39] 06 91886038</p>
-                  <p>+39] 06 91886093</p>
-                  <p>+39] 06 91886093</p>
-                  <p><a href="mailto:info@dmgitalia.com" className="text-blue-600 hover:underline">info@dmgitalia.com</a></p>
-                </div>
-                <div className="text-xs text-gray-600 space-y-1">
-                  <p>Magazzino</p>
-                  <p>Via dei Opifici, 22</p>
+                <h4 className="text-base font-medium text-gray-900 mb-2">DMG ITALIA S.R.L.</h4>
+                <img src="/images/usefull-icons/arrow.svg" alt="Arrow Icon" className="w-4 h-4 mb-4" />
+                <div className="text-base text-gray-600 space-y-1">
+                  <p >Sede legale</p>
+                  <p>Via Laurentina km. 26,700</p>
                   <p>00071 Pomezia (RM)</p>
-                  <p><a href="mailto:magazzino@dhool.com" className="text-blue-600 hover:underline">magazzino@dhool.com</a></p>
+                  <p><a href="mailto:info@dmgitalia.com" className=" hover:underline">info@dmgitalia.com</a></p>
+                </div>
+                <div className="text-base text-gray-600 space-y-1">
+                  
+                  <p >Sede operativae Uffici Amministrativi</p>
+                  <p>Via Nicaragua, 10</p>
+                  <p>00071 Pomezia (RM)</p>
+                </div>
+                <div className="text-base text-gray-600 space-y-1">
+                  <p>(+39) 06 91968038 </p>
+                  <p>(+39) 06 91969082</p>
+                  <p>(+39) 06 9145963</p>
+                  <p><a href="mailto:info@dmgitalia.com" className=" hover:underline">info@dmgitalia.com</a></p>
+                </div>
+                <div className="text-base text-gray-600 space-y-1">
+                  <p >Magazzino</p>
+                  <p>Via dei Cedri, 22</p>
+                  <p>00071 Pomezia (RM)</p>
+                  <p><a href="mailto:magazzino@dhool.com" className=" hover:underline">magazzino@dhool.com</a></p>
                 </div>
               </div>
 
               {/* DMG Polska sp. z o.o. */}
               <div className="col-span-2 space-y-4 border-l border-[#D4D4D4] pl-8">
-                <h4 className="text-sm font-medium text-gray-900 mb-2">DMG Polska sp. z o.o.</h4>
-                <img src="/images/usefull-icons/arrow-up-1--arrow-up-keyboard.svg" alt="Arrow Icon" className="w-4 h-4 mb-4" />
+                <h4 className="text-base font-medium text-gray-900 mb-2">DMG Polska sp. z o.o.</h4>
+                <img src="/images/usefull-icons/arrow.svg" alt="Arrow Icon" className="w-4 h-4 mb-4" />
                 <div className="text-xs text-gray-600 space-y-1">
                   <p>Sede legale</p>
                   <p>Al. Jerozolimskie 65/79 lok.</p>
-                  <p>U 26, 00-697 Warszawa</p>
-                  <p>(Polonia)</p>
+                  <p>1219, 00-697 Warszawa</p>
+                  <p> (Polska)</p>
                 </div>
                 <div className="text-xs text-gray-600 space-y-1">
-                  <p><a href="mailto:biuro@dmgpolska.eu" className="text-blue-600 hover:underline">biuro@dmgpolska.eu</a></p>
+                  <p><a href="mailto:biuro@dmgpolska.eu" className=" hover:underline">biuro@dmgpolska.eu</a></p>
                 </div>
               </div>
 
               {/* DMG Bulgaria ltd. */}
               <div className="col-span-2 space-y-4 border-l border-[#D4D4D4] pl-8">
-                <h4 className="text-sm font-medium text-gray-900 mb-2">DMG Bulgaria ltd.</h4>
-                <img src="/images/usefull-icons/arrow-up-1--arrow-up-keyboard.svg" alt="Arrow Icon" className="w-4 h-4 mb-4" />
+                <h4 className="text-base font-medium text-gray-900 mb-2">DMG Bulgaria ltd.</h4>
+                <img src="/images/usefull-icons/arrow.svg" alt="Arrow Icon" className="w-4 h-4 mb-4" />
                 <div className="text-xs text-gray-600 space-y-1">
                   <p>Sede legale</p>
-                  <p>Tsar Simeon st Ш2,</p>
-                  <p>ent 6, fl 5 – zona 1404</p>
+                  <p>IlkaPopova st.№2</p>
+                  <p>ent.B, fl.5 - Sofia 1404 </p>
                   <p>Lozenets, Bulgaria</p>
                 </div>
                 <div className="text-xs text-gray-600 space-y-1">
-                  <p><a href="mailto:info@dmgbg.com" className="text-blue-600 hover:underline">info@dmgbg.com</a></p>
+                  <p><a href="mailto:info@dmgbg.com" className=" hover:underline">info@dmgbg.com</a></p>
                 </div>
               </div>
 
               {/* DMG Turkey */}
               <div className="col-span-2 space-y-4 border-l border-[#D4D4D4] pl-8">
-                <h4 className="text-sm font-medium text-gray-900 mb-2">DMG Turkey</h4>
-                <img src="/images/usefull-icons/arrow-up-1--arrow-up-keyboard.svg" alt="Arrow Icon" className="w-4 h-4 mb-4" />
+                <h4 className="text-base font-medium text-gray-900 mb-2">DMG Turkey</h4>
+                <img src="/images/usefull-icons/arrow.svg" alt="Arrow Icon" className="w-4 h-4 mb-4" />
                 <div className="text-xs text-gray-600 space-y-1">
                   <p>Sede legale</p>
-                  <p>Buyukdere Cad. Vadistanbul</p>
-                  <p>odt. No:54 D:9№. Sar.</p>
-                  <p>Istanbul Turchia</p>
+                  <p>Teşvikiye mah. Valikonağı</p>
+                  <p>cad. No:74 D:7/A, Şişli, </p>
+                  <p>İstanbul (Turkey)</p>
                 </div>
                 <div className="text-xs text-gray-600 space-y-1">
-                  <p><a href="mailto:info@dmgturkiye.com.tr" className="text-blue-600 hover:underline">info@dmgturkiye.com.tr</a></p>
+                  <p><a href="mailto:info@dmgturkiye.com.tr" className=" hover:underline">info@dmgturkiye.com.tr</a></p>
                 </div>
               </div>
 
-              {/* Additional Company Info */}
+              {/* DMG Italia Reference */}
               <div className="col-span-2 space-y-4 border-l border-[#D4D4D4] pl-8">
-                <div className="text-xs text-gray-600">
-                  <p><strong>D.M.G. ITALIA S.R.L.</strong></p>
-                  <p>Via Lamontone km. 26,700 – 00071 Pomezia (RM)</p>
-                  <p>Reference.com | <a href="mailto:info@dmgitalia.com" className="text-blue-600 hover:underline">info@dmgitalia.com</a></p>
+                <h4 className="text-base font-medium text-gray-900 mb-2">D.M.G. ITALIA S.R.L.</h4>
+                <img src="/images/usefull-icons/arrow.svg" alt="Arrow Icon" className="w-4 h-4 mb-4" />
+                <div className="text-xs text-gray-600 space-y-1">
+                  <p>Sede Legale</p>
+                  <p>Via Laurentina km. 26,700</p>
+                  <p>– 00071 Pomezia (RM)</p>
+                </div>
+                <div className="text-xs text-gray-600 space-y-1">
+                  <p>italdevice.com</p>
+                  <p><a href="mailto:info@dmgitalia.com" className=" hover:underline">info@dmgitalia.com</a></p>
                 </div>
               </div>
 

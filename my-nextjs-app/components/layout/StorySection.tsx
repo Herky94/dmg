@@ -1,12 +1,43 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
+import { gsap } from 'gsap'
 
 export default function StorySection() {
   const [firstDivVisible, setFirstDivVisible] = useState(false)
   const [secondDivVisible, setSecondDivVisible] = useState(false)
   const headerRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
+    // Imposta stato iniziale del titolo
+    if (titleRef.current) {
+      gsap.set(titleRef.current, {
+        opacity: 0,
+        x: -200
+      })
+    }
+
+    // Intersection Observer per l'animazione del titolo
+    const observer = new IntersectionObserver(
+      ([entry]) => {        
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
+          // Anima il titolo da sinistra
+          gsap.to(titleRef.current, {
+            opacity: 1,
+            x: 0,
+            duration: 1.2,
+            ease: "power2.out"
+          })
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
     const handleScroll = () => {
       if (headerRef.current) {
         const rect = headerRef.current.getBoundingClientRect()
@@ -43,11 +74,14 @@ export default function StorySection() {
     window.addEventListener('scroll', handleScroll)
     handleScroll() // Controlla subito lo stato iniziale
     
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      observer.disconnect()
+    }
   }, [])
 
   return (
-    <section className="bg-[#f1f1f1] py-40">
+    <section ref={sectionRef} className="bg-[#f1f1f1] pt-40">
       {/* Story Header */}
       <div ref={headerRef} className="max-w-6xl mx-auto mb-20">
         {/* Main layout container */}
@@ -55,7 +89,7 @@ export default function StorySection() {
           
           {/* First row - Large "Story" text on the left */}
           <div className="flex justify-start">
-            <h2 className="text-8xl lg:text-9xl font-extralight text-gray-900">
+            <h2 ref={titleRef} className="text-8xl lg:text-9xl font-extralight text-gray-900">
               milestones.
             </h2>
           </div>
@@ -122,7 +156,7 @@ function HorizontalTimeline() {
     { year: '2024', subtitle: 'Con la crescente presenza sul mercato italiano ed estero, D.M.G. ITALIA avvia un processo di notevole ampliamento dei suoi spazi destinati sia agli uffici sia alla produzione.' }
   ]
 
-  const totalSets = Math.ceil(allCards.length / 4)
+  const totalCards = allCards.length
 
   // Gestione scroll per controllare le card e il progresso della barra
   useEffect(() => {
@@ -137,28 +171,28 @@ function HorizontalTimeline() {
           
           if (e.deltaY > 0) {
             // Scroll verso il basso
-            if (currentCardSet < totalSets - 1) {
-              // Ancora set da mostrare, previeni scroll normale
+            if (currentCardSet < totalCards - 4) {
+              // Ancora card da mostrare, previeni scroll normale
               e.preventDefault()
               setCurrentCardSet(prev => {
-                const newSet = prev + 1
-                setScrollProgress((newSet / (totalSets - 1)) * 100)
-                return newSet
+                const newCard = prev + 1
+                setScrollProgress((newCard / (totalCards - 4)) * 100)
+                return newCard
               })
             }
-            // Se siamo all'ultimo set, permetti scroll normale verso il basso
+            // Se siamo all'ultima card, permetti scroll normale verso il basso
           } else {
             // Scroll verso l'alto
             if (currentCardSet > 0) {
-              // Ancora set precedenti da mostrare, previeni scroll normale
+              // Ancora card precedenti da mostrare, previeni scroll normale
               e.preventDefault()
               setCurrentCardSet(prev => {
-                const newSet = prev - 1
-                setScrollProgress((newSet / (totalSets - 1)) * 100)
-                return newSet
+                const newCard = prev - 1
+                setScrollProgress((newCard / (totalCards - 4)) * 100)
+                return newCard
               })
             }
-            // Se siamo al primo set, permetti scroll normale verso l'alto
+            // Se siamo alla prima card, permetti scroll normale verso l'alto
           }
         }
       }
@@ -166,13 +200,13 @@ function HorizontalTimeline() {
 
     window.addEventListener('wheel', handleScroll, { passive: false })
     return () => window.removeEventListener('wheel', handleScroll)
-  }, [totalSets, currentCardSet])
+  }, [totalCards, currentCardSet])
 
-  // Card attualmente visibili (4 per set)
-  const currentCards = allCards.slice(currentCardSet * 4, (currentCardSet + 1) * 4)
+  // Card attualmente visibili (4 alla volta, scorrimento di 1)
+  const currentCards = allCards.slice(currentCardSet, currentCardSet + 4)
 
   return (
-    <div ref={sectionRef} className="text-black min-h-screen" style={{ backgroundColor: '#f1f1f1' }}>
+    <div ref={sectionRef} className="text-black" style={{ backgroundColor: '#f1f1f1' }}>
       
       {/* Timeline Bar sopra - si riempie con il progresso */}
       <div className="w-full max-w-6xl mx-auto px-8 pt-0 pb-6">
@@ -189,7 +223,7 @@ function HorizontalTimeline() {
       </div>
 
       {/* Cards Section */}
-      <div className="w-full max-w-6xl mx-auto px-8 pb-20">
+      <div className="w-full max-w-6xl mx-auto px-8 pb-40">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {currentCards.map((card, index) => (
             <div
@@ -199,11 +233,14 @@ function HorizontalTimeline() {
                 animationDelay: `${index * 100}ms`
               }}
             >
-              <div className="p-6 rounded-lg">
-                <div className="text-black text-2xl font-medium mb-4">
-                  {card.year}
+              <div className="p-6 card-timeline rounded-lg">
+                <div className="flex items-center gap-3 mb-4">
+                  <img src="/images/usefull-icons/arrow.svg" alt="Arrow Icon" className="w-4 h-4" />
+                  <div className="text-black text-2xl font-medium">
+                    {card.year}
+                  </div>
                 </div>
-                <p className="text-gray-700 text-sm leading-relaxed">
+                <p className="text-gray-700 leading-relaxed">
                   {card.subtitle}
                 </p>
               </div>

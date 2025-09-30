@@ -32,9 +32,9 @@ export default function Header() {
               <Image
                 src="/images/logos/DMG-logo-white.png"
                 alt="DMG Logo"
-                width={80}
-                height={30}
-                className="h-8 w-auto"
+                width={120}
+                height={60}
+                className="h-11 w-auto"
                 priority
               />
             </Link>
@@ -42,7 +42,7 @@ export default function Header() {
 
           {/* Progress Bar Central */}
           <div className="flex-1 mx-8">
-            <div className="w-full h-0.5 bg-white/30 rounded-full overflow-hidden">
+            <div className="w-full h-[1px] bg-white/30 rounded-full overflow-hidden">
               <div 
                 className="h-full bg-white transition-all duration-300 ease-out"
                 style={{ width: `${scrollProgress}%` }}

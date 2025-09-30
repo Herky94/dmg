@@ -1,25 +1,58 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 import Image from 'next/image'
 
 export default function FeaturedProductsSection() {
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    // Imposta stato iniziale del titolo
+    if (titleRef.current) {
+      gsap.set(titleRef.current, {
+        opacity: 0,
+        x: -200
+      })
+    }
+
+    // Intersection Observer per l'animazione del titolo
+    const observer = new IntersectionObserver(
+      ([entry]) => {        
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+          // Anima il titolo da sinistra
+          gsap.to(titleRef.current, {
+            opacity: 1,
+            x: 0,
+            duration: 1.2,
+            ease: "power2.out"
+          })
+        }
+      },
+      { threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5] }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
   return (
-    <section className="py-40 bg-white">
-      <div className="max-w-6xl mx-auto px-20">
+    <section ref={sectionRef} className="py-40 bg-white">
+      <div className="max-w-[1650px] mx-auto px-12">
         {/* Pre-title */}
         <div className="text-center mb-6">
           <span className="text-xs text-gray-400 uppercase tracking-widest font-medium">
-            • HOW WE WORK
+            HOW WE WORK
           </span>
         </div>
 
         {/* Main Title with number and year */}
         <div className="flex justify-between items-center mb-8">
-          <span className="text-sm text-gray-400">[03]</span>
-          <h2 className="text-4xl lg:text-5xl font-light text-gray-900 text-center flex-1">
-            Prodotti in evidenza
+          <h2 ref={titleRef} className="text-8xl lg:text-9xl font-light text-gray-900 text-center flex-1">
+            prodotti.
           </h2>
-          <span className="text-sm text-gray-400">©2025</span>
         </div>
 
         {/* Description */}
@@ -48,31 +81,31 @@ function ProductsCarousel() {
     {
       id: 1,
       name: 'Diplorin®',
-      description: 'Spray nasale a base di Azelastina e Fluticasone per il trattamento della rinite allergica.',
+      description: 'Spray nasale a base di Azelastina e Fluticasone per il trattamento della rinite allergica...',
       image: '/images/prodotti/diplorin.jpg'
     },
     {
       id: 2,
       name: 'Arinit®', 
-      description: 'Spray nasale a base di Mometasone, indicato per la rinite allergica e la poliposi nasale.',
+      description: 'Spray nasale a base di Mometasone, indicato per la rinite allergica e la poliposi nasale...',
       image: '/images/prodotti/arint.png'
     },
     {
       id: 3,
       name: 'Linea Gastrotuss®',
-      description: 'Dispositivi medici per la protezione della mucosa esofagea e gastrica in caso di reflusso.',
+      description: 'Dispositivi medici per la protezione della mucosa esofagea e gastrica in caso di reflusso...',
       image: '/images/prodotti/gastrotuss.png'
     },
     {
       id: 4,
       name: 'Emofix®',
-      description: 'Unguento barriera emostatico per la prevenzione e gestione di sanguinamenti locali.',
+      description: 'Unguento barriera emostatico per la prevenzione e gestione di sanguinamenti locali...',
       image: '/images/prodotti/emofix.webp'
     },
     {
       id: 5,
       name: 'Rinopanteina®',
-      description: 'Unguento nasale con acido ialuronico e vitamine per idratare e proteggere la mucosa nasale.',
+      description: 'Unguento nasale con acido ialuronico e vitamine per idratare e proteggere la mucosa nasale...',
       image: '/images/prodotti/diplorin.jpg'
     }
   ]
@@ -154,39 +187,53 @@ function ProductsCarousel() {
           {infiniteProducts.map((product, index) => (
             <div 
               key={`${product.id}-${index}`} 
-              className="w-1/4 flex-shrink-0 px-3 transform transition-all duration-500 hover:scale-105"
+              className="w-1/4 flex-shrink-0 px-4 transform transition-all duration-500 hover:scale-105"
             >
-              <div className="bg-white h-full">
+              <div className="bg-white h-full border border-gray-200">
                 {/* Product Image */}
-                <div className="relative h-64 bg-gray-50 overflow-hidden group">
+                <div className="relative h-80 bg-gray-50 overflow-hidden group">
                   <Image
                     src={product.image}
                     alt={product.name}
                     fill
-                    className="object-contain p-6 transition-transform duration-300 group-hover:scale-110"
+                    className="object-contain p-8 transition-transform duration-300 group-hover:scale-110"
                   />
                 </div>
 
-                {/* Product Info with border */}
-                <div className="p-6  border-l border-r border-b border-gray-200">
+                {/* Product Info */}
+                <div className="p-8">
                   {/* Circled Number */}
-                  <div className="flex justify-start mb-4">
-                    <div className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center transition-colors duration-200 hover:border-gray-500 hover:bg-gray-50">
-                      <span className="text-sm text-gray-600 font-medium">
-                        {(index % products.length) + 1}
-                      </span>
-                    </div>
-                  </div>
+               
                   
                   {/* Title */}
-                  <h3 className="text-lg font-medium text-gray-900 text-left mb-3 transition-colors duration-200 hover:text-gray-700">
+                  <h3 className="text-[25px] font-medium text-gray-900 text-left mb-3 transition-colors duration-200 hover:text-gray-700">
                     {product.name}
                   </h3>
                   
                   {/* Description */}
-                  <p className="text-sm text-gray-600 leading-relaxed text-left transition-colors duration-200 hover:text-gray-800">
+                  <p className="text-sm text-gray-600 leading-relaxed text-left transition-colors duration-200 hover:text-gray-800 mb-8">
                     {product.description}
                   </p>
+                  
+                  {/* Button */}
+                  <div className="flex items-center gap-3 border border-black text-black px-6 py-3 rounded-full hover:bg-black hover:text-white transition-all duration-300 cursor-pointer w-fit group">
+                    <span className="text-sm font-medium">Vedi prodotto</span>
+                    <div className="bg-black rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-white transition-colors duration-300">
+                      <svg 
+                        className="w-4 h-4 text-white transform transition-transform duration-300 group-hover:rotate-45 group-hover:text-black" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke="currentColor"
+                      >
+                        <path 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          strokeWidth={2} 
+                          d="M7 17L17 7M17 7H7M17 7V17" 
+                        />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -43,3 +43,19 @@ a:hover, button:hover, [role="button"]:hover {
 .cursor-hover {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Global paragraph styling - font-weight 200 for all paragraphs */
+p {
+  font-weight: 200 !important;
+  font-size: 18px;
+}
+
+/* Footer paragraphs should be 14px */
+footer p {
+  font-size: 14px !important;
+}
+
+/* Footer links should have specific color */
+.footer a {
+  color: #4888a1 !important;
+}
