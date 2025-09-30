@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Lexend_Deca } from "next/font/google";
+import { Lexend_Deca } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: 'swap',
-});
 
 const lexendDeca = Lexend_Deca({
   variable: "--font-lexend-deca",
@@ -32,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${lexendDeca.variable} font-inter antialiased`}
+        className={`${lexendDeca.variable} antialiased`}
       >
         {children}
       </body>

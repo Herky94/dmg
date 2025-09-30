@@ -61,8 +61,7 @@ export default function Header() {
               >
                 <Link
                   href={item.href}
-                  className="text-white hover:text-gray-300 px-4 py-2 text-sm transition-colors duration-200 flex items-center"
-                  style={{ fontFamily: 'var(--font-lexend-deca)', fontWeight: 300 }}
+                  className="text-white hover:text-gray-300 px-4 py-2 text-sm font-light transition-colors duration-200 flex items-center"
                 >
                   {item.name}
                   {item.hasDropdown && (
@@ -90,8 +89,7 @@ export default function Header() {
                         <Link
                           key={subItem.name}
                           href={subItem.href}
-                          className="block px-4 py-2 text-sm text-white hover:text-gray-300 hover:bg-white/10 transition-colors duration-200"
-                          style={{ fontFamily: 'var(--font-lexend-deca)', fontWeight: 300 }}
+                          className="block px-4 py-2 text-sm text-white hover:text-gray-300 hover:bg-white/10 font-light transition-colors duration-200"
                         >
                           {subItem.name}
                         </Link>
