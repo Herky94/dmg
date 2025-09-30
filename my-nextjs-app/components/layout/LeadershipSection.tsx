@@ -7,7 +7,7 @@ export default function LeadershipSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Photo */}
           <div className="order-2 lg:order-1">
-            <div className="rounded-lg overflow-hidden shadow-lg">
+            <div className=" overflow-hidden shadow-lg">
               <img 
                 src="/images/Luigi-Mercuri.jpg" 
                 alt="Luigi Mercuri - CEO & Managing Director"

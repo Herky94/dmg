@@ -92,7 +92,7 @@ export default function ProductsSection() {
           </div>
 
           {/* Card 2 - Integratori alimentari (Sticky Overlay) */}
-          <div className="sticky top-20 z-20 bg-white rounded-t-2xl shadow-lg py-16">
+          <div className="sticky top-20 z-20 bg-gray-50 rounded-t-2xl py-16">
             <div className="max-w-6xl mx-auto px-20">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
@@ -148,7 +148,7 @@ export default function ProductsSection() {
           </div>
 
           {/* Card 3 - Farmaci (Top Sticky Overlay) */}
-          <div className="sticky top-20 z-30 bg-gray-100 rounded-t-2xl shadow-lg py-16">
+          <div className="sticky top-20 z-30 bg-gray-50 rounded-t-2xl  py-16">
             <div className="max-w-6xl mx-auto px-20">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
