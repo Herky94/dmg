@@ -48,6 +48,64 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Team Leadership Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 text-center mb-16">La nostra Leadership</h2>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Photo placeholder */}
+            <div className="order-2 lg:order-1">
+              <div className="bg-gray-300 rounded-lg overflow-hidden shadow-lg">
+                <div className="aspect-[4/3] bg-gradient-to-br from-gray-400 to-gray-500 flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <div className="w-20 h-20 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center">
+                      <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-sm font-medium">Luigi Mercuri</p>
+                    <p className="text-xs opacity-80">CEO & Managing Director</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Content */}
+            <div className="order-1 lg:order-2">
+              <div className="max-w-2xl">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">Luigi Mercuri</h3>
+                <p className="text-lg text-blue-600 font-semibold mb-6">CEO & Managing Director</p>
+                
+                <div className="space-y-4 text-gray-700 leading-relaxed">
+                  <p>
+                    <strong>Il nostro impegno: </strong>intendenza nel per sé di "Funzionare ovvà &
+                    costantemente riuscen a migliorare in qualità della vita in la salute
+                    degli individui attraverso l'innovazione farmaceutica e tecnologica nella
+                    salute secondo cui "Non si cura la malattia ma il paziente"
+                  </p>
+                  
+                  <p>
+                    <strong>Innovazione, creatività </strong>e la costante ricerca di nuove soluzioni sono
+                    i pilastri sui quali poggiamo i nostri laboratori di ricerca e sviluppo,
+                    composti da un team di professionisti e dotati di apparecchiature
+                    all'avanguardia che, anno dopo anno, permettono una crescita
+                    costante.
+                  </p>
+                  
+                  <p>
+                    L'entusiasmo, l'onestà e la vicinanza di innovare sono le qualità
+                    fondamentali della nostra Q.M.C. ITALIA promuove il progresso e
+                    la crescita dei propri dipendenti e collaboratori favorendo un clima
+                    di trasparenza e di inclusione.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-20 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">I nostri Prodotti</h2>

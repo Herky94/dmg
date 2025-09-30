@@ -23,7 +23,7 @@ export default function Header() {
   }, [])
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-sm">
+    <header className="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-sm">
       <div className="w-full px-20">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
