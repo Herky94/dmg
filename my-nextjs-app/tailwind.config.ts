@@ -12,6 +12,19 @@ const config: Config = {
         'sans': ['var(--font-lexend-deca)', 'sans-serif'],
         'lexend-deca': ['var(--font-lexend-deca)', 'sans-serif'],
       },
+      keyframes: {
+        'hero-zoom': {
+          '0%': { 
+            transform: 'scale(1) translateX(0px)',
+          },
+          '100%': { 
+            transform: 'scale(1.1) translateX(20px)',
+          },
+        },
+      },
+      animation: {
+        'hero-zoom': 'hero-zoom 20s ease-in-out infinite alternate',
+      },
     },
   },
   plugins: [],

@@ -21,7 +21,9 @@ export const menuData: MenuItem[] = [
     hasDropdown: true,
     submenu: [
       { name: 'Storia', href: '/azienda/storia' },
+      { name: 'Messaggio del CEO', href: '/azienda/messaggio-ceo' },
       { name: 'Certificazioni', href: '/azienda/certificazioni' },
+      { name: 'Vocazione Internazionale', href: '/azienda/vocazione-internazionale' },
     ],
   },
   {
@@ -35,6 +37,10 @@ export const menuData: MenuItem[] = [
       { name: 'D.M.G. Turchia', href: '/corporate/turchia' },
       { name: 'ITALDEVICE', href: '/corporate/italdevice' },
     ],
+  },
+  {
+    name: 'R&D',
+    href: '/rd',
   },
   {
     name: 'Prodotti',

@@ -72,10 +72,13 @@ export default function Hero() {
 
   return (
     <>
-      <section className="relative h-screen bg-black flex items-center">
-        {/* Background Image Placeholder - Sostituisci con la tua immagine */}
-        <div className="absolute inset-0 bg-black">
-          {/* Qui andrà l'immagine di sfondo quando sarà pronta */}
+      <section className="relative h-screen flex items-center overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat animate-hero-zoom"
+          style={{ backgroundImage: 'url(/images/bg-home.webp)' }}
+        >
+          {/* Overlay per migliorare la leggibilità del testo */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30"></div>
         </div>
         
@@ -120,7 +123,7 @@ export default function Hero() {
         <div className="absolute bottom-0 left-0 pb-30 pl-20">
           <h2 
             className="text-6xl lg:text-6l xl:text-[10rem] max-w-[60%] font-light transition-colors duration-300"
-            style={{ lineHeight: 1 }}
+            style={{ lineHeight: '0.9' }}
           >
             {tagline.split('').map((letter, index) => (
               <span 
@@ -137,17 +140,15 @@ export default function Hero() {
       {/* Logo Accessibilità Fixed */}
       <div className="fixed bottom-6 left-6 z-50">
         <button 
-          className="bg-white/90 backdrop-blur-sm hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+          className="bg-white/90 backdrop-blur-sm hover:bg-white p-1 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
           aria-label="Accessibilità"
           title="Opzioni di accessibilità"
         >
-          <svg 
-            className="w-6 h-6 text-gray-800" 
-            fill="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-          </svg>
+          <img 
+            src="/images/usefull-icons/ax.svg" 
+            alt="Accessibilità" 
+            className="w8 h-8"
+          />
         </button>
       </div>
     </>

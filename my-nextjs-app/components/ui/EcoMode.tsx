@@ -19,7 +19,7 @@ export default function EcoMode() {
       // Avvia nuovo timer per 30 secondi
       inactivityTimer = setTimeout(() => {
         setIsActive(true)
-      }, 30000) // 30 secondi
+      }, 120000) // 2 minuti
     }
 
     // Eventi che resetano il timer - includendo più eventi mouse
@@ -56,7 +56,7 @@ export default function EcoMode() {
     setIsActive(false)
   }
 
-  if (!isActive) return null
+ if (!isActive) return null
 
   return (
     <div 
@@ -71,26 +71,21 @@ export default function EcoMode() {
         {/* Logo DMG */}
         <div className="flex justify-center mb-8">
           <Image
-            src="/images/logos/DMG-logo-white.png"
+            src="/images/logos/dmg-logo-inverse.svg"
             alt="DMG Logo"
             width={200}
             height={75}
-            className="h-16 w-auto"
+            className="h-16 w-auto pr-7"
           />
         </div>
         
-        {/* Testo principale */}
-        <h1 className="text-xl lg:text-2xl font-extralight text-white tracking-wider">
-          DRUGS MINERALS AND GENERICS ITALIA
-        </h1>
-        
         {/* Testo descrittivo */}
-        <p className="text-sm lg:text-base text-white/90 font-extralight max-w-md mx-auto leading-relaxed">
+        <p className="text-white/80 font-extralight max-w-md mx-auto leading-[1.4]">
           Questa schermata contribuisce al risparmio energetico quando ti allontani o resti inattivo
         </p>
         
         {/* Hint per uscire */}
-        <p className="text-xs text-white/60 font-extralight mt-8">
+        <p className="text-white/80 font-extralight italic max-w-md mx-auto leading-[1.4]">
           Muovi il mouse o premi un tasto per continuare
         </p>
       </div>

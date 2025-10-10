@@ -13,7 +13,7 @@ export default function Footer() {
             <div className="flex-1">
               <div className="space-y-2">
                 <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
-                  HOMEPAGE
+                  HOME
                 </Link>
                 <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
                   STORIA
@@ -25,19 +25,19 @@ export default function Footer() {
                   CERTIFICAZIONI
                 </Link>
                 <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
+                  VOCAZIONE INTERNAZIONALE
+                </Link>  
+                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
+                  R&D
+                </Link>
+                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
                   DISPOSITIVI MEDICI
                 </Link>
                 <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
-                  INTEGR. ALIMENTARI
+                  INTEGRATORI ALIMENTARI
                 </Link>
                 <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
                   FARMACI
-                </Link>
-                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
-                  FARMACOVIGILANZA
-                </Link>
-                <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
-                  VILANZA E SORVEGLIANZA
                 </Link>
                 <Link href="#" className="block text-base text-gray-600 hover:text-gray-900">
                   LAVORA CON NOI
@@ -75,7 +75,7 @@ export default function Footer() {
                 </div>
                 <div className="text-base text-gray-600 space-y-1">
                   
-                  <p >Sede operativae Uffici Amministrativi</p>
+                  <p >Sede operativa e Uffici Amministrativi</p>
                   <p>Via Nicaragua, 10</p>
                   <p>00071 Pomezia (RM)</p>
                 </div>
@@ -140,7 +140,7 @@ export default function Footer() {
 
               {/* DMG Italia Reference */}
               <div className="col-span-2 space-y-4 border-l border-[#D4D4D4] pl-8">
-                <h4 className="text-base font-medium text-gray-900 mb-2">D.M.G. ITALIA S.R.L.</h4>
+                <h4 className="text-base font-medium text-gray-900 mb-2">ITALDEVICE</h4>
                 <img src="/images/usefull-icons/arrow.svg" alt="Arrow Icon" className="w-4 h-4 mb-4" />
                 <div className="text-xs text-gray-600 space-y-1">
                   <p>Sede Legale</p>
@@ -164,23 +164,19 @@ export default function Footer() {
             <div className="flex items-center space-x-8">
               {/* DMG Logo */}
               <div className="w-32 h-12 rounded flex items-center justify-center">
-                <img src="/images/logos/DMG-logo-black.png" alt="DMG Logo" className="max-w-full max-h-full" />
+                <img src="/images/logos/dmg-logo-inverse.svg" alt="DMG Logo" className="max-w-full max-h-full" />
               </div>
               {/* Navigation Links */}
               <nav className="flex space-x-6 text-xs text-gray-600">
-                <Link href="#" className="hover:text-gray-900">FARMACEUTICA</Link>
-                <Link href="#" className="hover:text-gray-900">DISPOSITIVI MEDICI</Link>
-                <Link href="#" className="hover:text-gray-900">INTEGRATORI</Link>
                 <Link href="#" className="hover:text-gray-900">TRASPARENZA</Link>
+                <Link href="#" className="hover:text-gray-900">PRIVACY POLICY</Link>
                 <Link href="#" className="hover:text-gray-900">COOKIE POLICY</Link>
-                <Link href="#" className="hover:text-gray-900">CONFORMITÀ</Link>
-                <Link href="#" className="hover:text-gray-900">REGISTRESE</Link>
+                <Link href="#" className="hover:text-gray-900">WHISTLEBLOWING</Link>
               </nav>
             </div>
             {/* Copyright */}
             <div className="text-xs text-gray-500 text-right">
-              QUALSIASI DUBBIO, QUALSIASI QUESITO, CONTATTACI MA NOI RITENIAMO<br/>
-              CHE DOVRESTI SEMPRE CHIEDERE AL TUO MEDICO.
+              design: biancocreativo
             </div>
           </div>
         </div>

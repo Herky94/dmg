@@ -44,7 +44,7 @@ export default function FeaturedProductsSection() {
         {/* Pre-title */}
         <div className="text-center mb-6">
           <span className="text-xs text-gray-400 uppercase tracking-widest font-medium">
-            HOW WE WORK
+            CATALOGO
           </span>
         </div>
 
@@ -58,9 +58,7 @@ export default function FeaturedProductsSection() {
         {/* Description */}
         <div className="text-center mb-16">
           <p className="text-base text-gray-700 leading-relaxed max-w-3xl mx-auto">
-            To ensure a seamless and effortless briefing on your side we have set 
-            up a simple and efficient process that will help us get started working 
-            together as quickly as possible
+            Un team di professionisti altamente specializzati e un laboratorio di ricerca e sviluppo dotato di apparecchiature all’avanguardia sono i pilastri su cui si basa la nostra azienda.
           </p>
         </div>
 
@@ -80,15 +78,15 @@ function ProductsCarousel() {
   const products = [
     {
       id: 1,
-      name: 'Diplorin®',
-      description: 'Spray nasale a base di Azelastina e Fluticasone per il trattamento della rinite allergica...',
-      image: '/images/prodotti/diplorin.jpg'
+      name: 'Immunotrofina®',
+      description: 'Trattamento sintomatico della tosse e della raucedine nel bambino e nell\'adulto',
+      image: '/images/immunotrofina.webp'
     },
     {
       id: 2,
-      name: 'Arinit®', 
-      description: 'Spray nasale a base di Mometasone, indicato per la rinite allergica e la poliposi nasale...',
-      image: '/images/prodotti/arint.png'
+      name: 'Colinox®', 
+      description: 'Trattamento di meteorismo, arofagia e coliche gassose del bambino e dell\'adulto',
+      image: '/images/colinox.webp'
     },
     {
       id: 3,
@@ -106,7 +104,7 @@ function ProductsCarousel() {
       id: 5,
       name: 'Rinopanteina®',
       description: 'Unguento nasale con acido ialuronico e vitamine per idratare e proteggere la mucosa nasale...',
-      image: '/images/prodotti/diplorin.jpg'
+      image: '/images/rinopanteina.webp'
     }
   ]
 
@@ -173,10 +171,10 @@ function ProductsCarousel() {
 
 
   return (
-    <div className="relative">
+    <div className="relative py-8">
       {/* Products Grid */}
       <div 
-        className="relative overflow-hidden"
+        className="relative overflow-hidden px-8 py-10"
         onMouseEnter={() => setIsAutoPlay(false)}
         onMouseLeave={() => setIsAutoPlay(true)}
       >
@@ -191,7 +189,7 @@ function ProductsCarousel() {
             >
               <div className="bg-white h-full border border-gray-200">
                 {/* Product Image */}
-                <div className="relative h-80 bg-gray-50 overflow-hidden group">
+                <div className="relative h-80 bg-white overflow-hidden group">
                   <Image
                     src={product.image}
                     alt={product.name}
@@ -211,16 +209,16 @@ function ProductsCarousel() {
                   </h3>
                   
                   {/* Description */}
-                  <p className="text-sm text-gray-600 leading-relaxed text-left transition-colors duration-200 hover:text-gray-800 mb-8">
+                  <p className="text-sm text-gray-600 leading-[1.5] text-left transition-colors duration-200 hover:text-gray-800 mb-8">
                     {product.description}
                   </p>
                   
                   {/* Button */}
-                  <div className="flex items-center gap-3 border border-black text-black px-6 py-3 rounded-full hover:bg-black hover:text-white transition-all duration-300 cursor-pointer w-fit group">
+                  <div className="flex items-center gap-3 border border-[#C34069] text-[#C34069] px-6 py-3 rounded-full hover:bg-[#C34069] hover:text-white transition-all duration-300 cursor-pointer w-fit group">
                     <span className="text-sm font-medium">Vedi prodotto</span>
-                    <div className="bg-black rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-white transition-colors duration-300">
+                    <div className="bg-[#C34069] rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-white transition-colors duration-300">
                       <svg 
-                        className="w-4 h-4 text-white transform transition-transform duration-300 group-hover:rotate-45 group-hover:text-black" 
+                        className="w-4 h-4 text-white transform transition-transform duration-300 group-hover:rotate-45 group-hover:text-[#C34069]" 
                         fill="none" 
                         viewBox="0 0 24 24" 
                         stroke="currentColor"

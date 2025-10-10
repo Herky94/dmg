@@ -8,87 +8,124 @@ export default function LogosHorizontalSection() {
   const [isScrollDisabled, setIsScrollDisabled] = useState(false) 
   const [isInView, setIsInView] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
-  const logosContainerRef = useRef<HTMLDivElement>(null)
-  const textRef = useRef<HTMLDivElement>(null)
-  const maxScrollForEffect = 400
+  const backgroundRef = useRef<HTMLDivElement>(null)
+  const row1Ref = useRef<HTMLDivElement>(null)
+  const row2Ref = useRef<HTMLDivElement>(null)
+  const row3Ref = useRef<HTMLDivElement>(null)
   
-  // Loghi di test - su due righe
-  const logosRow1 = [
-    { name: "Microsoft", src: "https://via.placeholder.com/150x80/333333/ffffff?text=Microsoft" },
-    { name: "Google", src: "https://via.placeholder.com/150x80/4285f4/ffffff?text=Google" },
-    { name: "Apple", src: "https://via.placeholder.com/150x80/000000/ffffff?text=Apple" },
-    { name: "Amazon", src: "https://via.placeholder.com/150x80/ff9900/ffffff?text=Amazon" },
-    { name: "Meta", src: "https://via.placeholder.com/150x80/1877f2/ffffff?text=Meta" },
-    { name: "Tesla", src: "https://via.placeholder.com/150x80/cc0000/ffffff?text=Tesla" }
-  ]
+  const maxScrollForEffect = 400 // Scroll totale per completare tutte le animazioni
   
-  const logosRow2 = [
-    { name: "Netflix", src: "https://via.placeholder.com/150x80/e50914/ffffff?text=Netflix" },
-    { name: "Spotify", src: "https://via.placeholder.com/150x80/1db954/ffffff?text=Spotify" },
-    { name: "Adobe", src: "https://via.placeholder.com/150x80/ff0000/ffffff?text=Adobe" },
-    { name: "Intel", src: "https://via.placeholder.com/150x80/0071c5/ffffff?text=Intel" },
-    { name: "Samsung", src: "https://via.placeholder.com/150x80/1428a0/ffffff?text=Samsung" },
-    { name: "Sony", src: "https://via.placeholder.com/150x80/000000/ffffff?text=Sony" }
+  // 3 righe di loghi sfalsate
+  const logoRows = [
+    [
+      { name: "Selentuss", src: "/images/selentuss.png" },
+      { name: "Rinopanteina", src: "/images/rinopanteina.png" },
+      { name: "Pepsino", src: "/images/pepsino.png" }
+    ],
+    [
+      { name: "Orogermina", src: "/images/orogermina.png" },
+      { name: "Oftasiale", src: "/images/oftasiale.png" },
+      { name: "Gastroftal", src: "/images/gastrooftal.png" }
+    ],
+    [
+      { name: "Elastar", src: "/images/elastar.png" },
+      { name: "Selentuss", src: "/images/selentuss.png" }, // Ripeti per riempire
+      { name: "Rinopanteina", src: "/images/rinopanteina.png" }
+    ]
   ]
 
-  // Intersection Observer
+  // Scroll listener per rilevamento preciso del bordo superiore
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const newIsInView = entry.isIntersecting && entry.intersectionRatio >= 0.8
-        setIsInView(newIsInView)
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect()
         
-        if (!newIsInView && isScrollDisabled) {
+        // Attiva SOLO quando il bordo superiore raggiunge il top della viewport (rect.top <= 0)
+        const shouldBeInView = rect.top <= 0 && rect.bottom > 0
+        
+        console.log('Logos section - top:', rect.top, 'bottom:', rect.bottom, 'shouldBeInView:', shouldBeInView)
+        
+        if (shouldBeInView && !isInView) {
+          // Il bordo superiore ha raggiunto il top - attiva la sezione
+          console.log('🎯 BORDO SUPERIORE RAGGIUNTO - Attivando sezione logos')
+          setIsInView(true)
+          setIsScrollDisabled(true)
+          document.body.style.overflow = 'hidden'
+          document.body.style.height = '100vh'
+          
+          // Posiziona esattamente la sezione al top
+          window.scrollTo({
+            top: sectionRef.current.offsetTop,
+            behavior: 'auto'
+          })
+        } else if (!shouldBeInView && isInView) {
+          // Uscendo dalla sezione - reset completo
+          console.log('📤 Uscendo dalla sezione logos - reset')
+          setIsInView(false)
           setIsScrollDisabled(false)
           setVirtualScroll(0)
           document.body.style.overflow = 'auto'
           document.body.style.height = 'auto'
         }
-      },
-      { threshold: [0, 0.2, 0.5, 0.8, 1] }
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
+      }
     }
 
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // Controlla stato iniziale
+    
     return () => {
-      observer.disconnect()
+      window.removeEventListener('scroll', handleScroll)
       document.body.style.overflow = 'auto'
       document.body.style.height = 'auto'
     }
-  }, [isScrollDisabled])
 
-  // Gestione scroll con virtual scroll
+  }, [isInView])
+
+  // Gestione scroll semplificato per animazioni progressive
   useEffect(() => {
     const handleWheel = (event: WheelEvent) => {
       if (!isInView) return
       
-      if (isInView && !isScrollDisabled) {
+      if (!isScrollDisabled) {
         setIsScrollDisabled(true)
         document.body.style.overflow = 'hidden'
         document.body.style.height = '100vh'
       }
       
-      if (isScrollDisabled && isInView) {
+      if (isInView && isScrollDisabled) {
         event.preventDefault()
         
         setVirtualScroll(prev => {
           let newScroll
           
           if (event.deltaY > 0) {
+            // Scroll verso il basso - continua animazione
             newScroll = Math.min(prev + Math.abs(event.deltaY) * 0.8, maxScrollForEffect)
+            
+            // Se completiamo l'animazione, rilascia controllo per andare alla sezione successiva
+            if (newScroll >= maxScrollForEffect) {
+              setTimeout(() => {
+                setIsScrollDisabled(false)
+                document.body.style.overflow = 'auto'
+                document.body.style.height = 'auto'
+                window.scrollBy(0, 100)
+              }, 200)
+            }
           } else {
-            newScroll = Math.max(0, prev - Math.abs(event.deltaY) * 0.8)
-          }
-          
-          if (newScroll >= maxScrollForEffect) {
-            setTimeout(() => {
-              setIsScrollDisabled(false)
-              document.body.style.overflow = 'auto'
-              document.body.style.height = 'auto'
-              window.scrollBy(0, 100)
-            }, 200)
+            // Scroll verso l'alto - NON azzerare, ma permettere uscita se siamo all'inizio
+            if (prev <= 0) {
+              // Solo se siamo già a 0, permetti uscita verso l'alto
+              setTimeout(() => {
+                setIsScrollDisabled(false)
+                document.body.style.overflow = 'auto'
+                document.body.style.height = 'auto'
+                window.scrollBy(0, -100)
+              }, 100)
+              return 0
+            } else {
+              // Altrimenti riduci il progresso ma mantieni l'effetto visivo
+              newScroll = Math.max(0, prev - Math.abs(event.deltaY) * 0.8)
+            }
           }
           
           return newScroll
@@ -103,97 +140,154 @@ export default function LogosHorizontalSection() {
     }
   }, [isScrollDisabled, isInView])
 
-  // Animazioni GSAP
+  // Animazioni GSAP per sfondo e righe progressive
   useEffect(() => {
     const progress = virtualScroll / maxScrollForEffect
     
-    // Animazione testo
-    if (textRef.current) {
-      gsap.to(textRef.current, {
-        opacity: Math.max(0, 1 - progress * 1.5),
-        x: -progress * 150,
+    // Animazione sfondo rosa - RESTA ROSA UNA VOLTA ATTIVATO (non torna mai bianco)
+    if (backgroundRef.current) {
+      const backgroundProgress = Math.max(progress * 3, virtualScroll > 0 ? Math.max(progress, 0.3) : 0)
+      const finalProgress = Math.min(backgroundProgress, 1)
+      
+      gsap.to(backgroundRef.current, {
+        backgroundColor: `rgb(${255 - (255 - 195) * finalProgress}, ${255 - (255 - 64) * finalProgress}, ${255 - (255 - 105) * finalProgress})`,
         duration: 0.6,
         ease: "power2.out"
       })
     }
     
-    // Animazione loghi - movimento orizzontale
-    if (logosContainerRef.current) {
-      // Calcolo movimento: da posizione iniziale (200px) verso sinistra
-      const moveDistance = 1200 // Distanza totale di movimento
-      const currentX = 200 - (progress * moveDistance)
+    // Animazione riga 1 - Mantiene posizione minima una volta attivata
+    if (row1Ref.current) {
+      const row1Progress = Math.max(0, Math.min((progress - 0.1) * 3, 1))
+      const finalRow1Progress = virtualScroll > 0 ? Math.max(row1Progress, 0.2) : row1Progress
       
-      gsap.to(logosContainerRef.current, {
-        x: currentX,
-        duration: 0.6,
+      gsap.to(row1Ref.current, {
+        x: -100 + (finalRow1Progress * 60) + '%',
+        opacity: Math.max(finalRow1Progress, virtualScroll > 0 ? 0.3 : 0),
+        duration: 0.8,
+        ease: "power2.out"
+      })
+    }
+    
+    // Animazione riga 2 - Mantiene posizione minima una volta attivata
+    if (row2Ref.current) {
+      const row2Progress = Math.max(0, Math.min((progress - 0.3) * 3, 1))
+      const finalRow2Progress = virtualScroll > 50 ? Math.max(row2Progress, 0.15) : row2Progress
+      
+      gsap.to(row2Ref.current, {
+        x: -100 + (finalRow2Progress * 80) + '%',
+        opacity: Math.max(finalRow2Progress, virtualScroll > 50 ? 0.25 : 0),
+        duration: 0.8,
+        ease: "power2.out"
+      })
+    }
+    
+    // Animazione riga 3 - Mantiene posizione minima una volta attivata
+    if (row3Ref.current) {
+      const row3Progress = Math.max(0, Math.min((progress - 0.5) * 3, 1))
+      const finalRow3Progress = virtualScroll > 100 ? Math.max(row3Progress, 0.1) : row3Progress
+      
+      gsap.to(row3Ref.current, {
+        x: -100 + (finalRow3Progress * 100) + '%',
+        opacity: Math.max(finalRow3Progress, virtualScroll > 100 ? 0.2 : 0),
+        duration: 0.8,
         ease: "power2.out"
       })
     }
   }, [virtualScroll])
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen bg-white flex items-center overflow-hidden">
+    <section 
+      ref={sectionRef} 
+      className="relative min-h-screen flex items-center overflow-hidden"
+    >
+      {/* Sfondo animato */}
+      <div 
+        ref={backgroundRef}
+        className="absolute inset-0 bg-white transition-colors duration-600"
+      />
+      
       {/* Content Container */}
-      <div className="w-full px-6 lg:px-20">
-        {/* Testo iniziale a sinistra */}
-        <div 
-          ref={textRef}
-          className="absolute left-6 lg:left-20 top-1/2 transform -translate-y-1/2 z-10"
-        >
-          <h2 className="text-4xl lg:text-5xl xl:text-6xl font-extralight text-black leading-tight max-w-2xl">
+      <div className="relative w-full px-6 lg:px-20 flex items-center justify-between h-screen">
+        {/* Testo fisso a sinistra */}
+        <div className="flex-shrink-0 z-10 max-w-md">
+          <h2 className={`text-4xl lg:text-5xl xl:text-6xl font-extralight leading-tight transition-colors duration-600 ${
+            virtualScroll >= 50 ? 'text-white' : 'text-black'
+          }`}>
             <span className="block">I nostri</span>
             <span className="block">partner</span>
             <span className="block">nel mondo</span>
           </h2>
-          <p className="text-lg text-gray-600 font-light mt-6 max-w-lg">
-            Collaboriamo con le migliori aziende internazionali per offrire 
-            soluzioni innovative e di qualità superiore.
+          <p className={`text-lg font-light mt-6 transition-colors duration-600 ${
+            virtualScroll >= 50 ? 'text-white/80' : 'text-gray-600'
+          }`}>
+            I migliori brand per offrire prodotti sicuri, certificati e di qualità.
           </p>
         </div>
 
-        {/* Container per i loghi con scroll orizzontale */}
-        <div className="relative w-full h-screen flex items-center overflow-hidden">
+        {/* 3 Righe di loghi sfalsate a destra */}
+        <div className="flex-1 flex flex-col justify-center items-end space-y-8 mr-20 overflow-hidden">
+          {/* Riga 1 */}
           <div 
-            ref={logosContainerRef}
-            className="flex flex-col gap-16 whitespace-nowrap"
-            style={{ 
-              width: 'max-content',
-              transform: 'translateX(200px)' // Posizione iniziale
-            }}
+            ref={row1Ref}
+            className="flex gap-8 opacity-0"
+            style={{ transform: 'translateX(-100%)' }}
           >
-            {/* Prima riga di loghi */}
-            <div className="flex gap-16 items-center">
-              {logosRow1.map((logo, index) => (
-                <div
-                  key={`row1-${index}`}
-                  className="flex-shrink-0 bg-white rounded-lg shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-shadow duration-300"
-                  style={{ width: '200px', height: '120px' }}
-                >
-                  <img
-                    src={logo.src}
-                    alt={logo.name}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              ))}
-            </div>
+            {logoRows[0].map((logo, index) => (
+              <div
+                key={`row1-${index}`}
+                className="p-4"
+                style={{ width: '220px', height: '150px' }}
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            ))}
+          </div>
 
-            {/* Seconda riga di loghi */}
-            <div className="flex gap-16 items-center ml-32">
-              {logosRow2.map((logo, index) => (
-                <div
-                  key={`row2-${index}`}
-                  className="flex-shrink-0 bg-white rounded-lg shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-shadow duration-300"
-                  style={{ width: '200px', height: '120px' }}
-                >
-                  <img
-                    src={logo.src}
-                    alt={logo.name}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              ))}
-            </div>
+          {/* Riga 2 (sfalsata a sinistra) */}
+          <div 
+            ref={row2Ref}
+            className="flex gap-8 opacity-0 ml-16"
+            style={{ transform: 'translateX(-100%)' }}
+          >
+            {logoRows[1].map((logo, index) => (
+              <div
+                key={`row2-${index}`}
+                className="p-4"
+                style={{ width: '220px', height: '160px' }}
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Riga 3 (ancora più sfalsata) */}
+          <div 
+            ref={row3Ref}
+            className="flex gap-8 opacity-0 ml-32"
+            style={{ transform: 'translateX(-100%)' }}
+          >
+            {logoRows[2].map((logo, index) => (
+              <div
+                key={`row3-${index}`}
+                className="p-4"
+                style={{ width: '220px', height: '160px' }}
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>

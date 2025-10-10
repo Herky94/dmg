@@ -63,3 +63,17 @@ footer p {
 .card-timeline  {
   font-size: 14px !important;
 }
+
+/* Hero Background Zoom + Pan Animation */
+@keyframes hero-zoom {
+  0% {
+    transform: scale(1) translateX(0);
+  }
+  100% {
+    transform: scale(1.2) translateX(50px);
+  }
+}
+
+.animate-hero-zoom {
+  animation: hero-zoom 20s ease-out forwards;
+}
