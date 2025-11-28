@@ -8,6 +8,7 @@ export default function Hero() {
   const [isScrollDisabled, setIsScrollDisabled] = useState(true);
   const [videoStarted, setVideoStarted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const touchStartY = useRef(0);
   const tagline = "Quando serve cura.";
   const maxScrollForEffect = 150;
 
@@ -28,7 +29,7 @@ export default function Hero() {
       document.body.style.height = "auto";
     }
 
-    const handleWheel = (event: WheelEvent) => {
+    const handleScrollLogic = (deltaY: number, event: Event) => {
       // Avvia il video al primo scroll se non ancora avviato
       if (!videoStarted && videoRef.current) {
         videoRef.current.play().catch(console.error);
@@ -36,21 +37,22 @@ export default function Hero() {
       }
 
       if (isScrollDisabled) {
-        event.preventDefault();
+        if (event.cancelable) event.preventDefault();
 
         // Aggiorna il virtual scroll in base alla direzione
         setVirtualScroll((prev) => {
           let newScroll;
+          const sensitivity = event.type.startsWith("touch") ? 2.5 : 0.5;
 
-          if (event.deltaY > 0) {
+          if (deltaY > 0) {
             // Scroll verso il basso - aumenta il bianco
             newScroll = Math.min(
-              prev + Math.abs(event.deltaY) * 0.5,
+              prev + Math.abs(deltaY) * sensitivity,
               maxScrollForEffect
             );
           } else {
             // Scroll verso l'alto - diminuisce il bianco (ritrae)
-            newScroll = Math.max(0, prev - Math.abs(event.deltaY) * 0.5);
+            newScroll = Math.max(0, prev - Math.abs(deltaY) * sensitivity);
           }
 
           // Se raggiungiamo il 100%, riabilita lo scroll
@@ -64,21 +66,41 @@ export default function Hero() {
         });
       } else {
         // Quando lo scroll è abilitato, controlla se siamo in cima e scrolliamo verso l'alto
-        if (window.scrollY === 0 && event.deltaY < 0) {
-          event.preventDefault();
+        if (window.scrollY === 0 && deltaY < 0) {
+          if (event.cancelable) event.preventDefault();
           setIsScrollDisabled(true);
+          const sensitivity = event.type.startsWith("touch") ? 2.5 : 0.5;
           // Inizia a ridurre il bianco dalla posizione attuale
           setVirtualScroll((prev) =>
-            Math.max(0, prev - Math.abs(event.deltaY) * 0.5)
+            Math.max(0, prev - Math.abs(deltaY) * sensitivity)
           );
         }
       }
     };
 
+    const handleWheel = (event: WheelEvent) => {
+      handleScrollLogic(event.deltaY, event);
+    };
+
+    const handleTouchStart = (event: TouchEvent) => {
+      touchStartY.current = event.touches[0].clientY;
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      const currentY = event.touches[0].clientY;
+      const deltaY = touchStartY.current - currentY;
+      touchStartY.current = currentY;
+      handleScrollLogic(deltaY, event);
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
       document.body.style.overflow = "auto";
       document.body.style.height = "auto";
     };

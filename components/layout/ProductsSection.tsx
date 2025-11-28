@@ -146,7 +146,7 @@ export default function ProductsSection() {
 
       <div className="mx-auto">
         {/* Product Cards con effetto scroll stacking */}
-        <div className="relative" style={{ height: "300vh" }}>
+        <div className="relative h-auto lg:h-[300vh]">
           {/* Card 1 - Dispositivi medici (Sticky Base) */}
           <div className="sticky top-20 z-10 py-30 relative overflow-hidden lg:min-h-[650px] 2xl:min-h-[800px] flex items-center">
             {/* Background Image with Blur */}
@@ -160,7 +160,7 @@ export default function ProductsSection() {
               <div className="absolute inset-0 backdrop-blur-[8px] bg-black/20" />
             </div>
 
-            <div className="max-w-6xl mx-auto px-20 relative z-10 w-full">
+            <div className="max-w-6xl mx-auto px-[30px] lg:px-20 relative z-10 w-full">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center group cursor-pointer">
                 <div className="space-y-6">
                   {/* Number Circle */}
@@ -224,7 +224,7 @@ export default function ProductsSection() {
               <div className="absolute inset-0 backdrop-blur-[8px] bg-black/20" />
             </div>
 
-            <div className="max-w-6xl mx-auto px-20 relative z-10 w-full">
+            <div className="max-w-6xl mx-auto px-[30px] lg:px-20 relative z-10 w-full">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center group cursor-pointer">
                 <div className="space-y-6">
                   {/* Number Circle */}
@@ -277,7 +277,7 @@ export default function ProductsSection() {
           </div>
 
           {/* Card 3 - Farmaci (Top Sticky Overlay) */}
-          <div className="sticky top-20 z-30 py-16 relative overflow-hidden lg:min-h-[650px] 2xl:min-h-[800px] flex items-center">
+          <div className="relative lg:sticky lg:top-20 z-30 py-16 overflow-hidden lg:min-h-[650px] 2xl:min-h-[800px] flex items-center">
             {/* Background Image with Blur */}
             <div className="absolute inset-0 z-0">
               <div
@@ -289,7 +289,7 @@ export default function ProductsSection() {
               <div className="absolute inset-0 backdrop-blur-[8px] bg-black/20" />
             </div>
 
-            <div className="max-w-6xl mx-auto px-20 relative z-10 w-full">
+            <div className="max-w-6xl mx-auto px-[30px] lg:px-20 relative z-10 w-full">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
                   {/* Number Circle */}
