@@ -1,0 +1,287 @@
+"use client";
+import { useState, useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import Image from "next/image";
+
+export default function FeaturedProductsSection() {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    // Imposta stato iniziale del titolo
+    if (titleRef.current) {
+      gsap.set(titleRef.current, {
+        opacity: 0,
+        x: -200,
+      });
+    }
+
+    // Intersection Observer per l'animazione del titolo
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+          // Anima il titolo da sinistra
+          gsap.to(titleRef.current, {
+            opacity: 1,
+            x: 0,
+            duration: 1.2,
+            ease: "power2.out",
+          });
+        }
+      },
+      { threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5] }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <section ref={sectionRef} className="py-40 bg-white">
+      <div className="max-w-[1650px] mx-auto px-[30px] lg:px-12">
+        {/* Pre-title */}
+        <div className="text-center mb-6">
+          <span className="text-xs text-gray-400 uppercase tracking-widest font-medium">
+            CATALOGO
+          </span>
+        </div>
+
+        {/* Main Title with number and year */}
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-8xl lg:text-9xl font-extralight text-gray-900 text-center flex-1 animate-fade-in-up">
+            prodotti.
+          </h2>
+        </div>
+
+        {/* Description */}
+        <div className="text-center mb-16">
+          <p className="text-base text-gray-700 leading-relaxed max-w-3xl mx-auto">
+            Un team di professionisti altamente specializzati e un laboratorio
+            di ricerca e sviluppo dotato di apparecchiature all’avanguardia sono
+            i pilastri su cui si basa la nostra azienda.
+          </p>
+        </div>
+
+        {/* Separator Line */}
+        <div className="flex justify-center mb-16">
+          <div className="w-24 h-px bg-gray-300"></div>
+        </div>
+
+        {/* Products Carousel */}
+        <ProductsCarousel />
+      </div>
+    </section>
+  );
+}
+
+function ProductsCarousel() {
+  const products = [
+    {
+      id: 1,
+      name: "Immunotrofina®",
+      description:
+        "Trattamento sintomatico della tosse e della raucedine nel bambino e nell'adulto",
+      image: "/images/immunotrofina.webp",
+    },
+    {
+      id: 2,
+      name: "Colinox®",
+      description:
+        "Trattamento di meteorismo, arofagia e coliche gassose del bambino e dell'adulto",
+      image: "/images/colinox.webp",
+    },
+    {
+      id: 3,
+      name: "Linea Gastrotuss®",
+      description:
+        "Dispositivi medici per la protezione della mucosa esofagea e gastrica in caso di reflusso...",
+      image: "/images/prodotti/gastrotuss.png",
+    },
+    {
+      id: 4,
+      name: "Emofix®",
+      description:
+        "Unguento barriera emostatico per la prevenzione e gestione di sanguinamenti locali...",
+      image: "/images/prodotti/emofix.webp",
+    },
+    {
+      id: 5,
+      name: "Rinopanteina®",
+      description:
+        "Unguento nasale con acido ialuronico e vitamine per idratare e proteggere la mucosa nasale...",
+      image: "/images/rinopanteina.webp",
+    },
+  ];
+
+  const [translateX, setTranslateX] = useState(0);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [itemsPerScreen, setItemsPerScreen] = useState(4);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) setItemsPerScreen(1);
+      else if (window.innerWidth < 1024) setItemsPerScreen(2);
+      else setItemsPerScreen(4);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Create infinite array with 3 sets for seamless loop
+  const infiniteProducts = [...products, ...products, ...products];
+  const cardWidth = 100 / itemsPerScreen;
+
+  // Start from middle set to allow backward scrolling
+  const initialOffset = products.length * cardWidth;
+
+  useEffect(() => {
+    setTranslateX(-initialOffset);
+  }, [initialOffset]);
+
+  // Auto-advance carousel
+  useEffect(() => {
+    if (!isAutoPlay) return;
+
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlay]);
+
+  const nextSlide = () => {
+    setIsTransitioning(true);
+    setTranslateX((prev) => prev - cardWidth);
+  };
+
+  const prevSlide = () => {
+    setIsTransitioning(true);
+    setTranslateX((prev) => prev + cardWidth);
+  };
+
+  // Handle infinite loop reset
+  useEffect(() => {
+    const handleTransitionEnd = () => {
+      // If we've scrolled past the last set, jump back to the middle set
+      if (translateX <= -(initialOffset + products.length * cardWidth)) {
+        setIsTransitioning(false);
+        setTranslateX(-initialOffset);
+      }
+      // If we've scrolled before the first set, jump to the middle set
+      else if (translateX >= -initialOffset + cardWidth) {
+        setIsTransitioning(false);
+        setTranslateX(-(initialOffset + (products.length - 1) * cardWidth));
+      }
+    };
+
+    const timer = setTimeout(() => {
+      if (isTransitioning) {
+        handleTransitionEnd();
+      }
+    }, 700); // Match transition duration
+
+    return () => clearTimeout(timer);
+  }, [translateX, isTransitioning, initialOffset, products.length, cardWidth]);
+
+  return (
+    <div className="relative py-8">
+      {/* Products Grid */}
+      <div
+        className="relative overflow-hidden px-[30px] lg:px-8 py-10"
+        onMouseEnter={() => setIsAutoPlay(false)}
+        onMouseLeave={() => setIsAutoPlay(true)}
+      >
+        <div
+          className={`flex ${
+            isTransitioning
+              ? "transition-transform duration-700 ease-in-out"
+              : ""
+          }`}
+          style={{ transform: `translateX(${translateX}%)` }}
+        >
+          {infiniteProducts.map((product, index) => (
+            <div
+              key={`${product.id}-${index}`}
+              className="flex-shrink-0 px-4 transform transition-all duration-500 hover:scale-105"
+              style={{ width: `${cardWidth}%` }}
+            >
+              <div className="bg-white h-full border border-gray-200">
+                {/* Product Image */}
+                <div className="relative h-80 bg-white overflow-hidden group">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-contain p-8 transition-transform duration-300 group-hover:scale-110"
+                  />
+                </div>
+
+                {/* Product Info */}
+                <div className="p-8">
+                  {/* Circled Number */}
+
+                  {/* Title */}
+                  <h3 className="text-[25px] font-medium text-gray-900 text-left mb-3 transition-colors duration-200 hover:text-gray-700">
+                    {product.name}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-sm text-gray-600 leading-[1.5] text-left transition-colors duration-200 hover:text-gray-800 mb-8">
+                    {product.description}
+                  </p>
+
+                  {/* Button */}
+                  <div className="flex items-center gap-3 border border-[#C34069] text-[#C34069] px-6 py-3 rounded-full hover:bg-[#C34069] hover:text-white transition-all duration-300 cursor-pointer w-fit group">
+                    <span className="text-sm font-medium">Vedi prodotto</span>
+                    <div className="bg-[#C34069] rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-white transition-colors duration-300">
+                      <svg
+                        className="w-4 h-4 text-white transform transition-transform duration-300 group-hover:rotate-45 group-hover:text-[#C34069]"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M7 17L17 7M17 7H7M17 7V17"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Navigation Arrow */}
+      <div className="absolute top-1/2 -translate-y-1/2 right-4 z-20">
+        <button
+          onClick={nextSlide}
+          className="w-12 h-12 rounded-full bg-black hover:bg-gray-800 transition-colors duration-200 flex items-center justify-center shadow-lg"
+        >
+          <svg
+            className="w-5 h-5 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-lexend-deca), system-ui, -apple-system, sans-serif;
+}
+
+/* Custom Cursor Styles */
+* {
+  cursor: none !important;
+}
+
+/* Ensure interactive elements have proper hover states */
+a,
+button,
+[role="button"],
+input,
+textarea,
+select {
+  transition: all 0.2s ease;
+}
+
+/* Add subtle scale effect on hover for better interaction feedback */
+a:hover,
+button:hover,
+[role="button"]:hover {
+  transform: translateY(-1px);
+}
+
+/* Smooth transitions for all interactive elements */
+.cursor-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Global paragraph styling - font-weight 200 for all paragraphs */
+@layer base {
+  p {
+    font-weight: 200;
+    font-size: 18px;
+  }
+}
+
+/* Footer paragraphs should be 14px */
+footer p {
+  font-size: 14px !important;
+}
+
+/* Footer links should have specific color */
+.footer a {
+  color: #000000 !important;
+}
+
+.card-timeline {
+  font-size: 14px !important;
+}
+
+/* Hero Background Zoom + Pan Animation */
+@keyframes hero-zoom {
+  0% {
+    transform: scale(1) translateX(0);
+  }
+  100% {
+    transform: scale(1.2) translateX(50px);
+  }
+}
+
+.animate-hero-zoom {
+  animation: hero-zoom 20s ease-out forwards;
+}
+
+/* Force Lexend Deca font for hero title across all browsers */
+.hero-title,
+.hero-title * {
+  font-family: var(--font-lexend-deca), "Lexend Deca", system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif !important;
+  font-weight: 200 !important;
+  font-feature-settings: "kern" 1, "liga" 1 !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* Override Tailwind's font utilities for hero title */
+h2.hero-title {
+  font-family: var(--font-lexend-deca), "Lexend Deca", system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif !important;
+  font-weight: 200 !important;
+}
