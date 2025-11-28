@@ -41,8 +41,18 @@ export default function Header() {
             </Link>
           </div>
 
+          {/* Progress Bar Central */}
+          <div className="flex-1 mx-4 lg:mx-8">
+            <div className="w-full h-[1px] bg-white/30 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-white transition-all duration-300 ease-out"
+                style={{ width: `${scrollProgress}%` }}
+              />
+            </div>
+          </div>
+
           {/* Navigation Links - Desktop */}
-          <nav className="hidden lg:flex items-center space-x-1 ml-auto">
+          <nav className="hidden lg:flex items-center space-x-1">
             {menuData.map((item: MenuItem) => (
               <div
                 key={item.name}
@@ -119,14 +129,6 @@ export default function Header() {
             </button>
           </div>
         </div>
-      </div>
-
-      {/* Progress Bar Bottom */}
-      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-white/30 overflow-hidden">
-        <div
-          className="h-full bg-white transition-all duration-300 ease-out"
-          style={{ width: `${scrollProgress}%` }}
-        />
       </div>
     </header>
   );

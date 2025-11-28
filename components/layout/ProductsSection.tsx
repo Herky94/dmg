@@ -146,37 +146,40 @@ export default function ProductsSection() {
 
       <div className="mx-auto">
         {/* Product Cards con effetto scroll stacking */}
-        <div className="relative" style={{ height: "200vh" }}>
+        <div className="relative" style={{ height: "300vh" }}>
           {/* Card 1 - Dispositivi medici (Sticky Base) */}
-          <div className="sticky top-20 z-10 bg-gray-50 py-30">
-            <div className="max-w-6xl mx-auto px-20">
+          <div className="sticky top-20 z-10 py-30 relative overflow-hidden lg:min-h-[650px] 2xl:min-h-[800px] flex items-center">
+            {/* Background Image with Blur */}
+            <div className="absolute inset-0 z-0">
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{
+                  backgroundImage: "url('/images/dispositivi-medici-bg.jpg')",
+                }}
+              />
+              <div className="absolute inset-0 backdrop-blur-[8px] bg-black/20" />
+            </div>
+
+            <div className="max-w-6xl mx-auto px-20 relative z-10 w-full">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center group cursor-pointer">
                 <div className="space-y-6">
                   {/* Number Circle */}
 
                   {/* Title */}
-                  <h3 className="text-2xl lg:text-3xl font-light text-gray-900">
-                    Dispositivi Medici
+                  <h3 className="text-2xl lg:text-[64px] font-extralight text-white leading-tight">
+                    Dispositivi
+                    <br />
+                    Medici
                   </h3>
 
-                  {/* Description */}
-                  <p className="text-gray-700 leading-relaxed">
-                    I dispositivi medici rappresentano uno strumento essenziale
-                    per la prevenzione, la diagnosi e il trattamento delle
-                    patologie, garantendo standard elevati di sicurezza ed
-                    efficacia. Ogni area specialistica richiede soluzioni
-                    dedicate, progettate per rispondere alle esigenze specifiche
-                    di medici e pazienti.
-                  </p>
-
                   {/* Button */}
-                  <div className="flex items-center gap-3 border border-[#C34069] text-[#C34069] px-6 py-3 rounded-full hover:bg-[#C34069] hover:text-white transition-all duration-300 cursor-pointer w-fit custom-button">
-                    <span className="text-sm font-medium">
+                  <div className="flex items-center gap-3 border border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-[#C34069] transition-all duration-300 cursor-pointer w-fit custom-button">
+                    <span className="text-sm font-extralight">
                       Scopri di più...
                     </span>
-                    <div className="bg-[#C34069] rounded-full w-8 h-8 flex items-center justify-center button-circle transition-colors duration-300">
+                    <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center button-circle transition-colors duration-300">
                       <svg
-                        className="w-4 h-4 text-white button-arrow transition-all duration-300"
+                        className="w-4 h-4 text-black button-arrow transition-all duration-300"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -192,34 +195,73 @@ export default function ProductsSection() {
                   </div>
                 </div>
 
-                {/* Image */}
-                <div className="order-first lg:order-last">
-                  <div className="rounded-lg overflow-hidden">
-                    <img
-                      src="/images/at.webp"
-                      alt="Dispositivi Medici"
-                      className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-150"
-                    />
-                  </div>
+                {/* Description */}
+                <div>
+                  <p className="text-white leading-relaxed text-lg font-extralight">
+                    I dispositivi medici rappresentano uno strumento essenziale
+                    per la prevenzione, la diagnosi e il trattamento delle
+                    patologie, garantendo standard elevati di sicurezza ed
+                    efficacia. Ogni area specialistica richiede soluzioni
+                    dedicate, progettate per rispondere alle esigenze specifiche
+                    di medici e pazienti.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Card 2 - Integratori alimentari (Sticky Overlay) */}
-          <div className="sticky top-20 z-20 bg-gray-50 rounded-t-2xl py-16">
-            <div className="max-w-6xl mx-auto px-20">
+          <div className="sticky top-20 z-20 py-16 relative overflow-hidden lg:min-h-[650px] 2xl:min-h-[800px] flex items-center">
+            {/* Background Image with Blur */}
+            <div className="absolute inset-0 z-0">
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{
+                  backgroundImage:
+                    "url('/images/integratori-alimentari-bg.jpg')",
+                }}
+              />
+              <div className="absolute inset-0 backdrop-blur-[8px] bg-black/20" />
+            </div>
+
+            <div className="max-w-6xl mx-auto px-20 relative z-10 w-full">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center group cursor-pointer">
                 <div className="space-y-6">
                   {/* Number Circle */}
 
                   {/* Title */}
-                  <h3 className="text-2xl lg:text-3xl font-light text-gray-900">
-                    Integratori Alimentari
+                  <h3 className="text-2xl lg:text-[64px] font-extralight text-white leading-tight">
+                    Integratori
+                    <br />
+                    Alimentari
                   </h3>
 
-                  {/* Description */}
-                  <p className="text-gray-700 leading-relaxed">
+                  {/* Button */}
+                  <div className="flex items-center gap-3 border border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-[#C34069] transition-all duration-300 cursor-pointer w-fit custom-button">
+                    <span className="text-sm font-extralight">
+                      Scopri di più...
+                    </span>
+                    <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center button-circle transition-colors duration-300">
+                      <svg
+                        className="w-4 h-4 text-black button-arrow transition-all duration-300"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M7 17L17 7M17 7H7M17 7V17"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div>
+                  <p className="text-white leading-relaxed text-lg font-extralight">
                     Gli integratori alimentari sono formulazioni di nutrienti e
                     altre sostanze con effetto fisiologico (vitamine, minerali,
                     estratti botanici, probiotici, acidi grassi, aminoacidi)
@@ -229,15 +271,42 @@ export default function ProductsSection() {
                     terapie mediche; la loro efficacia dipende da formulazione,
                     dosaggio, biodisponibilità e corretta aderenza.
                   </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 3 - Farmaci (Top Sticky Overlay) */}
+          <div className="sticky top-20 z-30 py-16 relative overflow-hidden lg:min-h-[650px] 2xl:min-h-[800px] flex items-center">
+            {/* Background Image with Blur */}
+            <div className="absolute inset-0 z-0">
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{
+                  backgroundImage: "url('/images/dispositivi-medici-bg.jpg')",
+                }}
+              />
+              <div className="absolute inset-0 backdrop-blur-[8px] bg-black/20" />
+            </div>
+
+            <div className="max-w-6xl mx-auto px-20 relative z-10 w-full">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="space-y-6">
+                  {/* Number Circle */}
+
+                  {/* Title */}
+                  <h3 className="text-2xl lg:text-[64px] font-extralight text-white leading-tight">
+                    Farmaci
+                  </h3>
 
                   {/* Button */}
-                  <div className="flex items-center gap-3 border border-[#C34069] text-[#C34069] px-6 py-3 rounded-full hover:bg-[#C34069] hover:text-white transition-all duration-300 cursor-pointer w-fit custom-button">
-                    <span className="text-sm font-medium">
+                  <div className="flex items-center gap-3 border border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-[#C34069] transition-all duration-300 cursor-pointer w-fit custom-button">
+                    <span className="text-sm font-extralight">
                       Scopri di più...
                     </span>
-                    <div className="bg-[#C34069] rounded-full w-8 h-8 flex items-center justify-center button-circle transition-colors duration-300">
+                    <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center button-circle transition-colors duration-300">
                       <svg
-                        className="w-4 h-4 text-white button-arrow transition-all duration-300"
+                        className="w-4 h-4 text-black button-arrow transition-all duration-300"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -253,34 +322,9 @@ export default function ProductsSection() {
                   </div>
                 </div>
 
-                {/* Image */}
-                <div className="order-first lg:order-last">
-                  <div className="rounded-lg overflow-hidden">
-                    <img
-                      src="/images/at.webp"
-                      alt="Integratori Alimentari"
-                      className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-150"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 3 - Farmaci (Top Sticky Overlay) */}
-          <div className="sticky top-20 z-30 bg-gray-50 rounded-t-2xl  py-16">
-            <div className="max-w-6xl mx-auto px-20">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="space-y-6">
-                  {/* Number Circle */}
-
-                  {/* Title */}
-                  <h3 className="text-2xl lg:text-3xl font-light text-gray-900">
-                    Farmaci
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-gray-700 leading-relaxed">
+                {/* Description */}
+                <div>
+                  <p className="text-white leading-relaxed text-lg font-extralight">
                     I farmaci sono sostanze con azione preventiva, diagnostica o
                     terapeutica che agiscono su processi biologici specifici per
                     ripristinare o modificare funzioni dell'organismo. La loro
@@ -292,39 +336,6 @@ export default function ProductsSection() {
                     controindicazioni. L'automedicazione è limitata ai
                     medicinali OTC e SOP, per disturbi lievi e temporanei.
                   </p>
-
-                  {/* Button */}
-                  <div className="flex items-center gap-3 border border-[#C34069] text-[#C34069] px-6 py-3 rounded-full hover:bg-[#C34069] hover:text-white transition-all duration-300 cursor-pointer w-fit custom-button">
-                    <span className="text-sm font-medium">
-                      Scopri di più...
-                    </span>
-                    <div className="bg-[#C34069] rounded-full w-8 h-8 flex items-center justify-center button-circle transition-colors duration-300">
-                      <svg
-                        className="w-4 h-4 text-white button-arrow transition-all duration-300"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M7 17L17 7M17 7H7M17 7V17"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Image */}
-                <div className="order-first lg:order-last">
-                  <div className="rounded-lg overflow-hidden group cursor-pointer">
-                    <img
-                      src="/images/at.webp"
-                      alt="Farmaci"
-                      className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-150"
-                    />
-                  </div>
                 </div>
               </div>
             </div>
