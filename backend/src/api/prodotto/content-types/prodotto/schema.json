@@ -1,0 +1,85 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prodottos",
+  "info": {
+    "singularName": "prodotto",
+    "pluralName": "prodottos",
+    "displayName": "Prodotto"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Slug": {
+      "type": "uid",
+      "targetField": "Name"
+    },
+    "Description": {
+      "type": "blocks"
+    },
+    "Images": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "video": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Indicazione": {
+      "type": "blocks"
+    },
+    "Dosaggio": {
+      "type": "blocks"
+    },
+    "ModoDuso": {
+      "type": "blocks"
+    },
+    "Mercato": {
+      "type": "string"
+    },
+    "PDF": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "aree_terapeutich": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::aree-terapeutiche.aree-terapeutiche",
+      "inversedBy": "prodottos"
+    },
+    "classificazioni": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::classificazioni.classificazioni",
+      "inversedBy": "prodottos"
+    },
+    "formulazione": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::formulazione.formulazione",
+      "inversedBy": "prodottos"
+    }
+  }
+}

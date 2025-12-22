@@ -102,38 +102,35 @@ export default function LeadershipSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-40 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-[30px] lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Photo */}
-          <div className="order-2 lg:order-1">
-            <div ref={imageRef} className="overflow-hidden shadow-lg">
+    <section ref={sectionRef} className="py-20 bg-[#E5E5E5]">
+      <div className="mx-auto px-[30px] lg:px-20">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          {/* Photo - 50% width */}
+          <div className="w-full lg:w-1/2 order-1">
+            <div ref={imageRef} className="relative">
               <img
                 src="/images/Luigi-Mercuri.jpg"
                 alt="Luigi Mercuri - CEO & Managing Director"
-                className="w-full h-auto object-cover"
+                className="w-full h-auto object-cover rounded-[50px]"
               />
             </div>
           </div>
 
-          {/* Content */}
-          <div className="order-1 lg:order-2">
-            <div className="max-w-2xl">
-              {/* Testo sopra la linea divisoria */}
-              <div
-                ref={paragraphRef}
-                className="space-y-4 text-gray-700 leading-relaxed mb-12"
-              >
-                <p>
-                  «Il nostro impegno, sintetizzato nel pay-off "
-                  <b style={{ color: "#c34069" }}>Quando serve cura</b>", è
+          {/* Content - 50% width */}
+          <div className="w-full lg:w-1/2 order-2">
+            <div className="lg:pl-10">
+              {/* Testo */}
+              <div ref={paragraphRef} className="space-y-8 text-black mb-12">
+                <p className="text-[20px] italic font-light leading-relaxed">
+                  «Il nostro impegno, sintetizzato nel pay-off{" "}
+                  <span className="text-[#C34069]">"Quando serve cura"</span>, è
                   costantemente rivolto a migliorare la qualità della vita e la
                   salute delle persone. Proponiamo, infatti, un approccio alla
                   tutela della salute secondo cui "Non si cura la malattia ma il
                   paziente"»
                 </p>
 
-                <p>
+                <p className="text-[20px] italic font-light leading-relaxed">
                   Innovazione, creatività e la costante ricerca di nuove
                   soluzioni sono i pilastri sui quali poggiamo i nostri
                   laboratori di Ricerca e Sviluppo, composti da un team di
@@ -141,29 +138,30 @@ export default function LeadershipSection() {
                   che, anno dopo anno, permettono una crescita costante.
                 </p>
 
-                <p>
+                <p className="text-[20px] italic font-light leading-relaxed">
                   L'entusiasmo, l'onestà e la volontà di innovare sono le
                   qualità fondamentali attraverso cui{" "}
-                  <b style={{ color: "#c34069" }}>D.M.G. ITALIA</b> promuove il
-                  progresso e la crescita dei propri dipendenti e collaboratori,
-                  favorendo un clima di trasparenza e di inclusione.
+                  <span className="text-[#C34069]">D.M.G. ITALIA</span> promuove
+                  il progresso e la crescita dei propri dipendenti e
+                  collaboratori, favorendo un clima di trasparenza e di
+                  inclusione.
                 </p>
               </div>
 
-              {/* Linea divisoria */}
-              <div className="pt-12 relative">
-                <div
-                  ref={lineRef}
-                  className="border-t border-gray-300 w-full"
-                ></div>
-                <div ref={nameRef} className="pt-12">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                    Luigi Mercuri
-                  </h3>
-                  <p className="text-lg text-gray-900 font-semibold">
-                    CEO & Managing Director
-                  </p>
-                </div>
+              {/* Separatore */}
+              <div
+                ref={lineRef}
+                className="w-[50%] h-[1px] bg-[#D9D9D9] mb-8 origin-left"
+              ></div>
+
+              {/* Firma */}
+              <div ref={nameRef} className="pt-4">
+                <h3 className="text-[30px] font-normal text-black mb-1">
+                  Luigi Mercuri
+                </h3>
+                <p className="text-[30px] font-light text-black">
+                  CEO & Managing Director
+                </p>
               </div>
             </div>
           </div>

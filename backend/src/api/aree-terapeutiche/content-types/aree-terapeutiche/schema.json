@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "aree_terapeutiches",
+  "info": {
+    "singularName": "aree-terapeutiche",
+    "pluralName": "aree-terapeutiches",
+    "displayName": "Aree Terapeutiche"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Slug": {
+      "type": "uid",
+      "targetField": "Name"
+    },
+    "prodottos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::prodotto.prodotto",
+      "mappedBy": "aree_terapeutich"
+    }
+  }
+}

@@ -22,17 +22,46 @@ export default function InternationalSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full px-[30px] lg:px-20">
-        <div className="max-w-2xl">
-          {/* Title with line breaks */}
-          <h1 className="text-4xl lg:text-5xl xl:text-6xl font-[2] text-white leading-[1] mb-10">
-            <span className="block">La nostra vocazione</span>
-            <span className="block">internazionale</span>
-          </h1>
+      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-[30px] lg:px-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          {/* Left Column: Title and Button */}
+          <div className="flex flex-col items-start">
+            {/* Title with line breaks */}
+            <h1 className="text-5xl lg:text-[96px] font-[200] text-white leading-[1.1] mb-10">
+              <span className="block">La nostra</span>
+              <span className="block">vocazione</span>
+              <span className="block">internazionale</span>
+            </h1>
 
-          {/* Paragraphs */}
-          <div className="space-y-4 text-white/90 font-extralight">
-            <p className="text-sm lg:text-base leading-[1.5]">
+            {/* CTA Button */}
+            <div className="pt-2">
+              <Link
+                href="/scopri-di-piu"
+                className="group inline-flex items-center gap-4 bg-transparent border border-white text-white px-10 py-3 rounded-full text-sm font-light hover:bg-white hover:text-[#C34069] transition-all duration-300"
+              >
+                <span>Scopri di più</span>
+                <div className="bg-white rounded-full w-10 h-10 flex items-center justify-center group-hover:bg-[#C34069]">
+                  <svg
+                    className="w-5 h-5 text-[#C34069] transform transition-transform duration-300 group-hover:rotate-45 group-hover:text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M7 17L17 7M17 7H7M17 7V17"
+                    />
+                  </svg>
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Column: Paragraphs */}
+          <div className="space-y-6 text-white font-extralight text-sm lg:text-[15px] leading-relaxed text-justify lg:text-left max-w-xl ml-auto">
+            <p>
               Da azienda familiare profondamente radicata nel territorio
               italiano, negli anni abbiamo saputo evolvere in una realtà
               globale, portando nel mondo la nostra esperienza e la nostra
@@ -43,7 +72,7 @@ export default function InternationalSection() {
               Partner e Distributori.
             </p>
 
-            <p className="text-sm lg:text-base leading-[1.5]">
+            <p>
               Operando in vari contesti culturali, lavoriamo sempre con
               sensibilità e rispetto verso le specificità locali, offrendo
               flessibilità nel rispondere alle diverse esigenze dei nostri
@@ -56,38 +85,13 @@ export default function InternationalSection() {
               condivisi.
             </p>
 
-            <p className="text-sm lg:text-base leading-[1.5]">
+            <p>
               Guardiamo al futuro con la volontà di continuare ad ampliare la
               nostra rete internazionale. Per questo siamo sempre interessati a
               entrare in contatto con nuovi Partner che condividano i nostri
               valori e il desiderio di portare soluzioni affidabili e di qualità
               ai pazienti di tutto il mondo.
             </p>
-          </div>
-
-          {/* CTA Button - styled like Hero button */}
-          <div className="pt-6">
-            <Link
-              href="/scopri-di-piu"
-              className="group inline-flex items-center gap-3 bg-transparent border border-white text-white px-6 py-3 rounded-full text-base font-medium hover:bg-white hover:text-black transition-all duration-300"
-            >
-              <span>Scopri di più</span>
-              <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center">
-                <svg
-                  className="w-4 h-4 text-black transform transition-transform duration-300 group-hover:rotate-45"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M7 17L17 7M17 7H7M17 7V17"
-                  />
-                </svg>
-              </div>
-            </Link>
           </div>
         </div>
       </div>

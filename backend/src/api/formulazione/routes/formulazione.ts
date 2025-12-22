@@ -1,0 +1,7 @@
+/**
+ * formulazione router
+ */
+
+import { factories } from '@strapi/strapi';
+
+export default factories.createCoreRouter('api::formulazione.formulazione');

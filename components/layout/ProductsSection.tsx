@@ -144,11 +144,11 @@ export default function ProductsSection() {
       {/* Specialization Areas Section */}
       <SpecializationSection />
 
-      <div className="mx-auto">
+      <div className="mx-auto px-[30px] lg:px-20">
         {/* Product Cards con effetto scroll stacking */}
         <div className="relative h-auto lg:h-[300vh]">
           {/* Card 1 - Dispositivi medici (Sticky Base) */}
-          <div className="sticky top-20 z-10 py-30 relative overflow-hidden lg:min-h-[650px] 2xl:min-h-[800px] flex items-center">
+          <div className="sticky top-20 z-10 py-30 relative overflow-hidden lg:min-h-[650px] 2xl:min-h-[800px] flex items-center rounded-[50px]">
             {/* Background Image with Blur */}
             <div className="absolute inset-0 z-0">
               <div
@@ -211,7 +211,7 @@ export default function ProductsSection() {
           </div>
 
           {/* Card 2 - Integratori alimentari (Sticky Overlay) */}
-          <div className="sticky top-20 z-20 py-16 relative overflow-hidden lg:min-h-[650px] 2xl:min-h-[800px] flex items-center">
+          <div className="sticky top-20 z-20 py-16 relative overflow-hidden lg:min-h-[650px] 2xl:min-h-[800px] flex items-center rounded-[50px]">
             {/* Background Image with Blur */}
             <div className="absolute inset-0 z-0">
               <div
@@ -277,7 +277,7 @@ export default function ProductsSection() {
           </div>
 
           {/* Card 3 - Farmaci (Top Sticky Overlay) */}
-          <div className="relative lg:sticky lg:top-20 z-30 py-16 overflow-hidden lg:min-h-[650px] 2xl:min-h-[800px] flex items-center">
+          <div className="relative lg:sticky lg:top-20 z-30 py-16 overflow-hidden lg:min-h-[650px] 2xl:min-h-[800px] flex items-center rounded-[50px]">
             {/* Background Image with Blur */}
             <div className="absolute inset-0 z-0">
               <div

@@ -1,153 +1,17 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function StorySection() {
-  const [firstDivVisible, setFirstDivVisible] = useState(false);
-  const [secondDivVisible, setSecondDivVisible] = useState(false);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    // Imposta stato iniziale del titolo
-    if (titleRef.current) {
-      gsap.set(titleRef.current, {
-        opacity: 0,
-        x: -200,
-      });
-    }
-
-    // Intersection Observer per l'animazione del titolo
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
-          // Anima il titolo da sinistra
-          gsap.to(titleRef.current, {
-            opacity: 1,
-            x: 0,
-            duration: 1.2,
-            ease: "power2.out",
-          });
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    const handleScroll = () => {
-      if (headerRef.current) {
-        const rect = headerRef.current.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-
-        // Quando la sezione entra nella viewport
-        const sectionInView = rect.top <= windowHeight && rect.bottom >= 0;
-
-        if (sectionInView) {
-          // Calcola quanto è stata scrollata la sezione (0 = appena entrata, positivo = più scrollata)
-          const scrolledDistance = windowHeight - rect.top;
-
-          // Prima animazione: dopo 150px di scroll nella sezione
-          if (scrolledDistance >= 150) {
-            setFirstDivVisible(true);
-
-            // Seconda animazione: dopo altri 100px (totale 250px)
-            if (scrolledDistance >= 250) {
-              setSecondDivVisible(true);
-            } else {
-              setSecondDivVisible(false);
-            }
-          } else {
-            setFirstDivVisible(false);
-            setSecondDivVisible(false);
-          }
-        } else {
-          setFirstDivVisible(false);
-          setSecondDivVisible(false);
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Controlla subito lo stato iniziale
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      observer.disconnect();
-    };
-  }, []);
-
-  return (
-    <section ref={sectionRef} className="bg-[#f1f1f1] pt-40">
-      {/* Story Header */}
-      <div
-        ref={headerRef}
-        className="max-w-6xl mx-auto mb-20 px-[30px] lg:px-0"
-      >
-        {/* Main layout container */}
-        <div className="grid grid-rows-2 gap-16">
-          {/* First row - Large "Story" text on the left */}
-          <div className="flex justify-start">
-            <h2
-              ref={titleRef}
-              className="text-5xl md:text-7xl lg:text-9xl font-extralight text-gray-900"
-            >
-              milestones.
-            </h2>
-          </div>
-
-          {/* Second row - Two text columns on the right */}
-          <div className="flex justify-end">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl">
-              {/* First column */}
-              <div
-                className={`text-sm text-gray-600 leading-relaxed transform transition-all duration-500 ease-out ${
-                  firstDivVisible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                }`}
-              >
-                <p>
-                  La nostra storia inizia nel 1993 con una visione chiara:
-                  portare innovazione nel settore dei dispositivi medici. Dalla
-                  fondazione ad oggi, abbiamo costruito un percorso di crescita
-                  costante e internazionalizzazione.
-                </p>
-              </div>
-
-              {/* Second column */}
-              <div
-                className={`text-sm text-gray-600 leading-relaxed transform transition-all duration-500 ease-out ${
-                  secondDivVisible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                }`}
-              >
-                <p>
-                  Ogni milestone rappresenta un passo verso l'eccellenza. La
-                  nostra timeline racconta come siamo diventati leader nel
-                  settore, espandendoci in Europa e innovando continuamente i
-                  nostri processi produttivi.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Timeline Section */}
-      <HorizontalTimeline />
-    </section>
-  );
-}
-
-function HorizontalTimeline() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentCardSet, setCurrentCardSet] = useState(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [visibleCards, setVisibleCards] = useState(4);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   // Timeline aziendale DMG Italia - 12 eventi divisi in 3 set da 4
   const allCards = [
@@ -217,104 +81,158 @@ function HorizontalTimeline() {
     },
   ];
 
-  const totalCards = allCards.length;
-
-  // Gestione scroll per controllare le card e il progresso della barra
   useEffect(() => {
-    const handleScroll = (e: WheelEvent) => {
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        const centerOfPage = windowHeight / 2;
-
-        // Attiva lo scroll solo quando la sezione supera il centro della pagina
-        if (rect.top <= centerOfPage && rect.bottom >= centerOfPage) {
-          if (e.deltaY > 0) {
-            // Scroll verso il basso
-            if (currentCardSet < totalCards - 4) {
-              // Ancora card da mostrare, previeni scroll normale
-              e.preventDefault();
-              setCurrentCardSet((prev) => {
-                const newCard = prev + 1;
-                setScrollProgress((newCard / (totalCards - 4)) * 100);
-                return newCard;
-              });
-            }
-            // Se siamo all'ultima card, permetti scroll normale verso il basso
-          } else {
-            // Scroll verso l'alto
-            if (currentCardSet > 0) {
-              // Ancora card precedenti da mostrare, previeni scroll normale
-              e.preventDefault();
-              setCurrentCardSet((prev) => {
-                const newCard = prev - 1;
-                setScrollProgress((newCard / (totalCards - 4)) * 100);
-                return newCard;
-              });
-            }
-            // Se siamo alla prima card, permetti scroll normale verso l'alto
-          }
-        }
-      }
+    const handleResize = () => {
+      setVisibleCards(window.innerWidth < 1024 ? 2 : 4);
     };
 
-    window.addEventListener("wheel", handleScroll, { passive: false });
-    return () => window.removeEventListener("wheel", handleScroll);
-  }, [totalCards, currentCardSet]);
+    handleResize(); // Check on mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  // Card attualmente visibili (4 alla volta, scorrimento di 1)
-  const currentCards = allCards.slice(currentCardSet, currentCardSet + 4);
+  const totalSteps = Math.max(0, allCards.length - visibleCards);
+
+  // Gestione scroll con GSAP ScrollTrigger
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: () => `+=${window.innerHeight * 1.5}`, // 1.5 volte l'altezza della viewport per lo scroll
+        pin: true,
+        scrub: 0.5,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          setScrollProgress(progress * 100);
+
+          const newCardSet = Math.min(
+            Math.floor(progress * (totalSteps + 1)),
+            totalSteps
+          );
+
+          setCurrentCardSet(newCardSet);
+        },
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [totalSteps]);
+
+  // Animazione iniziale del titolo e testo
+  useEffect(() => {
+    if (titleRef.current) {
+      gsap.fromTo(
+        titleRef.current,
+        { opacity: 0, y: -50 },
+        { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+      );
+    }
+    if (textRef.current) {
+      gsap.fromTo(
+        textRef.current,
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: "power2.out" }
+      );
+    }
+  }, []);
+
+  // Card attualmente visibili
+  const currentCards = allCards.slice(
+    currentCardSet,
+    currentCardSet + visibleCards
+  );
 
   return (
-    <div
-      ref={sectionRef}
-      className="text-black"
-      style={{ backgroundColor: "#f1f1f1" }}
-    >
-      {/* Timeline Bar sopra - si riempie con il progresso */}
-      <div className="w-full max-w-6xl mx-auto px-[30px] lg:px-8 pt-0 pb-6">
-        <div className="relative mb-20">
-          {/* Linea grigia di sfondo */}
-          <div className="w-full h-[2px] bg-gray-300 relative">
-            {/* Barra di progresso che si riempie */}
-            <div
-              className="absolute left-0 top-0 h-full bg-[#C34069] transition-all duration-700 ease-out"
-              style={{ width: `${scrollProgress}%` }}
-            ></div>
-          </div>
-        </div>
-      </div>
+    <div className="bg-[#f1f1f1]">
+      <section ref={containerRef} className="relative h-screen">
+        <div className="h-full flex flex-col justify-center overflow-hidden px-[30px] lg:px-20">
+          <div className="w-full flex flex-col">
+            {/* Header Section */}
+            <div className="mb-0">
+              <div className="flex justify-center mb-8">
+                <h2
+                  ref={titleRef}
+                  className="text-5xl md:text-7xl lg:text-9xl font-extralight text-black text-center"
+                >
+                  milestones.
+                </h2>
+              </div>
 
-      {/* Cards Section */}
-      <div className="w-full max-w-6xl mx-auto px-[30px] lg:px-8 pb-40">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {currentCards.map((card, index) => (
-            <div
-              key={`${currentCardSet}-${index}`}
-              className="transform transition-all duration-700 ease-out"
-              style={{
-                animationDelay: `${index * 100}ms`,
-              }}
-            >
-              <div className="p-6 rounded-lg">
-                <div className="flex items-center gap-3 mb-4">
-                  <img
-                    src="/images/usefull-icons/arrow.svg"
-                    alt="Arrow Icon"
-                    className="w-4 h-4"
-                  />
-                  <div className="text-black text-2xl font-medium">
-                    {card.year}
+              <div className="flex justify-center">
+                <div className="max-w-3xl mx-auto">
+                  <div
+                    ref={textRef}
+                    className="text-base lg:text-lg text-black leading-relaxed text-left"
+                  >
+                    <p>
+                      La nostra storia inizia nel 1993 con una visione chiara:
+                      portare innovazione nel settore dei dispositivi medici.
+                      Dalla fondazione ad oggi, abbiamo costruito un percorso di
+                      crescita costante e internazionalizzazione. Ogni milestone
+                      rappresenta un passo verso l'eccellenza. La nostra
+                      timeline racconta come siamo diventati leader nel settore,
+                      espandendoci in Europa e innovando continuamente i nostri
+                      processi produttivi.
+                    </p>
                   </div>
                 </div>
-                <p className="text-gray-700 card-timeline  leading-relaxed">
-                  {card.subtitle}
-                </p>
               </div>
             </div>
-          ))}
+
+            {/* Timeline Bar */}
+            <div className="w-full mt-[55px] mb-12">
+              <div className="relative">
+                {/* Linea grigia di sfondo */}
+                <div className="w-full h-[2px] bg-gray-300 relative">
+                  {/* Barra di progresso che si riempie */}
+                  <div
+                    className="absolute left-0 top-0 h-full bg-[#C34069] transition-all duration-100 ease-out"
+                    style={{ width: `${scrollProgress}%` }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Cards Section */}
+            <div className="w-full">
+              <div
+                className={`grid gap-8 ${
+                  visibleCards <= 2 ? "grid-cols-2" : "grid-cols-4"
+                }`}
+              >
+                {currentCards.map((card, index) => {
+                  const isActive =
+                    visibleCards <= 2 ? index === 0 : index === 1;
+                  return (
+                    <div
+                      key={`${currentCardSet}-${index}`}
+                      className="transform transition-all duration-700 ease-out"
+                    >
+                      <div className=" rounded-lg">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div
+                            className={`transition-all duration-300 ${
+                              isActive
+                                ? "text-[#C34069] font-medium text-[48px] lg:text-[64px]"
+                                : "text-[#D4D4D4] font-medium text-[32px] lg:text-[40px]"
+                            }`}
+                          >
+                            {card.year}
+                          </div>
+                        </div>
+                        <p className="text-black font-extralight text-[15px] lg:text-[18px] leading-relaxed">
+                          {card.subtitle}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

@@ -6,27 +6,32 @@ import { gsap } from "gsap";
 export default function CountersSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const countersRef = useRef<(HTMLDivElement | null)[]>([]);
+  const numberRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [hasAnimated, setHasAnimated] = useState(false);
 
   const counters = [
     {
-      number: "23+",
+      value: 23,
+      suffix: "+",
       title: "Brevetti",
       description: "in 76+ Paesi",
     },
     {
-      number: "34+",
+      value: 34,
+      suffix: "+",
       title: "Prodotti",
       description: "in svariate forme farmaceutiche e presentazioni",
     },
     {
-      number: "4",
+      value: 4,
+      suffix: "",
       title: "Aree Terapeutiche",
       description:
         "Otorinolaringoiatria, Pediatria, Oftalmologia, Gastroenterologia",
     },
     {
-      number: "50+",
+      value: 50,
+      suffix: "+",
       title: "Paesi",
       description: "in cui sono distribuiti i nostri prodotti",
     },
@@ -58,6 +63,7 @@ export default function CountersSection() {
 
           countersRef.current.forEach((counter, index) => {
             if (counter) {
+              // Anima la card
               tl.to(
                 counter,
                 {
@@ -67,7 +73,25 @@ export default function CountersSection() {
                   ease: "power2.out",
                 },
                 index * 0.2
-              ); // Ritardo di 0.2s tra ogni elemento
+              );
+
+              // Anima il numero
+              const numberEl = numberRefs.current[index];
+              const counterData = counters[index];
+
+              if (numberEl) {
+                const obj = { val: 0 };
+                gsap.to(obj, {
+                  val: counterData.value,
+                  duration: 2,
+                  ease: "power2.out",
+                  delay: index * 0.2, // Sincronizza con l'apparizione della card
+                  onUpdate: () => {
+                    numberEl.innerText =
+                      Math.floor(obj.val) + counterData.suffix;
+                  },
+                });
+              }
             }
           });
         }
@@ -83,31 +107,40 @@ export default function CountersSection() {
   }, [hasAnimated]);
 
   return (
-    <section ref={sectionRef} className="pt-40 pb-10 bg-gray-50">
-      <div className="mx-auto px-[30px] lg:px-28">
+    <section
+      ref={sectionRef}
+      className="pb-20 bg-[#f1f1f1] mt-0 md:-mt-40 lg:-mt-20 relative z-10"
+    >
+      <div className="mx-auto px-[30px] lg:px-20">
         {/* Grid dei counter */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
           {counters.map((counter, index) => (
             <div
               key={counter.title}
               ref={(el) => {
                 countersRef.current[index] = el;
               }}
-              className="text-left space-y-4"
+              className={`flex flex-col justify-start p-[30px] lg:p-[50px] w-full max-w-[300px] lg:max-w-[360px] h-[350px] lg:h-[450px] rounded-[70px] text-white ${
+                index % 2 === 0 ? "bg-[#C34069]" : "bg-[#E03F82]"
+              }`}
             >
               {/* Numero principale */}
-              <div className="text-5xl lg:text-6xl font-light mb-0">
-                {counter.number}
+              <div
+                ref={(el) => {
+                  numberRefs.current[index] = el;
+                }}
+                className="text-[64px] font-light leading-none mb-[10px]"
+              >
+                0{counter.suffix}
               </div>
 
-              {/* Linea divisoria grigia */}
-              <div className="w-full h-px my-5 bg-gray-300"></div>
-
               {/* Titolo */}
-              <h3 className="text-xl mb-3 text-black">{counter.title}</h3>
+              <div className="text-[30px] font-light leading-tight mb-[20px]">
+                {counter.title}
+              </div>
 
               {/* Descrizione */}
-              <p className="text-sm text-gray-700 mb-0 leading-[1.5] text-[14px]">
+              <p className="text-[18px] font-extralight leading-relaxed">
                 {counter.description}
               </p>
             </div>

@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "formulaziones",
+  "info": {
+    "singularName": "formulazione",
+    "pluralName": "formulaziones",
+    "displayName": "Formulazione"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Slug": {
+      "type": "uid",
+      "targetField": "Name"
+    },
+    "prodottos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::prodotto.prodotto",
+      "mappedBy": "formulazione"
+    }
+  }
+}
