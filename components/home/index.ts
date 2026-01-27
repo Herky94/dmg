@@ -1,0 +1,9 @@
+export { default as Hero } from "./Hero";
+export { default as ProductsSection } from "./ProductsSection";
+export { default as FeaturedProductsSection } from "./FeaturedProductsSection";
+export { default as StorySection } from "./StorySection";
+export { default as CountersSection } from "./CountersSection";
+export { default as LeadershipSection } from "./LeadershipSection";
+export { default as LogosHorizontalSection } from "./LogosHorizontalSection";
+export { default as InternationalSection } from "./InternationalSection";
+export { default as ParallaxBuildingSection } from "./ParallaxBuildingSection";

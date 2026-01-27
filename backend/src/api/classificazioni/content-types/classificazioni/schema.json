@@ -20,7 +20,7 @@
     },
     "prodottos": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::prodotto.prodotto",
       "mappedBy": "classificazioni"
     }

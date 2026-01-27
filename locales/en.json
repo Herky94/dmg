@@ -1,0 +1,387 @@
+{
+  "metadata": {
+    "home": {
+      "title": "D.M.G. Italia | Medical Devices, Supplements and Medicines",
+      "description": "Italian pharmaceutical company specialized in research, development and commercialization of medical devices, food supplements and medicines. Innovative, safe and effective therapeutic solutions."
+    },
+    "defaultTitle": "D.M.G. Italia",
+    "titleTemplate": "%s | D.M.G. Italia"
+  },
+  "home": {
+    "hero": {
+      "tagline": "When care is needed.",
+      "description": "We offer innovative, safe and effective therapeutic solutions to patients and healthcare professionals, as well as new business opportunities to Italian and foreign pharmaceutical companies.",
+      "cta": "Discover more"
+    },
+    "products": {
+      "preTitle": "INNOVATION. SAFETY. EFFICACY.",
+      "title": "therapeutic\nsolutions.",
+      "description": "We are an Italian pharmaceutical company specialized in the research, development and commercialization of medical devices, food supplements and medicines. Our main objective is to offer innovative, safe and effective therapeutic solutions to patients and healthcare professionals, as well as new business opportunities to Italian and foreign pharmaceutical companies. We share with our partners a solid know-how, acquired over the years, to help them develop their business worldwide.",
+      "dm": {
+        "title": "Medical\nDevices",
+        "description": "Medical devices represent an essential tool for the prevention, diagnosis and treatment of pathologies, ensuring high standards of safety and efficacy. Each specialty area requires dedicated solutions, designed to meet the specific needs of doctors and patients.",
+        "cta": "Learn more..."
+      },
+      "ia": {
+        "title": "Food\nSupplements",
+        "description": "Food supplements are formulations of nutrients and other substances with physiological effect (vitamins, minerals, botanical extracts, probiotics, fatty acids, amino acids) designed to support normal well-being when diet is not sufficient to cover specific needs. They do not replace a balanced diet or medical therapies; their effectiveness depends on formulation, dosage, bioavailability and correct adherence.",
+        "cta": "Learn more..."
+      },
+      "farmaci": {
+        "title": "Medicines",
+        "description": "Medicines are substances with preventive, diagnostic or therapeutic action that act on specific biological processes to restore or modify body functions. Their quality, safety and efficacy are guaranteed by rigorous regulatory procedures (MA), production control (GMP) and post-marketing monitoring (pharmacovigilance). Correct use requires prescription and medical supervision, compliance with dosages and durations, attention to interactions and contraindications. Self-medication is limited to OTC and P medicines, for mild and temporary disorders.",
+        "cta": "Learn more..."
+      }
+    },
+    "story": {
+      "title": "Milestones.",
+      "description": "Our story begins in 1993 with a clear vision: bringing innovation to the medical devices sector. From our foundation to today, we have built a path of constant growth and internationalization. Each Milestone represents a step towards excellence. Our timeline tells how we became industry leaders, expanding across Europe and continuously innovating our production processes.",
+      "timeline": [
+        {
+          "year": "1993",
+          "subtitle": "The EEC Directive 93/42 on medical devices (abbreviated as MDD 93/42) is published in the OJEU. D.M.G. ITALIA S.R.L. IS FOUNDED by Luigi Mercuri and Antonio De Nisi."
+        },
+        {
+          "year": "1997",
+          "subtitle": "Directive 93/42 is implemented in Italy with Legislative Decree No. 46 of February 24, 1997."
+        },
+        {
+          "year": "2000",
+          "subtitle": "D.M.G. ITALIA prepares, as a pioneer, for the launch on the Italian market of RINOPANTEINA, the first CE-marked medical device that inaugurates the otorhinolaryngology field in D.M.G. ITALIA's portfolio."
+        },
+        {
+          "year": "2002",
+          "subtitle": "D.M.G. ITALIA establishes itself in the ophthalmology field with VISCOBLAST."
+        },
+        {
+          "year": "2003",
+          "subtitle": "D.M.G. ITALIA's product portfolio expands into gastroenterology with the launch of GASTROTUSS."
+        },
+        {
+          "year": "2004",
+          "subtitle": "D.M.G. ITALIA signs its first foreign distribution contract and, in the same year, moves its headquarters from Rome to Pomezia, inaugurating its first production site: Italdevice."
+        },
+        {
+          "year": "2009-2012",
+          "subtitle": "DMG Bulgaria, the first foreign subsidiary in Sofia, DMG Turkey in Istanbul, and DMG Poland in Warsaw are established in quick succession."
+        },
+        {
+          "year": "2014",
+          "subtitle": "D.M.G. ITALIA inaugurates its new warehouse."
+        },
+        {
+          "year": "2015",
+          "subtitle": "Due to strong growth, D.M.G. ITALIA relocates its offices again to the current headquarters on Via Nicaragua (Pomezia)."
+        },
+        {
+          "year": "2017",
+          "subtitle": "On May 25, 2017, the European Medical Device Regulation MDR enters into force with May 26, 2021 as the application date. It is intended to replace the MDD."
+        },
+        {
+          "year": "2018",
+          "subtitle": "D.M.G. ITALIA immediately begins work to recertify its products according to MDR."
+        },
+        {
+          "year": "2024",
+          "subtitle": "With increasing presence in the Italian and foreign markets, D.M.G. ITALIA initiates a significant expansion process of its spaces for both offices and production."
+        }
+      ]
+    },
+    "leadership": {
+      "paragraph1": "«Our commitment, summarized in the pay-off \"When care is needed\", is constantly focused on improving people's quality of life and health. In fact, we propose an approach to health protection according to which \"We do not treat the disease but the patient\"»",
+      "paragraph2": "Innovation, creativity and the constant search for new solutions are the pillars on which our Research and Development laboratories rest, composed of a team of professionals and equipped with cutting-edge equipment that, year after year, allow constant growth.",
+      "paragraph3": "Enthusiasm, honesty and the will to innovate are the fundamental qualities through which D.M.G. ITALIA promotes the progress and growth of its employees and collaborators, fostering a climate of transparency and inclusion.",
+      "name": "Luigi Mercuri",
+      "title": "CEO & Managing Director",
+      "imageAlt": "Luigi Mercuri - CEO & Managing Director",
+      "playVideoAlt": "Play Video",
+      "videoNotSupported": "Your browser does not support the video tag."
+    },
+    "international": {
+      "title": "Our\ninternational\nvocation",
+      "paragraph1": "From a family business deeply rooted in the Italian territory, over the years we have been able to evolve into a global reality, bringing our experience and vision to the world, without ever losing the value of relationships. Since 2004 we have chosen to open up to international markets, undertaking a growth path that today sees us present in over 50 countries thanks to a solid and consolidated network of Partners and Distributors.",
+      "paragraph2": "Operating in various cultural contexts, we always work with sensitivity and respect towards local specificities, offering flexibility in responding to the different needs of our Partners. Despite the distances, we guarantee complete and constant support: from the development of marketing strategies to assistance in regulatory and medical-scientific aspects, up to training dedicated to the sales force. This collaborative approach has allowed us to build lasting relationships with many Distributors, based on trust, continuity and shared objectives.",
+      "paragraph3": "We look to the future with the will to continue expanding our international network. For this reason we are always interested in getting in touch with new Partners who share our values and the desire to bring reliable and quality solutions to patients around the world.",
+      "cta": "Learn more",
+      "videoNotSupported": "Your browser does not support the video tag."
+    },
+    "featuredProducts": {
+      "preTitle": "CATALOG",
+      "title": "Products.",
+      "cta": "All our products",
+      "description": "A team of highly specialized professionals and a research and development laboratory equipped with cutting-edge equipment are the pillars on which our company is based.",
+      "productCta": "Learn more"
+    }
+  },
+  "pages": {
+    "visione": {
+      "title": "Our\nvision",
+      "description": "D.M.G. Italia tells a vision oriented towards people, where research, ethics and innovation guide every choice for health protection."
+    },
+    "storia": {
+      "title": "Our\nstory",
+      "description": "From 1993 to today, D.M.G. Italia has built a path of continuous development in the medical devices sector, establishing itself as a reference reality at national and international level."
+    },
+    "trasparenza": {
+      "title": "TRANSPARENCY",
+      "paragraph1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "paragraph2": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
+    },
+    "researchDevelopment": {
+      "title": "Research\n& Development",
+      "description": ""
+    },
+    "whistleblowing": {
+      "title": "WHISTLEBLOWING",
+      "paragraph1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "paragraph2": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
+    },
+    "vocazioneInternazionale": {
+      "title": "Global\npresence",
+      "description": "From an Italian company to an international group, D.M.G. Italia is present in over 50 countries thanks to a consolidated network of partners and distributors, offering strategic, regulatory and medical-scientific support in global markets."
+    },
+    "privacyPolicy": {
+      "title": "PRIVACY POLICY",
+      "paragraph1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "paragraph2": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
+    },
+    "cookiePolicy": {
+      "title": "COOKIE POLICY",
+      "paragraph1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "paragraph2": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
+    },
+    "certificazioni": {
+      "title": "Certified\nquality",
+      "description": "D.M.G. Italia operates in full compliance with European regulations on medical devices, ensuring compliance with the MDR Regulation and ISO international standards, to protect the safety, efficacy and reliability of products."
+    },
+    "lavoraConNoi": {
+      "title": "Work\nwith us",
+      "description": "Enthusiasm, honesty and the will to innovate are fundamental qualities to promote progress and growth in any sector.",
+      "cta": "Check open positions"
+    },
+    "compliance": {
+      "title": "COMPLIANCE",
+      "paragraph1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "paragraph2": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
+    },
+    "prodotti": {
+      "dispositiviMedici": {
+        "title": "Medical\nDevices",
+        "description": "Medical devices represent an essential tool for the prevention, diagnosis and treatment of pathologies, ensuring high standards of safety and efficacy. Each specialty area requires dedicated solutions, designed to meet the specific needs of doctors and patients."
+      },
+      "integratoriAlimentari": {
+        "title": "Food\nSupplements",
+        "description": "Food supplements are formulations of nutrients and other substances with physiological effect (vitamins, minerals, botanical extracts, probiotics, fatty acids, amino acids) designed to support normal well-being when diet is not sufficient to cover specific needs. They do not replace a balanced diet or medical therapies; their effectiveness depends on formulation, dosage, bioavailability and correct adherence."
+      },
+      "farmaci": {
+        "title": "Medicines",
+        "description": "Medicines are substances with preventive, diagnostic or therapeutic action that act on specific biological processes to restore or modify body functions. Their quality, safety and efficacy are guaranteed by rigorous regulatory procedures (MA), production control (GMP) and post-marketing monitoring (pharmacovigilance). Correct use requires prescription and medical supervision, compliance with dosages and durations, attention to interactions and contraindications. Self-medication is limited to OTC and P medicines, for mild and temporary disorders."
+      },
+      "default": {
+        "title": "All\nProducts",
+        "description": "Explore our complete range of medical devices, food supplements and medicines. Each product is developed with rigorous quality standards to ensure safety and efficacy."
+      }
+    },
+    "posizioniAperte": {
+      "title": "Open\nPositions",
+      "description": "Enthusiasm, honesty and the will to innovate are fundamental qualities to promote progress and growth in any sector."
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "company": "Company",
+    "storia": "History",
+    "visione": "Vision",
+    "certificazioni": "Certifications",
+    "vocazioneInternazionale": "International Vocation",
+    "corporate": "Corporate",
+    "dmgItalia": "D.M.G. Italia",
+    "dmgBulgaria": "D.M.G. Bulgaria",
+    "dmgPolonia": "D.M.G. Poland",
+    "dmgTurchia": "D.M.G. Turkey",
+    "italdevice": "ITALDEVICE",
+    "rd": "R&D",
+    "ricercaSviluppo": "Research & Development",
+    "prodotti": "Products",
+    "dispositiviMedici": "Medical Devices",
+    "integratoriAlimentari": "Food Supplements",
+    "farmaci": "Medicines",
+    "lavoraConNoi": "Work with us",
+    "contatti": "Contacts",
+    "farmacovigilanza": "Pharmacovigilance",
+    "vigilanzaSorveglianza": "Vigilance and Surveillance"
+  },
+  "footer": {
+    "homepage": "HOMEPAGE",
+    "messaggioCeo": "CEO MESSAGE",
+    "integAlimentari": "FOOD SUPPL.",
+    "helpDesk": "HELP DESK",
+    "sedeLegale": "Registered office",
+    "sedeOperativa": "Operative headquarters and Administrative Offices",
+    "magazzino": "Warehouse",
+    "trasparenza": "TRANSPARENCY",
+    "privacyPolicy": "PRIVACY POLICY",
+    "cookiePolicy": "COOKIE POLICY",
+    "compliance": "COMPLIANCE",
+    "whistleblowing": "WHISTLEBLOWING",
+    "copyright": "r.e.a. latina n. 198376 - share cap. € 200,000,000.00 - vat no. 02774840595 - © 2025 pfizer srl. a company owned and controlled by pfizer inc."
+  },
+  "farmacovigilanza": {
+    "title": "Pharmacovigilance",
+    "subtitle": "Lorem Ipsum",
+    "description": "Pharmacovigilance collects and studies adverse reactions (harmful and unwanted effects resulting from the use of a drug) that may be associated with drug treatment, in order to:",
+    "cards": [
+      "assess their incidence",
+      "identify the causal relationship with drug use",
+      "identify possible risk factors for the onset of such adverse events",
+      "identify possible means of preventing adverse events themselves"
+    ],
+    "bottomText": "When a drug is placed on the market, only the adverse reactions recorded during pre-registration clinical trials are known: such studies are generally conducted on a limited number of patients, belonging to selected categories. Only after its marketing, the drug is administered to a large number of various categories of patients and it is therefore possible to know more thoroughly the benefit/risk ratio related to the use of the drug itself. This is achieved through the systematic collection of adverse events and reactions. Spontaneous reporting by doctors, pharmacists, other healthcare professionals and by patients themselves is, therefore, essential to allow the Health Authorities responsible for Pharmacovigilance activities and Pharmaceutical Companies to define and keep updated the tolerability and safety profile of drugs (benefits versus risks) in real conditions of use."
+  },
+  "vigilanzaSorveglianza": {
+    "title": "Vigilance and Surveillance"
+  },
+  "corporate": {
+    "sedeLegale": "Registered office",
+    "sede": "Office",
+    "sedeOperativa": "Operative headquarters\nand Administrative Offices",
+    "magazzino": "Warehouse",
+    "sitoWeb": "Website",
+    "email": "Email"
+  },
+  "common": {
+    "discoverMore": "Discover more",
+    "search": "Search",
+    "searchProduct": "Search Product",
+    "apply": "Apply",
+    "send": "Send",
+    "sending": "Sending...",
+    "sent": "Sent!",
+    "applicationSent": "Application sent successfully!",
+    "reportSent": "Report sent successfully!",
+    "privacyRequired": "You must accept the privacy policy to continue.",
+    "cvRequired": "CV is required.",
+    "declarationsRequired": "You must accept both declarations to continue.",
+    "contactUs": "Contact Us"
+  },
+  "product": {
+    "indications": "Indications",
+    "dosageAndUse": "Dosage and Method of use",
+    "leaflet": "Package Leaflet",
+    "backToProducts": "BACK TO PRODUCTS",
+    "therapeuticAreas": "Therapeutic areas:",
+    "classification": "Classification:",
+    "formulation": "Formulation:",
+    "otherFormulation": "Other formulation available:"
+  },
+  "accessibility": {
+    "settings": "Accessibility Settings",
+    "options": "Accessibility options",
+    "alt": "Accessibility",
+    "readability": "Readability",
+    "fontSize": "Font size",
+    "lineHeight": "Line height",
+    "letterSpacing": "Letter spacing",
+    "wordSpacing": "Word spacing",
+    "textAlignment": "Text alignment",
+    "contrast": "Contrast",
+    "highContrast": "High contrast",
+    "invertColors": "Invert colors",
+    "saturation": "Saturation",
+    "brightness": "Brightness",
+    "colorFilter": "Color filter",
+    "reset": "Reset",
+    "left": "Left",
+    "center": "Center",
+    "right": "Right",
+    "justify": "Justify"
+  },
+  "certificazioni": {
+    "departments": {
+      "title": "Innovation, Quality\nand Compliance",
+      "subtitle": "D.M.G. ITALIA is characterized by the specialization of its key Departments.",
+      "list": [
+        "Research and Development Department characterized by constant innovative capacity.",
+        "Regulatory Department, aimed at obtaining and maintaining the certification of Medical Devices according to European regulations.",
+        "Quality Assurance Department, able to measure and ensure that the high standards required are always met.",
+        "Medical Department, which constantly takes care of products from the Research and Development phase until their market release."
+      ]
+    },
+    "certifiedCompany": {
+      "preTitle": "Lorem Ipsum",
+      "title": "D.M.G. ITALIA is a certified company for the research, development and trade of Medical Devices:"
+    },
+    "mdr": {
+      "paragraph1": "The new Medical Devices Regulation (MDR) 2017/745, which replaces the Directive (MDD) 93/42/EEC, entered into force on May 5, 2017. As of May 26, 2021, new medical devices placed on the market must comply with the requirements of the MDR, while medical devices previously certified under the Directive have been granted an extension of the validity of their Certificates until May 27, 2024.",
+      "paragraph2": "With Regulation (EU) 2023/607 of the European Parliament and of the Council of March 15, 2023, an extension of the transition period has been granted, which introduces specific conditions under which certificates issued by Notified Bodies under the MDD and meeting the conditions of Regulation EU 2023/607 will remain valid until:",
+      "listItem1": "a) December 31, 2027, for all class III devices and for implantable class IIb devices, subject to specifics;",
+      "listItem2": "b) December 31, 2028, for class IIb devices other than those referred to in letter a) of this paragraph, for class IIa devices and for class I devices placed on the market in sterile conditions or with a measuring function.",
+      "paragraph3": "D.M.G. ITALIA, as Legal Manufacturer, guarantees the compliance of its Medical Devices according to both the Directive and the European Regulation."
+    }
+  },
+  "storia": {
+    "intro": {
+      "preTitle": "Company",
+      "title": "In the context of planetary dynamics, all this is for us an indispensable element to continue orienting ourselves in the evolutions and transformations of modern medicine."
+    },
+    "timeline": {
+      "preTitle": "Who we are",
+      "description": "We are an Italian pharmaceutical company specialized in the research, development and commercialization of medical devices, food supplements and medicines. Our main objective is to offer innovative, safe and effective therapeutic solutions to patients and healthcare professionals, as well as new business opportunities to Italian and foreign pharmaceutical companies. We share with our partners a solid know-how, acquired over the years, to help them develop their business worldwide."
+    },
+    "milestones": {
+      "title": "Milestones.",
+      "description": "Our story begins in 1993 with a clear vision: to bring innovation to the medical device sector. From our foundation to today, we have built a path of constant growth and internationalization. Each milestone represents a step towards excellence. Our timeline tells how we became leaders in the sector, expanding in Europe and continuously innovating our production processes.",
+      "items": [
+        {
+          "year": "1993",
+          "text": "The Directive EEC 93/42 on medical devices (abbreviated as MDD 93/42) is published in the GUCE. D.M.G. ITALIA S.R.L. IS FOUNDED by Luigi Mercuri and Antonio De Nisi."
+        },
+        {
+          "year": "1997",
+          "text": "Directive 93/42 is implemented in Italy with Legislative Decree of February 24, 1997, n. 46."
+        },
+        {
+          "year": "2000",
+          "text": "D.M.G. ITALIA pioneers the launch on the Italian market of RINOPANTEINA, the first CE-marked medical device that inaugurates the field of otorhinolaryngology in the D.M.G. ITALIA portfolio."
+        },
+        {
+          "year": "2002",
+          "text": "D.M.G. ITALIA establishes itself in the field of ophthalmology with VISCOBLAST."
+        }
+      ]
+    },
+    "achievements": {
+      "title": "What we have achieved to date.",
+      "description": "Through the phases of planning, organization, control and analysis of results, our R&D team manages pioneering projects, essential to create that added value that has allowed us to record constant growth over the years.",
+      "cards": [
+        {
+          "number": "+23",
+          "label": "Patents",
+          "sub": "in 76+ Countries",
+          "bg": "bg-[#C34069]"
+        },
+        {
+          "number": "+34",
+          "label": "Products",
+          "sub": "in various pharmaceutical forms and presentations",
+          "bg": "bg-[#E03F82]"
+        },
+        {
+          "number": "4",
+          "label": "Therapeutic Areas",
+          "sub": "Otorhinolaryngology, Pediatrics, Ophthalmology, Gastroenterology",
+          "bg": "bg-[#C34069]"
+        },
+        {
+          "number": "+50",
+          "label": "Countries",
+          "sub": "where our products are distributed",
+          "bg": "bg-[#E03F82]"
+        }
+      ]
+    }
+  },
+  "relatedProducts": {
+    "title": "Related Products."
+  }
+}

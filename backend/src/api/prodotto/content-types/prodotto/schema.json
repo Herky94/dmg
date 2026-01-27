@@ -11,75 +11,72 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
-      "type": "string"
-    },
     "Slug": {
       "type": "uid",
       "targetField": "Name"
     },
+    "Name": {
+      "type": "string"
+    },
+    "sottotitolo": {
+      "type": "string"
+    },
     "Description": {
       "type": "blocks"
-    },
-    "Images": {
-      "type": "media",
-      "multiple": true,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "video": {
-      "type": "media",
-      "multiple": true,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
     },
     "Indicazione": {
       "type": "blocks"
     },
-    "Dosaggio": {
+    "posologiaModoDuso": {
       "type": "blocks"
     },
-    "ModoDuso": {
-      "type": "blocks"
-    },
-    "Mercato": {
-      "type": "string"
-    },
-    "PDF": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "aree_terapeutich": {
+    "formulazioni": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::aree-terapeutiche.aree-terapeutiche",
+      "relation": "manyToMany",
+      "target": "api::formulazione.formulazione",
       "inversedBy": "prodottos"
     },
     "classificazioni": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::classificazioni.classificazioni",
       "inversedBy": "prodottos"
     },
-    "formulazione": {
+    "aree_terapeutiche": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::formulazione.formulazione",
+      "relation": "manyToMany",
+      "target": "api::aree-terapeutiche.aree-terapeutiche",
       "inversedBy": "prodottos"
+    },
+    "Mercato": {
+      "type": "string"
+    },
+    "Images": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": ["images", "files", "videos", "audios"]
+    },
+    "video": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": ["images", "files", "videos", "audios"]
+    },
+    "PDF": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images", "files", "videos", "audios"]
+    },
+    "altreFormulazioni": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::prodotto.prodotto",
+      "inversedBy": "collegatoA"
+    },
+    "collegatoA": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::prodotto.prodotto",
+      "mappedBy": "altreFormulazioni"
     }
   }
 }

@@ -489,7 +489,10 @@ export interface ApiAreeTerapeuticheAreeTerapeutiche
     > &
       Schema.Attribute.Private;
     Name: Schema.Attribute.String;
-    prodottos: Schema.Attribute.Relation<'oneToMany', 'api::prodotto.prodotto'>;
+    prodottos: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::prodotto.prodotto'
+    >;
     publishedAt: Schema.Attribute.DateTime;
     Slug: Schema.Attribute.UID<'Name'>;
     updatedAt: Schema.Attribute.DateTime;
@@ -520,7 +523,10 @@ export interface ApiClassificazioniClassificazioni
     > &
       Schema.Attribute.Private;
     Name: Schema.Attribute.String;
-    prodottos: Schema.Attribute.Relation<'oneToMany', 'api::prodotto.prodotto'>;
+    prodottos: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::prodotto.prodotto'
+    >;
     publishedAt: Schema.Attribute.DateTime;
     Slug: Schema.Attribute.UID<'Name'>;
     updatedAt: Schema.Attribute.DateTime;
@@ -551,9 +557,52 @@ export interface ApiFormulazioneFormulazione
     > &
       Schema.Attribute.Private;
     Name: Schema.Attribute.String;
-    prodottos: Schema.Attribute.Relation<'oneToMany', 'api::prodotto.prodotto'>;
+    prodottos: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::prodotto.prodotto'
+    >;
     publishedAt: Schema.Attribute.DateTime;
     Slug: Schema.Attribute.UID<'Name'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPosizioneLavorativaPosizioneLavorativa
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'posizioni_lavorative';
+  info: {
+    description: 'Posizioni di lavoro aperte per la pagina Lavora con noi';
+    displayName: 'Posizione Lavorativa';
+    pluralName: 'posizioni-lavorative';
+    singularName: 'posizione-lavorativa';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Attiva: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Descrizione: Schema.Attribute.Text & Schema.Attribute.Required;
+    Immagine: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::posizione-lavorativa.posizione-lavorativa'
+    > &
+      Schema.Attribute.Private;
+    Modalita: Schema.Attribute.Enumeration<['da remoto', 'ibrido', 'in sede']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'in sede'>;
+    publishedAt: Schema.Attribute.DateTime;
+    Slug: Schema.Attribute.UID<'TitoloPosizione'>;
+    Sottotitolo: Schema.Attribute.String & Schema.Attribute.Required;
+    TitoloPosizione: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -571,21 +620,28 @@ export interface ApiProdottoProdotto extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    aree_terapeutich: Schema.Attribute.Relation<
-      'manyToOne',
+    altreFormulazioni: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::prodotto.prodotto'
+    >;
+    aree_terapeutiche: Schema.Attribute.Relation<
+      'manyToMany',
       'api::aree-terapeutiche.aree-terapeutiche'
     >;
     classificazioni: Schema.Attribute.Relation<
-      'manyToOne',
+      'manyToMany',
       'api::classificazioni.classificazioni'
+    >;
+    collegatoA: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::prodotto.prodotto'
     >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     Description: Schema.Attribute.Blocks;
-    Dosaggio: Schema.Attribute.Blocks;
-    formulazione: Schema.Attribute.Relation<
-      'manyToOne',
+    formulazioni: Schema.Attribute.Relation<
+      'manyToMany',
       'api::formulazione.formulazione'
     >;
     Images: Schema.Attribute.Media<
@@ -600,11 +656,12 @@ export interface ApiProdottoProdotto extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     Mercato: Schema.Attribute.String;
-    ModoDuso: Schema.Attribute.Blocks;
     Name: Schema.Attribute.String;
     PDF: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    posologiaModoDuso: Schema.Attribute.Blocks;
     publishedAt: Schema.Attribute.DateTime;
     Slug: Schema.Attribute.UID<'Name'>;
+    sottotitolo: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1129,6 +1186,7 @@ declare module '@strapi/strapi' {
       'api::aree-terapeutiche.aree-terapeutiche': ApiAreeTerapeuticheAreeTerapeutiche;
       'api::classificazioni.classificazioni': ApiClassificazioniClassificazioni;
       'api::formulazione.formulazione': ApiFormulazioneFormulazione;
+      'api::posizione-lavorativa.posizione-lavorativa': ApiPosizioneLavorativaPosizioneLavorativa;
       'api::prodotto.prodotto': ApiProdottoProdotto;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

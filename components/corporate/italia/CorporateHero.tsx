@@ -1,0 +1,167 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
+interface CorporateHeroProps {
+  sedeLegale: string;
+  sedeOperativa: string;
+  magazzino: string;
+}
+
+export default function CorporateHero({
+  sedeLegale,
+  sedeOperativa,
+  magazzino,
+}: CorporateHeroProps) {
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [animationStarted, setAnimationStarted] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  // Start animation on mount
+  useEffect(() => {
+    setAnimationStarted(true);
+  }, []);
+
+  // Auto-animate when triggered
+  useEffect(() => {
+    if (!animationStarted || animationComplete) return;
+
+    let startTime: number | null = null;
+    const duration = 1200; // 1.2 seconds animation
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Ease out cubic function for smooth deceleration
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      setScrollProgress(easeOut);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setAnimationComplete(true);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [animationStarted, animationComplete]);
+
+  const blurAmount = scrollProgress * 8;
+  const textOpacity = scrollProgress;
+
+  return (
+    <div ref={heroRef} className="relative min-h-screen w-full overflow-hidden">
+      {/* Background Image with Blur */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/images/dmg-italia.png')",
+          filter: `blur(${blurAmount}px)`,
+          transform: `scale(${1 + scrollProgress * 0.1})`,
+          transition: "none",
+        }}
+      />
+
+      {/* Dark Overlay */}
+      <div
+        className="absolute inset-0 bg-black"
+        style={{ opacity: scrollProgress * 0.3 }}
+      />
+
+      {/* Content Container */}
+      <div
+        className="absolute inset-0 flex items-center"
+        style={{ opacity: textOpacity }}
+      >
+        <div className="container-dmg text-white mt-60">
+          {/* Title */}
+          <h1 className="text-[60px] lg:text-[130px] font-thin leading-none mb-[60px] lg:mb-[80px]">
+            D.M.G. Italia srl
+          </h1>
+
+          {/* Two Column Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-2 max-w-[900px]">
+            {/* Left Column */}
+            <div className="space-y-8">
+              {/* Sede Legale */}
+              <div>
+                <p className="text-[16px] lg:text-[18px] font-semibold mb-2">
+                  {sedeLegale}
+                </p>
+                <p className="text-[15px] lg:text-[17px] font-light leading-relaxed">
+                  Via Laurentina km. 26,700
+                  <br />
+                  00071 Pomezia (RM), Italy
+                </p>
+                <a
+                  href="mailto:info@dmgit.com"
+                  className="text-[15px] lg:text-[17px] font-light underline hover:no-underline"
+                >
+                  info@dmgit.com
+                </a>
+              </div>
+
+              {/* Magazzino */}
+              <div>
+                <p className="text-[16px] lg:text-[18px] font-semibold mb-2">
+                  {magazzino}
+                </p>
+                <p className="text-[15px] lg:text-[17px] font-light leading-relaxed">
+                  Via dei Cedri, 22
+                  <br />
+                  00071 Pomezia (RM), Italy
+                </p>
+                <a
+                  href="mailto:magazzino@dmgit.com"
+                  className="text-[15px] lg:text-[17px] font-light underline hover:no-underline"
+                >
+                  magazzino@dmgit.com
+                </a>
+              </div>
+            </div>
+
+            {/* Right Column */}
+            <div className="space-y-8">
+              {/* Sede Operativa */}
+              <div>
+                <p className="text-[16px] lg:text-[18px] font-semibold mb-2">
+                  {sedeOperativa.split("\n").map((line, index) => (
+                    <span key={index}>
+                      {line}
+                      {index < sedeOperativa.split("\n").length - 1 && <br />}
+                    </span>
+                  ))}
+                </p>
+                <p className="text-[15px] lg:text-[17px] font-light leading-relaxed">
+                  Via Nicaragua, 10
+                  <br />
+                  00071 Pomezia (RM), Italy
+                </p>
+              </div>
+
+              {/* Contact Info */}
+              <div>
+                <p className="text-[15px] lg:text-[17px] font-light leading-relaxed">
+                  (+39) 06 91968038
+                  <br />
+                  (+39) 06 91969082
+                  <br />
+                  (+39) 06 9145963
+                </p>
+                <a
+                  href="mailto:info@dmgit.com"
+                  className="text-[15px] lg:text-[17px] font-light underline hover:no-underline block mt-4"
+                >
+                  info@dmgit.com
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

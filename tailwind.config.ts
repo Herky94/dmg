@@ -10,15 +10,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: [
-          "var(--font-lexend-deca)",
-          "system-ui",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "sans-serif",
-        ],
-        "lexend-deca": [
-          "var(--font-lexend-deca)",
-          "Lexend Deca",
+          "var(--font-google-sans)",
           "system-ui",
           "-apple-system",
           "BlinkMacSystemFont",
@@ -28,10 +20,10 @@ const config: Config = {
       keyframes: {
         "hero-zoom": {
           "0%": {
-            transform: "scale(1) translateX(0px)",
+            transform: "scale(1)",
           },
           "100%": {
-            transform: "scale(1.1) translateX(20px)",
+            transform: "scale(1.1)",
           },
         },
       },

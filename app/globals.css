@@ -1,27 +1,31 @@
 @import "tailwindcss";
 
+/* Custom breakpoints per Tailwind v4 */
+@custom-media --xl (min-width: 1440px);
+@custom-media --2xl (min-width: 1600px);
+
 :root {
-  --background: #ffffff;
+  --background: #f5f5f5;
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-lexend-deca), system-ui, -apple-system, sans-serif;
+  font-family:
+    var(--font-google-sans),
+    system-ui,
+    -apple-system,
+    sans-serif;
+  width: 100%;
+  max-width: 100vw;
 }
 
 /* Custom Cursor Styles */
-* {
+/* * {
   cursor: none !important;
-}
+} */
 
 /* Ensure interactive elements have proper hover states */
 a,
@@ -31,13 +35,6 @@ input,
 textarea,
 select {
   transition: all 0.2s ease;
-}
-
-/* Add subtle scale effect on hover for better interaction feedback */
-a:hover,
-button:hover,
-[role="button"]:hover {
-  transform: translateY(-1px);
 }
 
 /* Smooth transitions for all interactive elements */
@@ -53,14 +50,71 @@ button:hover,
   }
 }
 
+/* DMG Container - Responsive padding and max-width */
+@layer components {
+  .container-dmg {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.25rem; /* 20px */
+    padding-right: 1.25rem; /* 20px */
+  }
+
+  @media (min-width: 1024px) {
+    .container-dmg {
+      padding-left: 5rem; /* 80px */
+      padding-right: 5rem; /* 80px */
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .container-dmg {
+      max-width: 1440px;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    .container-dmg {
+      max-width: 1600px;
+    }
+  }
+  @media (min-width: 1920px) {
+    .container-dmg {
+      max-width: 1920px;
+    }
+  }
+  /* Header e Footer - Padding laterali più ampi */
+  .container-header-footer {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.25rem; /* 20px mobile */
+    padding-right: 1.25rem; /* 20px mobile */
+  }
+
+  @media (min-width: 1024px) {
+    .container-header-footer {
+      padding-left: 5rem; /* 80px desktop */
+      padding-right: 5rem; /* 80px desktop */
+    }
+  }
+
+  @media (min-width: 1600px) {
+    .container-header-footer {
+      padding-left: 10rem; /* 160px da 1600px+ */
+      padding-right: 10rem; /* 160px da 1600px+ */
+    }
+  }
+}
+
 /* Footer paragraphs should be 14px */
 footer p {
-  font-size: 14px !important;
+  font-size: 14px;
 }
 
 /* Footer links should have specific color */
 .footer a {
-  color: #000000 !important;
+  color: #000000;
 }
 
 .card-timeline {
@@ -81,20 +135,391 @@ footer p {
   animation: hero-zoom 20s ease-out forwards;
 }
 
+/* Fix mobile overflow issue caused by zoom animation */
+@media (max-width: 1024px) {
+  @keyframes hero-zoom-mobile {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(
+        1
+      ); /* Completely disable zoom on mobile to prevent overflow */
+    }
+  }
+
+  .animate-hero-zoom {
+    animation: hero-zoom-mobile 20s ease-out forwards;
+  }
+
+  html,
+  body {
+    overflow-x: clip;
+    width: 100%; /* Changed from 100vw to 100% to avoid scrollbar width issues */
+    position: relative;
+  }
+}
+
 /* Force Lexend Deca font for hero title across all browsers */
 .hero-title,
 .hero-title * {
-  font-family: var(--font-lexend-deca), "Lexend Deca", system-ui, -apple-system,
-    BlinkMacSystemFont, sans-serif !important;
+  font-family:
+    var(--font-lexend-deca),
+    "Lexend Deca",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif !important;
   font-weight: 200 !important;
-  font-feature-settings: "kern" 1, "liga" 1 !important;
+  font-feature-settings:
+    "kern" 1,
+    "liga" 1 !important;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
 }
 
 /* Override Tailwind's font utilities for hero title */
 h2.hero-title {
-  font-family: var(--font-lexend-deca), "Lexend Deca", system-ui, -apple-system,
-    BlinkMacSystemFont, sans-serif !important;
+  font-family:
+    var(--font-lexend-deca),
+    "Lexend Deca",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif !important;
   font-weight: 200 !important;
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-out-down {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-fade-out-down {
+  animation: fade-out-down 0.3s ease-in forwards;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-fade-out {
+  animation: fade-out 0.5s ease-in forwards;
+}
+
+@keyframes zoom-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-zoom-in {
+  animation: zoom-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes zoom-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.animate-zoom-out {
+  animation: zoom-out 0.5s ease-in forwards;
+}
+@layer utilities {
+  /* Accessibility Plugin Styles */
+  /* Remove old zoom class as we use inline style now, but keep for fallback */
+  body.mic-toolbox-zoom-up > :not(#mic-init-access-tool) {
+    /* Legacy fallback */
+  }
+
+  /* Monochrome: Standard Grayscale Filter */
+  body.mic-toolbox-contrast-monochrome {
+    filter: grayscale(100%) !important;
+  }
+
+  /* High Contrast Light - WCAG AAA Compliant */
+  /* Forces Black Text (#000) on Pure White Background (#FFF) */
+  /* Contrast Ratio: 21:1 (Maximum possible) */
+  body.mic-toolbox-contrast-soft {
+    background: #ffffff !important;
+  }
+
+  body.mic-toolbox-contrast-soft
+    *:not(#mic-init-access-tool):not(#mic-init-access-tool *):not(img):not(
+      svg
+    ):not(video):not(canvas) {
+    background-color: #ffffff !important;
+    background-image: none !important;
+    color: #000000 !important;
+    border-color: #000000 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Links in bright mode - Blue for distinction */
+  body.mic-toolbox-contrast-soft a {
+    color: #0000ee !important;
+    text-decoration: underline !important;
+  }
+
+  /* Preserve images in bright mode */
+  body.mic-toolbox-contrast-soft img,
+  body.mic-toolbox-contrast-soft video,
+  body.mic-toolbox-contrast-soft svg,
+  body.mic-toolbox-contrast-soft canvas {
+    filter: none !important;
+    opacity: 1 !important;
+  }
+
+  /* High Contrast Dark - WCAG AAA Compliant */
+  /* Forces Yellow Text (#FFFF00) on Pure Black Background (#000) */
+  /* Contrast Ratio: 19.56:1 (Near maximum for yellow/black) */
+  body.mic-toolbox-contrast-hard {
+    background: #000000 !important;
+  }
+
+  body.mic-toolbox-contrast-hard
+    *:not(#mic-init-access-tool):not(#mic-init-access-tool *):not(img):not(
+      svg
+    ):not(video):not(canvas) {
+    background-color: #000000 !important;
+    background-image: none !important;
+    color: #ffff00 !important;
+    border-color: #ffff00 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Links in dark mode - Keep yellow */
+  body.mic-toolbox-contrast-hard a {
+    color: #ffff00 !important;
+    text-decoration: underline !important;
+  }
+
+  /* Preserve images in dark mode */
+  body.mic-toolbox-contrast-hard img,
+  body.mic-toolbox-contrast-hard video,
+  body.mic-toolbox-contrast-hard svg,
+  body.mic-toolbox-contrast-hard canvas {
+    filter: none !important;
+    opacity: 0.9 !important; /* Slight dim for comfort */
+    border: 1px solid #ffff00 !important; /* Add border for definition */
+  }
+
+  body.mic-toolbox-disable-buttons-animations * {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  body.mic-toolbox-fonts-simple p,
+  body.mic-toolbox-fonts-simple span,
+  body.mic-toolbox-fonts-simple q,
+  body.mic-toolbox-fonts-simple div,
+  body.mic-toolbox-fonts-simple h1,
+  body.mic-toolbox-fonts-simple h2,
+  body.mic-toolbox-fonts-simple h3,
+  body.mic-toolbox-fonts-simple h4,
+  body.mic-toolbox-fonts-simple h5,
+  body.mic-toolbox-fonts-simple h6,
+  body.mic-toolbox-fonts-simple a,
+  body.mic-toolbox-fonts-simple li,
+  body.mic-toolbox-fonts-simple button,
+  body.mic-toolbox-fonts-simple input,
+  body.mic-toolbox-fonts-simple label {
+    font-family: Arial, Helvetica, sans-serif !important;
+    letter-spacing: normal !important;
+    word-spacing: normal !important;
+  }
+
+  body.mic-toolbox-content-links a {
+    text-decoration: underline !important;
+    font-weight: 700 !important;
+    color: #0000ee !important;
+    background-color: rgba(255, 255, 0, 0.2) !important;
+  }
+  /* Fix link color in hard contrast */
+  body.mic-toolbox-contrast-hard.mic-toolbox-content-links a {
+    color: #ffff00 !important; /* Yellow links on dark bg */
+    background-color: transparent !important;
+    text-decoration-color: #ffff00 !important;
+  }
+
+  body.mic-toolbox-content-headers h1,
+  body.mic-toolbox-content-headers h2,
+  body.mic-toolbox-content-headers h3 {
+    text-decoration: underline !important;
+    text-decoration-color: #c34069 !important;
+    background-color: rgba(195, 64, 105, 0.1);
+  }
+
+  /* =====================================================
+   * WCAG 1.4.12 - Text Spacing (Level AA)
+   * ===================================================== */
+  body.mic-toolbox-text-spacing p,
+  body.mic-toolbox-text-spacing li,
+  body.mic-toolbox-text-spacing h1,
+  body.mic-toolbox-text-spacing h2,
+  body.mic-toolbox-text-spacing h3,
+  body.mic-toolbox-text-spacing h4,
+  body.mic-toolbox-text-spacing h5,
+  body.mic-toolbox-text-spacing h6,
+  body.mic-toolbox-text-spacing div,
+  body.mic-toolbox-text-spacing span {
+    line-height: 1.5 !important;
+    letter-spacing: 0.12em !important; /* 12% of font-size */
+    word-spacing: 0.16em !important; /* 16% of font-size */
+  }
+
+  body.mic-toolbox-text-spacing p + p {
+    margin-top: 2em !important; /* 2x font-size for paragraph spacing */
+  }
+
+  /* =====================================================
+   * WCAG 1.4.8 - Text Alignment (Level AAA)
+   * ===================================================== */
+  body.mic-toolbox-text-align-left p,
+  body.mic-toolbox-text-align-left h1,
+  body.mic-toolbox-text-align-left h2,
+  body.mic-toolbox-text-align-left h3,
+  body.mic-toolbox-text-align-left h4,
+  body.mic-toolbox-text-align-left h5,
+  body.mic-toolbox-text-align-left h6,
+  body.mic-toolbox-text-align-left div,
+  body.mic-toolbox-text-align-left li {
+    text-align: left !important;
+  }
+
+  /* =====================================================
+   * Low Saturation (for color sensitivity/colorblindness)
+   * ===================================================== */
+  body.mic-toolbox-low-saturation {
+    filter: saturate(0.5) !important;
+  }
+
+  body.mic-toolbox-low-saturation img,
+  body.mic-toolbox-low-saturation video {
+    filter: saturate(0.7) !important; /* Less desaturation for media */
+  }
+
+  /* =====================================================
+   * Skip to Content Link (WCAG 2.4.1 - Level A)
+   * ===================================================== */
+  .skip-to-content {
+    position: absolute;
+    left: -9999px;
+    z-index: 9999;
+    padding: 1em 1.5em;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 0 0 4px 0;
+  }
+
+  .skip-to-content:focus {
+    left: 0;
+    top: 0;
+    outline: 3px solid #ffff00;
+    outline-offset: 2px;
+  }
+
+  /* =====================================================
+   * WCAG 1.1.1 - Highlight Images without ALT Text (Level A)
+   * ===================================================== */
+  body.mic-toolbox-highlight-images-no-alt img:not([alt]),
+  body.mic-toolbox-highlight-images-no-alt img[alt=""] {
+    outline: 5px dashed #ff0000 !important;
+    outline-offset: 2px !important;
+    filter: brightness(0.7) !important;
+  }
+
+  body.mic-toolbox-disable-buttons-keyboard a:focus,
+  body.mic-toolbox-disable-buttons-keyboard button:focus,
+  body.mic-toolbox-disable-buttons-keyboard input:focus {
+    outline: 4px solid #ff0 !important;
+    outline-offset: 2px !important;
+    background-color: #000 !important;
+    color: #ff0 !important;
+    box-shadow: 0 0 0 4px #000 !important;
+    z-index: 999999;
+  }
+
+  /* Cursors */
+  body.mic-toolbox-cursor-big-white,
+  body.mic-toolbox-cursor-big-white * {
+    cursor:
+      url(https://raw.githubusercontent.com/mickidum/acc_toolbar/master/app/cursors/w1.cur),
+      auto !important;
+  }
+  body.mic-toolbox-cursor-big-white a,
+  body.mic-toolbox-cursor-big-white button,
+  body.mic-toolbox-cursor-big-white [role="button"] {
+    cursor:
+      url(https://raw.githubusercontent.com/mickidum/acc_toolbar/master/app/cursors/w2.cur),
+      pointer !important;
+  }
+
+  body.mic-toolbox-cursor-big-black,
+  body.mic-toolbox-cursor-big-black * {
+    cursor:
+      url(https://raw.githubusercontent.com/mickidum/acc_toolbar/master/app/cursors/b1.cur),
+      auto !important;
+  }
+  body.mic-toolbox-cursor-big-black a,
+  body.mic-toolbox-cursor-big-black button,
+  body.mic-toolbox-cursor-big-black [role="button"] {
+    cursor:
+      url(https://raw.githubusercontent.com/mickidum/acc_toolbar/master/app/cursors/b2.cur),
+      pointer !important;
+  }
 }

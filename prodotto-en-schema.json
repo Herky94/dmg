@@ -1,0 +1,83 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prodotto_ens",
+  "info": {
+    "singularName": "prodotto-en",
+    "pluralName": "prodotto-ens",
+    "displayName": "Prodotto EN",
+    "description": "Products for English version"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Slug": {
+      "type": "uid",
+      "targetField": "Name"
+    },
+    "Name": {
+      "type": "string"
+    },
+    "sottotitolo": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "blocks"
+    },
+    "Indicazione": {
+      "type": "blocks"
+    },
+    "posologiaModoDuso": {
+      "type": "blocks"
+    },
+    "formulazioni": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::formulazione.formulazione",
+      "inversedBy": "prodotto_ens"
+    },
+    "classificazioni": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::classificazioni.classificazioni",
+      "inversedBy": "prodotto_ens"
+    },
+    "aree_terapeutiche": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::aree-terapeutiche.aree-terapeutiche",
+      "inversedBy": "prodotto_ens"
+    },
+    "Mercato": {
+      "type": "string"
+    },
+    "Images": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": ["images", "files", "videos", "audios"]
+    },
+    "video": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": ["images", "files", "videos", "audios"]
+    },
+    "PDF": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images", "files", "videos", "audios"]
+    },
+    "altreFormulazioni": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::prodotto-en.prodotto-en",
+      "inversedBy": "collegatoA"
+    },
+    "collegatoA": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::prodotto-en.prodotto-en",
+      "mappedBy": "altreFormulazioni"
+    }
+  }
+}

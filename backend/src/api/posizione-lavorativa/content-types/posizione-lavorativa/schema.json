@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "posizioni_lavorative",
+  "info": {
+    "singularName": "posizione-lavorativa",
+    "pluralName": "posizioni-lavorative",
+    "displayName": "Posizione Lavorativa",
+    "description": "Posizioni di lavoro aperte per la pagina Lavora con noi"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "TitoloPosizione": {
+      "type": "string",
+      "required": true
+    },
+    "Slug": {
+      "type": "uid",
+      "targetField": "TitoloPosizione"
+    },
+    "Sottotitolo": {
+      "type": "string",
+      "required": true
+    },
+    "Descrizione": {
+      "type": "text",
+      "required": true
+    },
+    "Modalita": {
+      "type": "enumeration",
+      "enum": ["da remoto", "ibrido", "in sede"],
+      "required": true,
+      "default": "in sede"
+    },
+    "Immagine": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "Attiva": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}
