@@ -50,11 +50,12 @@ export default async function LavoraConNoiPage({
           </>
         }
         description={t.pages.lavoraConNoi.description}
-        backgroundImage="" // No background image
+        backgroundImage="/images/at.webp"
+        // No background image
         showScrollIndicator={true}
         actionButton={
           <Link
-            href="/posizioni-aperte"
+            href={`/${locale}/posizioni-aperte`}
             className="mt-8 group inline-flex items-center gap-4 bg-transparent border border-white text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-white hover:text-black transition-all duration-300"
           >
             <span className="tracking-wider">{t.pages.lavoraConNoi.cta}</span>
@@ -86,6 +87,8 @@ export default async function LavoraConNoiPage({
           successMessage={t.common.applicationSent}
           privacyRequired={t.common.privacyRequired}
           cvRequired={t.common.cvRequired}
+          locale={locale}
+          labels={t.pages.lavoraConNoi.form}
         />
       </div>
 

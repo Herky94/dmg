@@ -3,7 +3,19 @@ import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
 import Link from "next/link";
-import { normalizeToSlug } from "@/lib/strapi";
+import { useParams } from "next/navigation";
+import { normalizeToSlug, getStrapiURL } from "@/lib/strapi";
+
+interface Product {
+  id: number;
+  Name: string;
+  Slug: string;
+  sottotitolo: string;
+  Images?: {
+    url: string;
+    alternativeText?: string;
+  }[];
+}
 
 interface FeaturedProductsSectionProps {
   preTitle: string;
@@ -11,6 +23,7 @@ interface FeaturedProductsSectionProps {
   cta: string;
   description: string;
   productCta: string;
+  products?: Product[];
 }
 
 export default function FeaturedProductsSection({
@@ -19,7 +32,10 @@ export default function FeaturedProductsSection({
   cta,
   description,
   productCta,
+  products = [],
 }: FeaturedProductsSectionProps) {
+  const params = useParams();
+  const locale = (params?.locale as string) || "it";
   const titleRef = useRef<HTMLHeadingElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -74,7 +90,7 @@ export default function FeaturedProductsSection({
           </h2>
 
           <Link
-            href="/prodotti"
+            href={`/${locale}/prodotti`}
             className="group flex items-center gap-3 border border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-[#C34069] transition-all duration-300 w-fit"
           >
             <span className="text-sm font-light uppercase tracking-wider">
@@ -98,28 +114,31 @@ export default function FeaturedProductsSection({
           </Link>
         </div>
 
-        {/* Description */}
-        <div className="text-center mb-0">
-          <p className="text-base lg:text-[18px] text-white font-extralight leading-relaxed max-w-3xl mx-auto text-center">
-            {description}
-          </p>
-        </div>
-
         {/* Products Carousel */}
-        <ProductsCarousel productCta={productCta} />
+        <ProductsCarousel productCta={productCta} products={products} />
       </div>
     </section>
   );
 }
 
-function ProductsCarousel({ productCta }: { productCta: string }) {
-  const products = [
+function ProductsCarousel({
+  productCta,
+  products,
+}: {
+  productCta: string;
+  products: Product[];
+}) {
+  const params = useParams();
+  const locale = (params?.locale as string) || "it";
+
+  const defaultProducts = [
     {
       id: 1,
       name: "Immunotrofina®",
       description:
         "Trattamento sintomatico della tosse e della raucedine nel bambino e nell'adulto",
       image: "/images/immunotrofina.webp",
+      slug: "immunotrofina",
     },
     {
       id: 2,
@@ -127,6 +146,7 @@ function ProductsCarousel({ productCta }: { productCta: string }) {
       description:
         "Trattamento di meteorismo, arofagia e coliche gassose del bambino e dell'adulto",
       image: "/images/colinox.webp",
+      slug: "colinox",
     },
     {
       id: 3,
@@ -134,6 +154,7 @@ function ProductsCarousel({ productCta }: { productCta: string }) {
       description:
         "Dispositivi medici per la protezione della mucosa esofagea e gastrica in caso di reflusso...",
       image: "/images/prodotti/gastrotuss.png",
+      slug: "linea-gastrotuss",
     },
     {
       id: 4,
@@ -141,6 +162,7 @@ function ProductsCarousel({ productCta }: { productCta: string }) {
       description:
         "Unguento barriera emostatico per la prevenzione e gestione di sanguinamenti locali...",
       image: "/images/prodotti/emofix.webp",
+      slug: "emofix",
     },
     {
       id: 5,
@@ -148,24 +170,50 @@ function ProductsCarousel({ productCta }: { productCta: string }) {
       description:
         "Unguento nasale con acido ialuronico e vitamine per idratare e proteggere la mucosa nasale...",
       image: "/images/rinopanteina.webp",
+      slug: "rinopanteina",
     },
   ];
+
+  const displayProducts =
+    products.length > 0
+      ? products.map((p) => ({
+          id: p.id,
+          name: p.Name,
+          description: p.sottotitolo,
+          image:
+            p.Images && p.Images.length > 0
+              ? getStrapiURL(p.Images[0].url)
+              : "/images/placeholder.jpg",
+          slug: p.Slug,
+        }))
+      : defaultProducts;
 
   const [translateX, setTranslateX] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(true);
-  const [itemsPerScreen, setItemsPerScreen] = useState(4);
+  const [itemsPerScreen, setItemsPerScreen] = useState(1);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isReady, setIsReady] = useState(false);
 
   const minSwipeDistance = 50;
 
+  // Create infinite array with 3 sets for seamless loop
+  const infiniteProducts = [
+    ...displayProducts,
+    ...displayProducts,
+    ...displayProducts,
+  ];
+
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) setItemsPerScreen(1);
-      else if (window.innerWidth < 1024) setItemsPerScreen(2);
-      else if (window.innerWidth < 1280) setItemsPerScreen(3);
-      else setItemsPerScreen(4);
+      let newItems = 1;
+      if (window.innerWidth >= 1280) newItems = 5;
+      else if (window.innerWidth >= 1024) newItems = 3;
+      else if (window.innerWidth >= 640) newItems = 2;
+
+      setItemsPerScreen(newItems);
+      setIsReady(true);
     };
 
     handleResize();
@@ -173,20 +221,20 @@ function ProductsCarousel({ productCta }: { productCta: string }) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Create infinite array with 3 sets for seamless loop
-  const infiniteProducts = [...products, ...products, ...products];
   const cardWidth = 100 / itemsPerScreen;
 
   // Start from middle set to allow backward scrolling
-  const initialOffset = products.length * cardWidth;
+  const initialOffset = displayProducts.length * cardWidth;
 
   useEffect(() => {
-    setTranslateX(-initialOffset);
-  }, [initialOffset]);
+    if (isReady) {
+      setTranslateX(-initialOffset);
+    }
+  }, [initialOffset, isReady]);
 
   // Auto-advance carousel
   useEffect(() => {
-    if (!isAutoPlay) return;
+    if (!isAutoPlay || !isReady) return;
 
     const interval = setInterval(() => {
       nextSlide();
@@ -234,14 +282,16 @@ function ProductsCarousel({ productCta }: { productCta: string }) {
   useEffect(() => {
     const handleTransitionEnd = () => {
       // If we've scrolled past the last set, jump back to the middle set
-      if (translateX <= -(initialOffset + products.length * cardWidth)) {
+      if (translateX <= -(initialOffset + displayProducts.length * cardWidth)) {
         setIsTransitioning(false);
         setTranslateX(-initialOffset);
       }
       // If we've scrolled before the first set, jump to the middle set
       else if (translateX >= -initialOffset + cardWidth) {
         setIsTransitioning(false);
-        setTranslateX(-(initialOffset + (products.length - 1) * cardWidth));
+        setTranslateX(
+          -(initialOffset + (displayProducts.length - 1) * cardWidth),
+        );
       }
     };
 
@@ -252,15 +302,23 @@ function ProductsCarousel({ productCta }: { productCta: string }) {
     }, 700); // Match transition duration
 
     return () => clearTimeout(timer);
-  }, [translateX, isTransitioning, initialOffset, products.length, cardWidth]);
+  }, [
+    translateX,
+    isTransitioning,
+    initialOffset,
+    displayProducts.length,
+    cardWidth,
+  ]);
 
   // Calculate active index
   const activeIndex =
     Math.round(Math.abs(translateX + initialOffset) / cardWidth) %
-    products.length;
+    displayProducts.length;
 
   return (
-    <div className="relative pb-8">
+    <div
+      className={`relative pb-8 transition-opacity duration-300 ${isReady ? "opacity-100" : "opacity-0"}`}
+    >
       {/* Products Grid */}
       <div
         className="relative overflow-x-hidden"
@@ -277,18 +335,26 @@ function ProductsCarousel({ productCta }: { productCta: string }) {
                 ? "transition-transform duration-700 ease-in-out"
                 : ""
             }`}
-            style={{ transform: `translateX(${translateX}%)` }}
+            style={{
+              transform: `translateX(${translateX}%)`,
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+            }}
           >
             {infiniteProducts.map((product, index) => (
               <div
                 key={`${product.id}-${index}`}
                 className="flex-shrink-0 px-3 transform transition-all duration-500 hover:scale-105"
-                style={{ width: `${cardWidth}%` }}
+                style={{
+                  width: `${cardWidth}%`,
+                  backfaceVisibility: "hidden",
+                  WebkitBackfaceVisibility: "hidden",
+                }}
               >
                 <div className="bg-white h-full rounded-[15px] overflow-hidden flex flex-col shadow-lg">
                   {/* Product Image */}
                   <div className="relative h-60 bg-white overflow-hidden group flex-shrink-0">
-                    <Link href={`/prodotti/${normalizeToSlug(product.name)}`}>
+                    <Link href={`/${locale}/prodotti/${product.slug}`}>
                       <Image
                         src={product.image}
                         alt={product.name}
@@ -312,7 +378,7 @@ function ProductsCarousel({ productCta }: { productCta: string }) {
 
                     {/* Button */}
                     <Link
-                      href={`/prodotti/${normalizeToSlug(product.name)}`}
+                      href={`/${locale}/prodotti/${product.slug}`}
                       className="mb-8 flex items-center gap-3 bg-[#C34069]/16 text-[#C34069] px-6 py-3 rounded-full hover:bg-[#C34069] hover:text-white transition-all duration-300 cursor-pointer w-fit group"
                     >
                       <span className="text-[12px] font-medium">
@@ -344,7 +410,7 @@ function ProductsCarousel({ productCta }: { productCta: string }) {
 
       {/* Pagination Dots */}
       <div className="flex justify-center gap-2 mt-4">
-        {products.map((_, index) => (
+        {displayProducts.map((_, index) => (
           <button
             key={index}
             onClick={() => {

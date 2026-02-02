@@ -20,12 +20,12 @@ export default function FarmacovigilanzaHero({
   };
 
   return (
-    <section className="relative h-screen w-full flex items-center overflow-hidden">
+    <section className="relative h-[60vh] min-h-[500px] w-full flex items-center overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/images/bg-contatti.png')",
+          backgroundImage: "url('/images/at.webp')",
         }}
       >
         {/* Dark overlay */}
@@ -33,7 +33,7 @@ export default function FarmacovigilanzaHero({
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container-dmg mt-60">
+      <div className="relative z-10 container-dmg pt-16">
         <h1 className="text-5xl md:text-6xl lg:text-[70px] xl:text-[110px] 2xl:text-[150px] font-thin text-white leading-[1.1]">
           {title}
         </h1>

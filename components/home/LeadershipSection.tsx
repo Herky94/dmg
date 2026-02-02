@@ -147,7 +147,7 @@ export default function LeadershipSection({
               onClick={() => setIsVideoOpen(true)}
             >
               <img
-                src="/images/Luigi-Mercuri.jpg"
+                src="/images/Luigi-Mercuri.webp"
                 alt={imageAlt}
                 className="w-full h-auto lg:h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />

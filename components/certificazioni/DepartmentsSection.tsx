@@ -6,12 +6,14 @@ interface DepartmentsSectionProps {
   title: string;
   subtitle: string;
   departments: string[];
+  regulationLink?: string;
 }
 
 export default function DepartmentsSection({
   title,
   subtitle,
   departments,
+  regulationLink = "Regolamento Europeo MDR",
 }: DepartmentsSectionProps) {
   return (
     <section className="py-24 bg-white">
@@ -53,7 +55,7 @@ export default function DepartmentsSection({
             className="flex items-center gap-3 bg-[#F6E1E7] text-[#C34069] px-6 py-3 rounded-full hover:bg-[#C34069] hover:text-white transition-colors duration-300 cursor-pointer w-fit group"
           >
             <span className="text-[12px] font-medium bg-transparent">
-              Regolamento Europeo MDR
+              {regulationLink}
             </span>
             <div className="bg-[#C34069] rounded-full w-6 h-6 flex items-center justify-center group-hover:bg-white transition-colors duration-300">
               <svg

@@ -32,11 +32,11 @@ export function getMenuData(locale: Locale): MenuItem[] {
       hasDropdown: true,
       submenu: [
         { name: t.navigation.dmgItalia, href: `/${locale}/corporate/italia` },
+        { name: t.navigation.dmgPolonia, href: `/${locale}/corporate/polonia` },
         {
           name: t.navigation.dmgBulgaria,
           href: `/${locale}/corporate/bulgaria`,
         },
-        { name: t.navigation.dmgPolonia, href: `/${locale}/corporate/polonia` },
         { name: t.navigation.dmgTurchia, href: `/${locale}/corporate/turchia` },
         {
           name: t.navigation.italdevice,
@@ -63,7 +63,7 @@ export function getMenuData(locale: Locale): MenuItem[] {
         },
         {
           name: t.navigation.farmaci,
-          href: `/${locale}/prodotti?classificazione=farmaci`,
+          href: `/${locale}/prodotti?classificazione=${locale === "en" ? "drug" : "farmaci"}`,
         },
       ],
     },
@@ -73,7 +73,7 @@ export function getMenuData(locale: Locale): MenuItem[] {
     },
     {
       name: t.navigation.contatti,
-      href: "",
+      href: `/${locale}/contatti`,
       hasDropdown: true,
       submenu: [
         {

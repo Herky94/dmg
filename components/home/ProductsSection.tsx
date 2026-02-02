@@ -4,6 +4,7 @@ import { useEffect, useRef, useLayoutEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -48,6 +49,9 @@ export default function ProductsSection({
   ia,
   farmaci,
 }: ProductsSectionProps) {
+  const params = useParams();
+  const locale = (params?.locale as string) || "it";
+
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const card1Ref = useRef<HTMLDivElement>(null);
@@ -236,7 +240,7 @@ export default function ProductsSection({
 
                   {/* Button */}
                   <Link
-                    href="/prodotti?classificazione=dispositivi-medici"
+                    href={`/${locale}/prodotti?classificazione=dispositivi-medici`}
                     className="flex items-center gap-3 border border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-[#C34069] transition-all duration-300 cursor-pointer w-fit custom-button"
                   >
                     <span className="text-sm font-extralight">{dm.cta}</span>
@@ -303,7 +307,7 @@ export default function ProductsSection({
 
                   {/* Button */}
                   <Link
-                    href="/prodotti?classificazione=integratori-alimentari"
+                    href={`/${locale}/prodotti?classificazione=integratori-alimentari`}
                     className="flex items-center gap-3 border border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-[#C34069] transition-all duration-300 cursor-pointer w-fit custom-button"
                   >
                     <span className="text-sm font-extralight">{ia.cta}</span>
@@ -364,7 +368,7 @@ export default function ProductsSection({
 
                   {/* Button */}
                   <Link
-                    href="/prodotti?classificazione=farmaci"
+                    href={`/${locale}/prodotti?classificazione=${locale === "en" ? "drug" : "farmaci"}`}
                     className="flex items-center gap-3 border border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-[#C34069] transition-all duration-300 cursor-pointer w-fit custom-button"
                   >
                     <span className="text-sm font-extralight">
@@ -414,8 +418,8 @@ function SpecializationSection() {
       image: "/images/pediatria.png",
     },
     {
-      name: "Otorinolaringoiatra",
-      image: "/images/otorinolaringoiatra.png",
+      name: "Otorinolaringoiatria",
+      image: "/images/otorinolaringoiatria.png",
     },
     {
       name: "Gastroenterologia",
@@ -489,7 +493,7 @@ function SpecializationSection() {
                 <img
                   src={spec.image}
                   alt={spec.name}
-                  className="w-[140px] h-[100px] md:w-[195px] md:h-[135px] object-contain"
+                  className="w-[180px] h-[135px] md:w-[280px] md:h-[195px] object-contain"
                 />
               </div>
 

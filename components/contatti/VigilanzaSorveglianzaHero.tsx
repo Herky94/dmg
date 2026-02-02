@@ -4,10 +4,12 @@ import Image from "next/image";
 
 interface VigilanzaSorveglianzaHeroProps {
   title: string;
+  description?: string;
 }
 
 export default function VigilanzaSorveglianzaHero({
   title,
+  description,
 }: VigilanzaSorveglianzaHeroProps) {
   const handleScrollDown = () => {
     const heroSection = document.querySelector("section");
@@ -20,12 +22,12 @@ export default function VigilanzaSorveglianzaHero({
   };
 
   return (
-    <section className="relative h-screen w-full flex items-center overflow-hidden">
+    <section className="relative h-[60vh] min-h-[500px] w-full flex items-center overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/images/bg-contatti.png')",
+          backgroundImage: "url('/images/at.webp')",
         }}
       >
         {/* Dark overlay */}
@@ -33,15 +35,33 @@ export default function VigilanzaSorveglianzaHero({
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container-dmg mt-60">
-        <h1 className="text-5xl md:text-6xl lg:text-[70px] xl:text-[110px] 2xl:text-[150px] font-thin text-white leading-[1.1]">
-          {title.split("\n").map((line, index) => (
-            <span key={index}>
-              {line}
-              {index < title.split("\n").length - 1 && <br />}
-            </span>
-          ))}
-        </h1>
+      <div className="relative z-10 container-dmg pt-16">
+        <div
+          className={`${
+            description
+              ? "grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12 lg:gap-16 xl:gap-20"
+              : "flex flex-col"
+          } items-center`}
+        >
+          {/* Title */}
+          <h1 className="text-5xl md:text-6xl lg:text-[70px] xl:text-[110px] 2xl:text-[150px] font-thin text-white leading-[1.1]">
+            {title.split("\n").map((line, index) => (
+              <span key={index}>
+                {line}
+                {index < title.split("\n").length - 1 && <br />}
+              </span>
+            ))}
+          </h1>
+
+          {/* Description */}
+          {description && (
+            <div>
+              <p className="text-white/90 text-base md:text-lg lg:text-base xl:text-xl 2xl:text-[20px] font-light leading-relaxed max-w-xl lg:max-w-md xl:max-w-xl">
+                {description}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Scroll Indicator */}

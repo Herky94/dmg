@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "posizioni_lavorative_en",
+  "info": {
+    "singularName": "posizione-lavorativa-en",
+    "pluralName": "posizioni-lavorative-en",
+    "displayName": "Job Position (EN)",
+    "description": "Open job positions for the Work with us page (English version)"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "JobTitle": {
+      "type": "string",
+      "required": true
+    },
+    "Slug": {
+      "type": "uid",
+      "targetField": "JobTitle"
+    },
+    "Subtitle": {
+      "type": "string",
+      "required": true
+    },
+    "Description": {
+      "type": "text",
+      "required": true
+    },
+    "WorkMode": {
+      "type": "enumeration",
+      "enum": ["remote", "hybrid", "on-site"],
+      "required": true,
+      "default": "on-site"
+    },
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "Active": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}

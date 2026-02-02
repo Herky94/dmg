@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 interface InternationalSectionProps {
   title: string;
@@ -19,6 +20,9 @@ export default function InternationalSection({
   cta,
   videoNotSupported,
 }: InternationalSectionProps) {
+  const params = useParams();
+  const locale = (params?.locale as string) || "it";
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden py-24 lg:py-0">
       {/* Video Background */}
@@ -54,13 +58,13 @@ export default function InternationalSection({
             {/* CTA Button - Desktop */}
             <div className="pt-2 hidden lg:block">
               <Link
-                href="/vocazione-internazionale"
+                href={`/${locale}/vocazione-internazionale`}
                 className="group inline-flex items-center gap-4 bg-transparent border border-white text-white px-10 py-3 rounded-full text-sm font-light hover:bg-white hover:text-[#C34069] transition-all duration-300"
               >
                 <span>{cta}</span>
-                <div className="bg-white rounded-full w-10 h-10 flex items-center justify-center group-hover:bg-[#C34069]">
+                <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-[#C34069]">
                   <svg
-                    className="w-5 h-5 text-[#C34069] transform transition-transform duration-300 group-hover:rotate-45 group-hover:text-white"
+                    className="w-4 h-4 text-[#C34069] transform transition-transform duration-300 group-hover:rotate-45 group-hover:text-white"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -88,11 +92,11 @@ export default function InternationalSection({
             {/* CTA Button - Mobile */}
             <div className="pt-8 flex justify-center lg:hidden">
               <Link
-                href="/vocazione-internazionale"
+                href={`/${locale}/vocazione-internazionale`}
                 className="group inline-flex items-center gap-4 bg-transparent border border-white text-white px-10 py-3 rounded-full text-sm font-light hover:bg-white hover:text-[#C34069] transition-all duration-300"
               >
                 <span>{cta}</span>
-                <div className="bg-white rounded-full w-10 h-10 flex items-center justify-center group-hover:bg-[#C34069]">
+                <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-[#C34069]">
                   <svg
                     className="w-5 h-5 text-[#C34069] transform transition-transform duration-300 group-hover:rotate-45 group-hover:text-white"
                     fill="none"

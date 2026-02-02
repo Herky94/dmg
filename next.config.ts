@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "dmg-backend.altera.consulting",
+        hostname: "admin.dmgit.com",
         port: "",
         pathname: "/uploads/**",
       },

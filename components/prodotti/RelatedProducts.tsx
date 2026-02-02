@@ -24,6 +24,7 @@ interface RelatedProductsProps {
   relatedProducts: Product[];
   discoverMore?: string;
   title?: string;
+  subtitle?: string;
 }
 
 const extractTextFromBlocks = (blocks: any[], limit: number = 100): string => {
@@ -51,6 +52,7 @@ export default function RelatedProducts({
   relatedProducts,
   discoverMore = "Scopri di più",
   title = "Prodotti Correlati.",
+  subtitle = "AREA TERAPEUTICA",
 }: RelatedProductsProps) {
   const pathname = usePathname();
   const currentLocale = pathname.startsWith("/it")
@@ -62,7 +64,7 @@ export default function RelatedProducts({
   const [translateX, setTranslateX] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(true);
-  const [itemsPerScreen, setItemsPerScreen] = useState(4);
+  const [itemsPerScreen, setItemsPerScreen] = useState(5);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
@@ -78,7 +80,7 @@ export default function RelatedProducts({
       if (window.innerWidth < 640) setItemsPerScreen(1);
       else if (window.innerWidth < 1024) setItemsPerScreen(2);
       else if (window.innerWidth < 1280) setItemsPerScreen(3);
-      else setItemsPerScreen(4);
+      else setItemsPerScreen(5);
     };
 
     handleResize();
@@ -202,10 +204,17 @@ export default function RelatedProducts({
     <section className="py-12 lg:py-[90px] bg-[#C34069] overflow-hidden">
       <div className="container-dmg">
         {/* Title */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-6">
           <h2 className="text-5xl lg:text-[80px] font-extralight text-white text-center">
             {title}
           </h2>
+        </div>
+
+        {/* Subtitle */}
+        <div className="text-center mb-12">
+          <span className="text-sm lg:text-[16px] text-white uppercase tracking-widest font-normal">
+            {subtitle}
+          </span>
         </div>
 
         {/* Products Carousel */}
@@ -225,13 +234,21 @@ export default function RelatedProducts({
                     ? "transition-transform duration-700 ease-in-out"
                     : ""
                 }`}
-                style={{ transform: `translateX(${translateX}%)` }}
+                style={{
+                  transform: `translateX(${translateX}%)`,
+                  backfaceVisibility: "hidden",
+                  WebkitBackfaceVisibility: "hidden",
+                }}
               >
                 {infiniteProducts.map((product, index) => (
                   <div
                     key={`${product.documentId}-${index}`}
                     className="flex-shrink-0 px-3 transform transition-all duration-500 hover:scale-105"
-                    style={{ width: `${cardWidth}%` }}
+                    style={{
+                      width: `${cardWidth}%`,
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                    }}
                   >
                     <div className="bg-white h-full rounded-[15px] overflow-hidden flex flex-col shadow-lg">
                       {/* Product Image */}

@@ -48,6 +48,14 @@ export function getFormulationsEndpoint(locale: "it" | "en" = "it"): string {
   return locale === "en" ? "formulazione-ens" : "formulaziones";
 }
 
+export function getDrugsEndpoint(locale: "it" | "en" = "it"): string {
+  return locale === "en" ? "farmaci-en" : "farmaci";
+}
+
+export function getJobPositionsEndpoint(locale: "it" | "en" = "it"): string {
+  return locale === "en" ? "posizioni-lavorative-en" : "posizioni-lavorative";
+}
+
 /**
  * Fetch con retry automatico
  */
@@ -86,9 +94,10 @@ export async function fetchAPI(
 
 /**
  * Tempo di revalidation per ISR (in secondi)
+ * Default: 60 secondi (1 minuto) per testing, aumentare in produzione
  */
 export const REVALIDATE_TIME = parseInt(
-  process.env.REVALIDATE_TIME || "3600",
+  process.env.REVALIDATE_TIME || "60",
   10,
 );
 
@@ -117,15 +126,54 @@ export function normalizeToSlug(name: string): string {
 }
 
 /**
+ * Mappa di alias per traduzioni IT <-> EN
+ * Permette di usare lo stesso slug URL per entrambe le lingue
+ */
+const slugAliases: Record<string, string[]> = {
+  farmaci: ["drugs", "drug", "medicines", "medicine"],
+  drugs: ["farmaci", "drug", "medicines", "medicine"],
+  drug: ["farmaci", "drugs", "medicines", "medicine"],
+  "dispositivi-medici": ["medical-devices", "medical-device"],
+  "medical-devices": ["dispositivi-medici", "medical-device"],
+  "integratori-alimentari": [
+    "food-supplements",
+    "supplements",
+    "food-supplement",
+    "supplement",
+  ],
+  "food-supplements": [
+    "integratori-alimentari",
+    "supplements",
+    "food-supplement",
+  ],
+};
+
+/**
  * Trova un elemento in un array confrontando il nome normalizzato con lo slug URL
+ * Supporta alias per permettere matching cross-lingua (es: farmaci <-> drugs)
  */
 export function findByNormalizedName<
   T extends { name?: string; Name?: string; documentId: string },
 >(items: T[], urlSlug: string): T | undefined {
-  return items.find((item) => {
+  // Prima cerca match diretto
+  const directMatch = items.find((item) => {
     const itemName = item.name || item.Name;
     return itemName && normalizeToSlug(itemName) === urlSlug;
   });
+
+  if (directMatch) return directMatch;
+
+  // Se non trovato, cerca usando gli alias
+  const aliases = slugAliases[urlSlug] || [];
+  for (const alias of aliases) {
+    const aliasMatch = items.find((item) => {
+      const itemName = item.name || item.Name;
+      return itemName && normalizeToSlug(itemName) === alias;
+    });
+    if (aliasMatch) return aliasMatch;
+  }
+
+  return undefined;
 }
 
 /**

@@ -61,7 +61,7 @@ export default function Footer() {
                   {t.navigation.integratoriAlimentari}
                 </Link>
                 <Link
-                  href={`/${currentLocale}/prodotti?classificazione=farmaci`}
+                  href={`/${currentLocale}/prodotti?classificazione=${currentLocale === "en" ? "drug" : "farmaci"}`}
                   className="block text-base text-black hover:!text-[#C34069] group-hover:text-[#C34069] leading-none font-normal uppercase transition-colors"
                 >
                   {t.navigation.farmaci}
@@ -87,18 +87,29 @@ export default function Footer() {
                 <Link
                   href="https://forms.zohopublic.eu/tickets/form/RICHIEDIASSISTENZADMG/formperma/xJ_xn4qlazGWSsZiHXhhwWDJNOzSq-5H2J0ubZnir3o"
                   target="_blank"
-                  className="flex items-center gap-2 text-base text-black hover:!text-[#C34069] group-hover:text-[#C34069] mt-8 group h-5 font-normal uppercase transition-colors"
+                  className="group inline-flex items-center gap-3 bg-[#C34069]/16 text-[#C34069] px-6 py-3 rounded-full hover:bg-[#C34069] hover:text-white transition-all duration-300 mt-8 w-fit font-normal"
                 >
-                  <div className="w-5 h-5 flex items-center justify-center shrink-0">
-                    <img
-                      src="/images/usefull-icons/helpdesk.svg"
-                      alt="Help Desk"
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  <span className="leading-none group-hover:text-[#C34069] flex items-center h-full pt-1">
+                  <span
+                    className="text-[12px] text-[#C34069] group-hover:!text-white transition-colors duration-300"
+                    suppressHydrationWarning
+                  >
                     {t.footer.helpDesk}
                   </span>
+                  <div className="bg-[#C34069] rounded-full w-6 h-6 flex items-center justify-center group-hover:bg-white transition-colors duration-300">
+                    <svg
+                      className="w-3 h-3 text-white transition-all duration-300 group-hover:text-[#C34069] group-hover:rotate-45 transform"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M7 17L17 7M17 7H7M17 7V17"
+                      />
+                    </svg>
+                  </div>
                 </Link>
               </div>
             </div>
@@ -128,7 +139,7 @@ export default function Footer() {
               {/* DMG ITALIA S.R.L. */}
               <div className="space-y-4 xl:border-l border-[#D4D4D4] xl:pl-8 text-center xl:text-left">
                 <h4 className="text-base font-[400] text-black mb-2">
-                  DMG ITALIA S.R.L.
+                  D.M.G. ITALIA S.r.l.
                 </h4>
                 <img
                   src="/images/usefull-icons/arrow.svg"
@@ -378,7 +389,7 @@ export default function Footer() {
               {/* DMG Italia Reference */}
               <div className="space-y-4 xl:border-l border-[#D4D4D4] xl:pl-8 text-center xl:text-left">
                 <h4 className="text-base font-[400] text-black mb-2">
-                  D.M.G. ITALIA S.R.L.
+                  ITALDEVICE S.r.l.
                 </h4>
                 <img
                   src="/images/usefull-icons/arrow.svg"
@@ -426,18 +437,29 @@ export default function Footer() {
               <Link
                 href="https://forms.zohopublic.eu/tickets/form/RICHIEDIASSISTENZADMG/formperma/xJ_xn4qlazGWSsZiHXhhwWDJNOzSq-5H2J0ubZnir3o"
                 target="_blank"
-                className="flex items-center gap-2 text-base text-black hover:!text-[#C34069] group-hover:text-[#C34069] transition-colors group h-5"
+                className="group inline-flex items-center gap-3 bg-[#C34069]/16 text-[#C34069] px-6 py-3 rounded-full hover:bg-[#C34069] hover:text-white transition-all duration-300 w-fit font-normal"
               >
-                <div className="w-5 h-5 flex items-center justify-center shrink-0">
-                  <img
-                    src="/images/usefull-icons/helpdesk.svg"
-                    alt="Help Desk"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <span className="leading-none group-hover:text-[#C34069] flex items-center h-full pt-1">
+                <span
+                  className="text-[12px] text-[#C34069] group-hover:!text-white transition-colors duration-300"
+                  suppressHydrationWarning
+                >
                   {t.footer.helpDesk}
                 </span>
+                <div className="bg-[#C34069] rounded-full w-6 h-6 flex items-center justify-center group-hover:bg-white transition-colors duration-300">
+                  <svg
+                    className="w-3 h-3 text-white transition-all duration-300 group-hover:text-[#C34069] group-hover:rotate-45 transform"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M7 17L17 7M17 7H7M17 7V17"
+                    />
+                  </svg>
+                </div>
               </Link>
             </div>
           </div>

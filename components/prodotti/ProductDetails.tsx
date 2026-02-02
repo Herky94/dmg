@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getStrapiURL, normalizeToSlug } from "@/lib/strapi";
+import { useProductFilters } from "@/lib/useProductFilters";
 
 interface ProductDetailsProps {
   product: any;
@@ -12,8 +13,8 @@ interface ProductDetailsProps {
 
 const specializationIcons: Record<string, string> = {
   Pediatria: "/images/pediatria.png",
-  Otorinolaringoiatra: "/images/otorinolaringoiatra.png",
-  Otorinolaringoiatria: "/images/otorinolaringoiatra.png", // Handle potential spelling variation
+  Otorinolaringoiatria: "/images/otorinolaringoiatria.png",
+  
   Gastroenterologia: "/images/gastroenterologia.png",
   Oftalmologia: "/images/oftalmologia.png",
 };
@@ -105,6 +106,8 @@ export default function ProductDetails({
       ? "en"
       : "it";
 
+  const { buildQueryString } = useProductFilters();
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [show360, setShow360] = useState(false);
   const [openAccordion, setOpenAccordion] = useState<string | null>(
@@ -157,7 +160,7 @@ export default function ProductDetails({
     <section className="py-[90px] pt-[140px] container-dmg">
       <div className="mb-8">
         <Link
-          href={`/${currentLocale}/prodotti`}
+          href={`/${currentLocale}/prodotti${buildQueryString()}`}
           className="inline-flex items-center gap-3 bg-[#C34069]/16 text-[#C34069] px-6 py-3 rounded-full hover:bg-[#C34069] hover:text-white transition-all duration-300 cursor-pointer group"
         >
           <div className="bg-[#C34069] rounded-full w-6 h-6 flex items-center justify-center group-hover:bg-white transition-colors duration-300">
@@ -258,7 +261,7 @@ export default function ProductDetails({
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
-                    className="w-full h-full transition-transform duration-700 group-hover:rotate-180"
+                    className="w-full h-full transition-transform duration-700 group-hover:rotate-[360deg]"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
@@ -375,7 +378,7 @@ export default function ProductDetails({
               target="_blank"
               className="border border-black rounded-full px-8 py-3 w-fit mb-12 hover:bg-black hover:text-white transition-colors text-[14px] font-medium"
             >
-              Foglio illustrativo
+              {leaflet}
             </Link>
           )}
 

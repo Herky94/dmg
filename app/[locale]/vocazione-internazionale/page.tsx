@@ -43,6 +43,7 @@ export default async function InternationalVocationPage({
       />
 
       <InternationalContent
+        title={t.home.international.title}
         paragraph1={t.home.international.paragraph1}
         paragraph2={t.home.international.paragraph2}
         paragraph3={t.home.international.paragraph3}

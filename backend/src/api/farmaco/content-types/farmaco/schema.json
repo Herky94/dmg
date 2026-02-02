@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "farmaci",
+  "info": {
+    "singularName": "farmaco",
+    "pluralName": "farmaci",
+    "displayName": "Farmaco (IT)",
+    "description": "Loghi dei farmaci con link esterni per la pagina prodotti (versione italiana)"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Nome": {
+      "type": "string",
+      "required": true
+    },
+    "Slug": {
+      "type": "uid",
+      "targetField": "Nome"
+    },
+    "Logo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "LinkEsterno": {
+      "type": "string",
+      "required": true
+    },
+    "Descrizione": {
+      "type": "text",
+      "required": false
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 999,
+      "min": 1,
+      "max": 9999
+    },
+    "Attivo": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}

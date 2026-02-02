@@ -7,6 +7,10 @@
     "defaultTitle": "D.M.G. Italia",
     "titleTemplate": "%s | D.M.G. Italia"
   },
+  "ecoMode": {
+    "description": "Questa schermata contribuisce al risparmio energetico quando ti allontani o resti inattivo.",
+    "hint": "Muovi il mouse o premi un tasto per continuare"
+  },
   "home": {
     "hero": {
       "tagline": "Quando serve cura.",
@@ -15,31 +19,31 @@
     },
     "products": {
       "preTitle": "INNOVAZIONE. SICUREZZA. EFFICACIA.",
-      "title": "soluzioni\nterapeutiche.",
+      "title": "Soluzioni\nterapeutiche.",
       "description": "Siamo un'azienda farmaceutica italiana specializzata nella ricerca, sviluppo e commercializzazione di dispositivi medici, integratori alimentari e farmaci. Il nostro obiettivo principale è quello di offrire soluzioni terapeutiche innovative, sicure ed efficaci a pazienti e a operatori sanitari, nonché nuove opportunità di business ad aziende farmaceutiche italiane ed estere. Condividiamo con i nostri partner un solido know-how, acquisito negli anni, per aiutarli a sviluppare il loro business in tutto il mondo.",
       "dm": {
         "title": "Dispositivi\nMedici",
         "description": "I dispositivi medici rappresentano uno strumento essenziale per la prevenzione, la diagnosi e il trattamento delle patologie, garantendo standard elevati di sicurezza ed efficacia. Ogni area specialistica richiede soluzioni dedicate, progettate per rispondere alle esigenze specifiche di medici e pazienti.",
-        "cta": "Scopri di più..."
+        "cta": "Scopri di più"
       },
       "ia": {
         "title": "Integratori\nAlimentari",
         "description": "Gli integratori alimentari sono formulazioni di nutrienti e altre sostanze con effetto fisiologico (vitamine, minerali, estratti botanici, probiotici, acidi grassi, aminoacidi) pensate per supportare il normale benessere quando l'alimentazione non è sufficiente a coprire specifici fabbisogni. Non sostituiscono una dieta equilibrata né terapie mediche; la loro efficacia dipende da formulazione, dosaggio, biodisponibilità e corretta aderenza.",
-        "cta": "Scopri di più..."
+        "cta": "Scopri di più"
       },
       "farmaci": {
         "title": "Farmaci",
         "description": "I farmaci sono sostanze con azione preventiva, diagnostica o terapeutica che agiscono su processi biologici specifici per ripristinare o modificare funzioni dell'organismo. La loro qualità, sicurezza ed efficacia sono garantite da rigorosi iter regolatori (AIC), controllo di produzione (GMP) e monitoraggio post-marketing (farmacovigilanza). L'uso corretto richiede prescrizione e controllo medico, rispetto di posologie e durate, attenzione alle interazioni e alle controindicazioni. L'automedicazione è limitata ai medicinali OTC e SOP, per disturbi lievi e temporanei.",
-        "cta": "Scopri di più..."
+        "cta": "Scopri di più"
       }
     },
     "story": {
       "title": "Milestones.",
-      "description": "La nostra storia inizia nel 1993 con una visione chiara: portare innovazione nel settore dei dispositivi medici. Dalla fondazione ad oggi, abbiamo costruito un percorso di crescita costante e internazionalizzazione. Ogni Milestone rappresenta un passo verso l'eccellenza. La nostra timeline racconta come siamo diventati leader nel settore, espandendoci in Europa e innovando continuamente i nostri processi produttivi.",
+      "description": "La nostra storia inizia nel 1993 con una visione chiara: portare innovazione nel settore dei dispositivi medici. Dalla fondazione ad oggi, abbiamo costruito un percorso di crescita costante e internazionalizzazione.\n\nOgni Milestone rappresenta un passo verso l'eccellenza. La nostra timeline racconta come siamo diventati leader nel settore, espandendoci in Europa e innovando continuamente i nostri processi produttivi.",
       "timeline": [
         {
           "year": "1993",
-          "subtitle": "Viene pubblicata sulla GUCE La Direttiva CEE 93/42 sui dispositivi medici (abbreviata in MDD 93/42). NASCE D.M.G. ITALIA S.R.L. fondata da Luigi Mercuri e Antonio De Nisi."
+          "subtitle": "Nasce D.M.G. ITALIA S.R.L. fondata da Luigi Mercuri e Antonio De Nisi.\n\nViene pubblicata sulla GUCE La Direttiva CEE 93/42 sui dispositivi medici (abbreviata in MDD 93/42)."
         },
         {
           "year": "1997",
@@ -75,7 +79,7 @@
         },
         {
           "year": "2017",
-          "subtitle": "Il 25 maggio 2017 entra in vigore il Regolamento europeo sui dispositivi medici MDR con il 26 maggio 2021 come data di applicazione. E' destinato a sostituire l'MDD."
+          "subtitle": "Il 25 maggio 2017 entra in vigore il Regolamento europeo sui dispositivi medici MDR con il 26 maggio 2021 come data di applicazione. È destinato a sostituire l'MDD."
         },
         {
           "year": "2018",
@@ -88,9 +92,9 @@
       ]
     },
     "leadership": {
-      "paragraph1": "«Il nostro impegno, sintetizzato nel pay-off \"Quando serve cura\", è costantemente rivolto a migliorare la qualità della vita e la salute delle persone. Proponiamo, infatti, un approccio alla tutela della salute secondo cui \"Non si cura la malattia ma il paziente\"»",
-      "paragraph2": "Innovazione, creatività e la costante ricerca di nuove soluzioni sono i pilastri sui quali poggiamo i nostri laboratori di Ricerca e Sviluppo, composti da un team di professionisti e dotati di apparecchiature all'avanguardia che, anno dopo anno, permettono una crescita costante.",
-      "paragraph3": "L'entusiasmo, l'onestà e la volontà di innovare sono le qualità fondamentali attraverso cui D.M.G. ITALIA promuove il progresso e la crescita dei propri dipendenti e collaboratori, favorendo un clima di trasparenza e di inclusione.",
+      "paragraph1": "«Il nostro impegno, sintetizzato nel pay off \"Quando serve cura\", è costantemente rivolto a migliorare la qualità della vita e la salute delle persone. Proponiamo, infatti, un approccio alla tutela della salute secondo cui \"Non si cura la malattia ma il paziente\".»",
+      "paragraph2": "Innovazione, creatività e la costante ricerca di nuove soluzioni sono i pilastri sui quali poggiano i nostri laboratori di Ricerca e Sviluppo, composti da un team di professionisti e dotati di apparecchiature all'avanguardia che, anno dopo anno, permettono una crescita costante.",
+      "paragraph3": "L'entusiasmo, l'onestà e la volontà di innovare sono le qualità fondamentali attraverso cui D.M.G. ITALIA promuove il progresso e la crescita dei propri dipendenti e collaboratori, favorendo un clima di trasparenza e di inclusione.»",
       "name": "Luigi Mercuri",
       "title": "CEO & Managing Director",
       "imageAlt": "Luigi Mercuri - CEO & Managing Director",
@@ -128,8 +132,16 @@
       "paragraph2": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
     },
     "researchDevelopment": {
-      "title": "Research\n& Development",
-      "description": ""
+      "title": "Research\n & Development",
+      "description": "",
+      "subtitle": "MOTORE DELL'INNOVAZIONE",
+      "heading": "Nel nostro approccio, ricerca e visione strategica si incontrano",
+      "paragraphs": [
+        "Nel nostro approccio, ricerca e visione strategica si incontrano per trasformare l'innovazione scientifica in soluzioni concrete.",
+        "La capacità di generare idee originali, di creare nuove prospettive e di trasformarle in soluzioni reali ci porta a sviluppare nuovi prodotti e migliorare costantemente il portafoglio esistente. Sono questi gli obiettivi del nostro dipartimento R&D (Ricerca e Sviluppo), che guida l'innovazione farmaceutica in D.M.G. Italia e a cui è destinata un'importante quota del fatturato annuo.",
+        "Ci avvaliamo di un team multidisciplinare di professionisti che collabora a stretto contatto con enti esterni quali Università, Ospedali, Cliniche e Centri di Ricerca e di Laboratori dotati di attrezzature specifiche e all'avanguardia. Con i nostri Partner promuoviamo il confronto e la condivisione di risorse e tecnologie innovative, grazie alle quali guardiamo al futuro preparandoci alle nuove sfide del settore farmaceutico.",
+        "Attraverso le fasi di pianificazione, organizzazione, controllo e analisi dei risultati, il nostro team R&D gestisce progetti pionieristici, essenziali per creare quel valore aggiunto che ha consentito di registrare negli anni più di 23 brevetti e realizzare oltre 30 prodotti in diverse forme farmaceutiche distribuiti attualmente in più di 50 Paesi nel mondo."
+      ]
     },
     "whistleblowing": {
       "title": "WHISTLEBLOWING",
@@ -151,13 +163,31 @@
       "paragraph2": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt."
     },
     "certificazioni": {
-      "title": "Qualit\u00e0\ncertificata",
-      "description": "D.M.G. Italia opera nel pieno rispetto delle normative europee sui dispositivi medici, garantendo la conformit\u00e0 al Regolamento MDR e agli standard internazionali ISO, a tutela della sicurezza, dell'efficacia e dell'affidabilit\u00e0 dei prodotti."
+      "title": "Qualità\ncertificata",
+      "description": "D.M.G. Italia opera nel pieno rispetto delle normative europee sui dispositivi medici, garantendo la conformità al Regolamento MDR e agli standard internazionali ISO, a tutela della sicurezza, dell'efficacia e dell'affidabilità dei prodotti."
     },
     "lavoraConNoi": {
       "title": "Lavora\ncon noi",
-      "description": "L'entusiasmo, l'onest\u00e0 e la volont\u00e0 di innovare sono qualit\u00e0 fondamentali per promuovere il progresso e la crescita in qualsiasi settore.",
-      "cta": "Consulta le posizioni aperte"
+      "description": "L'entusiasmo, l'onestà e la volontà di innovare sono qualità fondamentali per promuovere il progresso e la crescita in qualsiasi settore.",
+      "cta": "Consulta le posizioni aperte",
+      "form": {
+        "firstName": "Nome",
+        "lastName": "Cognome",
+        "email": "Email",
+        "phone": "Numero di cellulare",
+        "applicationLabel": "Candidatura",
+        "specificPosition": "Mi candido per una posizione specifica",
+        "spontaneousApplication": "Autocandidatura",
+        "positionLabel": "Posizione",
+        "loadingPositions": "Caricamento posizioni...",
+        "selectPosition": "Seleziona posizione",
+        "uploadCv": "Allega CV",
+        "uploadCvHint": "Fai click o trascina i file qui",
+        "coverLetter": "Lettera di presentazione",
+        "privacyText": "Ho letto la Privacy Policy e accetto il trattamento dei dati personali, in conformità alla dichiarazione sulla protezione dei dati",
+        "modalita": "Modalità",
+        "errorMissingFields": "Errore o campi mancanti."
+      }
     },
     "compliance": {
       "title": "COMPLIANCE",
@@ -171,20 +201,22 @@
       },
       "integratoriAlimentari": {
         "title": "Integratori\nAlimentari",
-        "description": "Gli integratori alimentari sono formulazioni di nutrienti e altre sostanze con effetto fisiologico (vitamine, minerali, estratti botanici, probiotici, acidi grassi, aminoacidi) pensate per supportare il normale benessere quando l'alimentazione non \u00e8 sufficiente a coprire specifici fabbisogni. Non sostituiscono una dieta equilibrata n\u00e9 terapie mediche; la loro efficacia dipende da formulazione, dosaggio, biodisponibilit\u00e0 e corretta aderenza."
+        "description": "Gli integratori alimentari sono formulazioni di nutrienti e altre sostanze con effetto fisiologico (vitamine, minerali, estratti botanici, probiotici, acidi grassi, aminoacidi) pensate per supportare il normale benessere quando l'alimentazione non è sufficiente a coprire specifici fabbisogni. Non sostituiscono una dieta equilibrata né terapie mediche; la loro efficacia dipende da formulazione, dosaggio, biodisponibilità e corretta aderenza."
       },
       "farmaci": {
         "title": "Farmaci",
-        "description": "I farmaci sono sostanze con azione preventiva, diagnostica o terapeutica che agiscono su processi biologici specifici per ripristinare o modificare funzioni dell'organismo. La loro qualit\u00e0, sicurezza ed efficacia sono garantite da rigorosi iter regolatori (AIC), controllo di produzione (GMP) e monitoraggio post-marketing (farmacovigilanza). L'uso corretto richiede prescrizione e controllo medico, rispetto di posologie e durate, attenzione alle interazioni e alle controindicazioni. L'automedicazione \u00e8 limitata ai medicinali OTC e SOP, per disturbi lievi e temporanei."
+        "description": "I farmaci sono sostanze con azione preventiva, diagnostica o terapeutica che agiscono su processi biologici specifici per ripristinare o modificare funzioni dell'organismo. La loro qualità, sicurezza ed efficacia sono garantite da rigorosi iter regolatori (AIC), controllo di produzione (GMP) e monitoraggio post-marketing (farmacovigilanza). L'uso corretto richiede prescrizione e controllo medico, rispetto di posologie e durate, attenzione alle interazioni e alle controindicazioni. L'automedicazione è limitata ai medicinali OTC e SOP, per disturbi lievi e temporanei."
       },
       "default": {
         "title": "Tutti i\nProdotti",
-        "description": "Esplora la nostra gamma completa di dispositivi medici, integratori alimentari e farmaci. Ogni prodotto \u00e8 sviluppato con rigorosi standard di qualit\u00e0 per garantire sicurezza ed efficacia."
+        "description": "Esplora la nostra gamma completa di dispositivi medici, integratori alimentari e farmaci. Ogni prodotto è sviluppato con rigorosi standard di qualità per garantire sicurezza ed efficacia."
       }
     },
     "posizioniAperte": {
       "title": "Posizioni\nAperte",
-      "description": "L'entusiasmo, l'onest\u00e0 e la volont\u00e0 di innovare sono qualit\u00e0 fondamentali per promuovere il progresso e la crescita in qualsiasi settore."
+      "description": "L'entusiasmo, l'onestà e la volontà di innovare sono qualità fondamentali per promuovere il progresso e la crescita in qualsiasi settore.",
+      "noPositions": "Al momento non ci sono posizioni aperte.",
+      "published": "Pubblicato"
     }
   },
   "navigation": {
@@ -211,6 +243,37 @@
     "farmacovigilanza": "Farmacovigilanza",
     "vigilanzaSorveglianza": "Vigilanza e Sorveglianza"
   },
+  "contatti": {
+    "title": "Contatti",
+    "description": "Siamo sempre a disposizione per rispondere alle tue richieste e fornirti tutte le informazioni di cui hai bisogno.",
+    "form": {
+      "firstName": "Nome",
+      "lastName": "Cognome",
+      "address": "Indirizzo",
+      "postalCode": "CAP",
+      "city": "Citt\u00e0",
+      "country": "Nazione",
+      "company": "Azienda",
+      "jobTitle": "Ruolo",
+      "phone": "Telefono",
+      "email": "Email",
+      "website": "Sito web",
+      "requestType": "Richiesta",
+      "message": "Messaggio",
+      "selectRequest": "Seleziona richiesta",
+      "requestTypes": {
+        "business": "Business",
+        "distribution": "Distribuzione",
+        "development": "Sviluppo",
+        "partnership": "Partnership",
+        "consultation": "Consulenza",
+        "employment": "Lavoro",
+        "information": "Informazioni",
+        "other": "Altro"
+      },
+      "privacyText": "Ho letto la Privacy Policy e accetto il trattamento dei dati personali, in conformità alla dichiarazione sulla protezione dei dati"
+    }
+  },
   "footer": {
     "homepage": "HOMEPAGE",
     "messaggioCeo": "MESSAGGIO DEL CEO",
@@ -224,11 +287,11 @@
     "cookiePolicy": "COOKIE POLICY",
     "compliance": "COMPLIANCE",
     "whistleblowing": "WHISTLEBLOWING",
-    "copyright": "r.e.a. latina n. 198376 - cap. soc. € 200.000.000,00 - p.iva 02774840595 - © 2025 pfizer srl. società diretta e controllata da pfizer inc."
+    "copyright": "R.e.a. Latina n. 198376 - cap. Soc. € 200.000.000,00 - p.iva 02774840595 - © 2025 pfizer srl. Società diretta e controllata da pfizer inc."
   },
   "farmacovigilanza": {
     "title": "Farmacovigilanza",
-    "subtitle": "Lorem Ipsum",
+    "subtitle": "Sicurezza dei farmaci",
     "description": "La Farmacovigilanza raccoglie e studia le reazioni avverse (effetti nocivi e non voluti conseguenti all'utilizzo di un farmaco) che possono associarsi ad un trattamento farmacologico, al fine di:",
     "cards": [
       "valutarne l'incidenza",
@@ -236,10 +299,62 @@
       "identificare possibili fattori di rischio per l'insorgenza di tali eventi avversi",
       "individuare possibili mezzi di prevenzione degli eventi avversi stessi"
     ],
-    "bottomText": "Quando un farmaco viene immesso in commercio, sono note solamente le reazioni avverse registrate nel corso degli studi clinici pre-registrativi: tali studi sono generalmente condotti su un numero limitato di pazienti, appartenenti a categorie selezionate. Solo dopo la sua commercializzazione, il farmaco viene somministrato a un numero elevato di varie categorie di pazienti ed è quindi possibile conoscerne più approfonditamente il rapporto beneficio/rischio legato all'uso del farmaco stesso. Questo si realizza attraverso la raccolta sistematica degli eventi avversi e reazioni avverse. La segnalazione spontanea da parte di medici, farmacisti, altri operatori sanitari e da parte dei pazienti stessi è, pertanto, essenziale per permettere alle Autorità Sanitarie deputate alle attività di Farmacovigilanza e alle Aziende Farmaceutiche di definire e mantenere aggiornato il profilo di tollerabilità e sicurezza dei farmaci (benefici verso rischi) nelle reali condizioni d'impiego."
+    "bottomText": "Quando un farmaco viene immesso in commercio, sono note solamente le reazioni avverse registrate nel corso degli studi clinici pre-registrativi: tali studi sono generalmente condotti su un numero limitato di pazienti, appartenenti a categorie selezionate. Solo dopo la sua commercializzazione, il farmaco viene somministrato a un numero elevato di varie categorie di pazienti ed è quindi possibile conoscerne più approfonditamente il rapporto beneficio/rischio legato all'uso del farmaco stesso. Questo si realizza attraverso la raccolta sistematica degli eventi avversi e reazioni avverse. La segnalazione spontanea da parte di medici, farmacisti, altri operatori sanitari e da parte dei pazienti stessi è, pertanto, essenziale per permettere alle Autorità Sanitarie deputate alle attività di Farmacovigilanza e alle Aziende Farmaceutiche di definire e mantenere aggiornato il profilo di tollerabilità e sicurezza dei farmaci (benefici verso rischi) nelle reali condizioni d'impiego.",
+    "form": {
+      "adverseEventTitle": "Segnalazione evento avverso",
+      "adverseEventDescription": "Per la segnalazione di sospette reazioni avverse (adverse drug reaction - adr) da parte degli operatori sanitari o cittadini, è possibile",
+      "aifaLinkText": "collegarsi al sito dell'Aifa (Agenzia Italiana del Farmaco).",
+      "channelsIntro": "D.M.G. Italia mette a disposizione i seguenti canali per segnalare un evento avverso legato all'impiego di un nostro farmaco:",
+      "requestsAndReports": "Richieste e Segnalazioni",
+      "requestTypeLabel": "Tipo di richiesta",
+      "requestTypeHint": "Seleziona il tipo di segnalazione o richiesta",
+      "adverseEventReport": "Segnalazione evento avverso",
+      "informationRequest": "Richiesta di informazioni",
+      "other": "Altro",
+      "reporterDataLabel": "Dati del Segnalatore",
+      "firstName": "Nome",
+      "lastName": "Cognome",
+      "email": "Email",
+      "productInfoLabel": "Informazioni sul prodotto",
+      "productInfoHint": "Inserisci le informazioni relative al prodotto coinvolto",
+      "drugName": "Nome del farmaco",
+      "batchNumber": "Lotto (se disponibile)",
+      "startDate": "Data di inizio assunzione",
+      "endDate": "Data di fine assunzione (se conclusa)",
+      "detailedDescriptionLabel": "Descrizione dettagliata",
+      "detailedDescriptionHint": "(Sintomi, tempistica, eventuali terapie concomitanti, esito dell'evento, ecc.)",
+      "descriptionPlaceholder": "Descrivici in modo chiaro l'evento o la richiesta",
+      "privacyDeclaration": "Dichiaro di aver letto l'informativa Privacy e autorizzo il trattamento dei dati personali ai sensi del Reg. UE n. 679 del 2016.",
+      "infoDeclaration": "Dichiaro che le informazioni fornite sono corrette e complete al meglio delle mie conoscenze.",
+      "errorSubmitting": "Errore nell'invio. Riprova."
+    }
   },
   "vigilanzaSorveglianza": {
-    "title": "Vigilanza e Sorveglianza"
+    "title": "Vigilanza\ne Sorveglianza",
+    "mainTitle": "Segnalazioni di reclami e vigilanza sui dispositivi medici",
+    "emailText": "La segnalazione di {title} con dispositivi di D.M.G. deve essere effettuata scrivendo al seguente indirizzo mail:",
+    "linkText": "La segnalazione spontanea di incidente può essere effettuata sia dai cittadini che dagli operatori sanitari, secondo le modalità riportate sul sito:",
+    "sections": [
+      {
+        "title": "Dispositivi medici e Reclami",
+        "paragraphs": [
+          "Un reclamo tecnico è definito ai sensi del D.Lgs. 137/2022 come una comunicazione che dichiara carenze correlate a identità, qualità, durabilità, affidabilità, usabilità, sicurezza o prestazioni di un dispositivo o relative a un servizio che influisce sulle prestazioni di tali dispositivi."
+        ],
+        "email": "complaints@dmgit.com"
+      },
+      {
+        "title": "Dispositivi Medici ed Incidenti",
+        "paragraphs": [
+          "Un incidente è qualsiasi malfunzionamento o alterazione delle caratteristiche o delle prestazioni di un Dispositivo Medico messo a disposizione sul mercato, compreso l'errore d'uso determinato dalle caratteristiche ergonomiche, come pure qualsiasi inadeguatezza nelle informazioni fornite dal fabbricante e qualsiasi effetto collaterale indesiderato.",
+          "La normativa vigente indica gli obblighi relativi alla vigilanza sui Dispositivi Medici e sorveglianza post marketing a carico del Fabbricante di Dispositivi Medici, tra cui la raccolta delle segnalazioni di sospetti incidenti ed effetti collaterali."
+        ],
+        "email": "farmacovigilanza@dmgit.com",
+        "link": {
+          "text": "Sistema di segnalazione dispositivi medici",
+          "url": "https://www.salute.gov.it/new/it/tema/dispositivi-medici/sistema-di-segnalazione-i-dispositivi-medici/"
+        }
+      }
+    ]
   },
   "corporate": {
     "sedeLegale": "Sede legale",
@@ -262,7 +377,19 @@
     "privacyRequired": "Devi accettare la privacy policy per continuare.",
     "cvRequired": "Il CV è obbligatorio.",
     "declarationsRequired": "Devi accettare entrambe le dichiarazioni per continuare.",
-    "contactUs": "Contattaci"
+    "contactUs": "Contattaci",
+    "privacyLabel": "Ho letto ed accettato la Privacy Policy",
+    "filterProducts": "Filtra Prodotti",
+    "resetFilters": "Resetta Filtri",
+    "sort": "Ordina",
+    "relevance": "Rilevanza",
+    "therapeuticAreas": "Aree Terapeutiche",
+    "classification": "Classificazione",
+    "formulation": "Formulazione",
+    "noProductsFound": "Nessun prodotto trovato con i filtri selezionati.",
+    "drugLeafletText": "Per consultare il foglietto illustrativo o il Riassunto delle Caratteristiche del Prodotto (RCP)",
+    "visitSite": "Visita il sito",
+    "noDrugsFound": "Nessun farmaco trovato."
   },
   "product": {
     "indications": "Indicazioni",
@@ -278,23 +405,33 @@
     "settings": "Impostazioni Accessibilità",
     "options": "Opzioni di accessibilità",
     "alt": "Accessibilità",
+    "keyboardNav": "Navigazione tastiera",
+    "disableAnimations": "Blocca animazioni",
+    "contrast": "Contrasto Cromatico",
+    "monochrome": "Bianco e Nero",
+    "brightContrast": "Contrasto Luminoso",
+    "negativeContrast": "Contrasto Negativo",
+    "textAndZoom": "Testo e Zoom",
+    "zoomOut": "Diminuisci Zoom",
+    "zoomIn": "Aumenta Zoom",
+    "readableFont": "Font Leggibile",
+    "highlightContent": "Evidenzia Contenuto",
+    "links": "Links",
+    "headers": "Titoli",
     "readability": "Leggibilità",
-    "fontSize": "Dimensione carattere",
-    "lineHeight": "Altezza riga",
-    "letterSpacing": "Spaziatura lettere",
-    "wordSpacing": "Spaziatura parole",
-    "textAlignment": "Allineamento testo",
-    "contrast": "Contrasto",
-    "highContrast": "Alto contrasto",
-    "invertColors": "Inverti colori",
-    "saturation": "Saturazione",
-    "brightness": "Luminosità",
-    "colorFilter": "Filtro colore",
-    "reset": "Reset",
-    "left": "Sinistra",
-    "center": "Centro",
-    "right": "Destra",
-    "justify": "Giustificato"
+    "textSpacing": "Spaziatura Testo",
+    "alignLeft": "Allinea Sinistra",
+    "colors": "Colori",
+    "lowSaturation": "Riduzione Saturazione",
+    "images": "Immagini",
+    "showAltText": "Mostra testo ALT",
+    "cursor": "Cursore",
+    "whiteCursor": "Cursore Bianco",
+    "blackCursor": "Cursore Nero",
+    "reset": "Ripristina impostazioni",
+    "close": "Chiudi",
+    "missingAlt": "⚠ Manca ALT",
+    "foundAlt": "✓ ALT:"
   },
   "certificazioni": {
     "departments": {
@@ -308,7 +445,7 @@
       ]
     },
     "certifiedCompany": {
-      "preTitle": "Lorem Ipsum",
+      "preTitle": "Qualità Certificata",
       "title": "D.M.G. ITALIA è un'azienda certificata per la ricerca, sviluppo e commercio di Dispositivi Medici:"
     },
     "mdr": {
@@ -316,7 +453,8 @@
       "paragraph2": "Con il Regolamento (EU) 2023/607 del Parlamento Europeo e del Consiglio del 15 marzo 2023, è stata concessa una proroga del periodo di transizione, che introduce specifiche condizioni secondo le quali i certificati emessi dagli Organismi Notificati ai sensi della MDD e che rispettino le condizioni del Regolamento UE 2023/607 resteranno in vigore fino a:",
       "listItem1": "a) 31 dicembre 2027, per tutti i dispositivi della classe III e per i dispositivi impiantabili della classe IIb, salvo specifiche;",
       "listItem2": "b) 31 dicembre 2028, per i dispositivi della classe IIb diversi da quelli di cui alla lettera a) del presente paragrafo, per i dispositivi della classe IIa e per i dispositivi della classe I immessi sul mercato in condizioni di sterilità o con funzione di misura.",
-      "paragraph3": "D.M.G. ITALIA, in qualità di Legal Manufacturer, garantisce la conformità dei propri Dispositivi Medici secondo quanto previsto sia dalla Direttiva sia dal Regolamento Europeo."
+      "paragraph3": "D.M.G. ITALIA, in qualità di Legal Manufacturer, garantisce la conformità dei propri Dispositivi Medici secondo quanto previsto sia dalla Direttiva sia dal Regolamento Europeo.",
+      "regulationLink": "Regolamento Europeo MDR"
     }
   },
   "storia": {
@@ -334,7 +472,7 @@
       "items": [
         {
           "year": "1993",
-          "text": "Viene pubblicata sulla GUCE La Direttiva CEE 93/42 sui dispositivi medici (abbreviata in MDD 93/42). NASCE D.M.G. ITALIA S.R.L. fondata da Luigi Mercuri e Antonio De Nisi."
+          "text": "Nasce D.M.G. ITALIA S.R.L. fondata da Luigi Mercuri e Antonio De Nisi.\n\nViene pubblicata sulla GUCE La Direttiva CEE 93/42 sui dispositivi medici (abbreviata in MDD 93/42)."
         },
         {
           "year": "1997",
@@ -347,6 +485,38 @@
         {
           "year": "2002",
           "text": "D.M.G. ITALIA si afferma nel campo dell'oftalmologia con VISCOBLAST."
+        },
+        {
+          "year": "2003",
+          "text": "Il portafoglio di prodotti di D.M.G. ITALIA si espande nell'area della gastroenterologia con il lancio di GASTROTUSS."
+        },
+        {
+          "year": "2004",
+          "text": "D.M.G. ITALIA firma il suo primo contratto di distribuzione estera e, nello stesso anno, trasferisce la sua sede da Roma a Pomezia, inaugurando il suo primo sito produttivo: Italdevice."
+        },
+        {
+          "year": "2009-2012",
+          "text": "Nascono a breve distanza l'una dall'altra DMG Bulgaria, prima filiale estera, a Sofia, DMG Turchia, a Istanbul e DMG Polonia a Varsavia."
+        },
+        {
+          "year": "2014",
+          "text": "D.M.G. ITALIA inaugura il suo nuovo magazzino."
+        },
+        {
+          "year": "2015",
+          "text": "Vista la forte crescita, D.M.G. ITALIA trasferisce nuovamente i suoi uffici nell'attuale sede di via Nicaragua (Pomezia)."
+        },
+        {
+          "year": "2017",
+          "text": "Il 25 maggio 2017 entra in vigore il Regolamento europeo sui dispositivi medici MDR con il 26 maggio 2021 come data di applicazione. È destinato a sostituire l'MDD."
+        },
+        {
+          "year": "2018",
+          "text": "D.M.G. ITALIA si mette subito al lavoro per ricertificare i suoi prodotti secondo MDR."
+        },
+        {
+          "year": "2024",
+          "text": "Con la crescente presenza sul mercato italiano ed estero, D.M.G. ITALIA avvia un processo di notevole ampliamento dei suoi spazi destinati sia agli uffici sia alla produzione."
         }
       ]
     },
@@ -382,6 +552,7 @@
     }
   },
   "relatedProducts": {
-    "title": "Prodotti Correlati."
+    "title": "Prodotti Correlati.",
+    "subtitle": "AREA TERAPEUTICA"
   }
 }

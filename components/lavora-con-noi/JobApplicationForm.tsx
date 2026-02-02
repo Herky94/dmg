@@ -31,6 +31,25 @@ interface JobApplicationFormProps {
   successMessage?: string;
   privacyRequired?: string;
   cvRequired?: string;
+  locale?: string;
+  labels?: {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phone?: string;
+    applicationLabel?: string;
+    specificPosition?: string;
+    spontaneousApplication?: string;
+    positionLabel?: string;
+    loadingPositions?: string;
+    selectPosition?: string;
+    uploadCv?: string;
+    uploadCvHint?: string;
+    coverLetter?: string;
+    privacyText?: string;
+    modalita?: string;
+    errorMissingFields?: string;
+  };
 }
 
 export default function JobApplicationForm({
@@ -43,7 +62,32 @@ export default function JobApplicationForm({
   successMessage = "Candidatura inviata con successo!",
   privacyRequired = "Devi accettare la privacy policy per continuare.",
   cvRequired = "Il CV è obbligatorio.",
+  locale = "it",
+  labels = {},
 }: JobApplicationFormProps) {
+  // Default labels with fallbacks
+  const formLabels = {
+    firstName: labels.firstName || "Nome",
+    lastName: labels.lastName || "Cognome",
+    email: labels.email || "Email",
+    phone: labels.phone || "Numero di cellulare",
+    applicationLabel: labels.applicationLabel || "Candidatura",
+    specificPosition:
+      labels.specificPosition || "Mi candido per una posizione specifica",
+    spontaneousApplication: labels.spontaneousApplication || "Autocandidatura",
+    positionLabel: labels.positionLabel || "Posizione",
+    loadingPositions: labels.loadingPositions || "Caricamento posizioni...",
+    selectPosition: labels.selectPosition || "Seleziona posizione",
+    uploadCv: labels.uploadCv || "Allega CV",
+    uploadCvHint: labels.uploadCvHint || "Fai click o trascina i file qui",
+    coverLetter: labels.coverLetter || "Lettera di presentazione",
+    privacyText:
+      labels.privacyText ||
+      "Ho letto la Privacy Policy e accetto il trattamento dei dati personali, in conformità alla dichiarazione sulla protezione dei dati",
+    modalita: labels.modalita || "Modalità",
+    errorMissingFields: labels.errorMissingFields || "Errore o campi mancanti.",
+  };
+
   const [formData, setFormData] = useState<FormDataState>({
     nome: "",
     cognome: "",
@@ -65,15 +109,23 @@ export default function JobApplicationForm({
   const [posizioni, setPosizioni] = useState<string[]>([]);
   const [loadingPositions, setLoadingPositions] = useState(true);
 
-  // Fetch posizioni from Strapi
+  // Fetch posizioni from Strapi based on locale
   useEffect(() => {
     const fetchPositions = async () => {
       try {
-        const res = await fetch(
-          getAPIURL("posizioni-lavorative?filters[Attiva][$eq]=true"),
-        );
+        const isEN = locale === "en";
+        const endpoint = isEN
+          ? "posizioni-lavorative-en"
+          : "posizioni-lavorative";
+        const activeFilter = isEN
+          ? "filters[Active][$eq]=true"
+          : "filters[Attiva][$eq]=true";
+        const res = await fetch(getAPIURL(`${endpoint}?${activeFilter}`));
         const data = await res.json();
-        const titles = data.data?.map((pos: any) => pos.TitoloPosizione) || [];
+        // IT uses TitoloPosizione, EN uses JobTitle
+        const titles =
+          data.data?.map((pos: any) => pos.JobTitle ?? pos.TitoloPosizione) ||
+          [];
         setPosizioni(titles);
       } catch (error) {
         console.error("Error fetching positions:", error);
@@ -84,7 +136,7 @@ export default function JobApplicationForm({
     };
 
     fetchPositions();
-  }, []);
+  }, [locale]);
 
   const handleSelectPosizione = (value: string) => {
     setFormData((prev) => ({ ...prev, posizione: value }));
@@ -140,6 +192,7 @@ export default function JobApplicationForm({
     data.append("tipoCandidatura", formData.tipoCandidatura);
     data.append("posizione", formData.posizione);
     data.append("message", formData.lettera); // Changed from lettera to message to match API
+    data.append("locale", locale);
     if (formData.cv) {
       data.append("cv", formData.cv);
     }
@@ -183,10 +236,19 @@ export default function JobApplicationForm({
         <div className="flex flex-col lg:flex-row min-h-[800px] rounded-[30px] overflow-hidden shadow-2xl">
           {/* Left Sidebar - Black Background or Job Info */}
           <div
-            className={`w-full lg:w-1/3 p-10 lg:p-20 flex flex-col justify-start overflow-y-auto text-white ${
+            className={`w-full lg:w-1/3 p-10 lg:p-20 flex flex-col justify-start overflow-y-auto text-white relative ${
               jobInfo ? "bg-[#C34069]" : "bg-black"
             }`}
           >
+            {!jobInfo && (
+              <Image
+                src="/images/form-foto.webp"
+                alt="Form background"
+                fill
+                className="object-cover absolute inset-0"
+                quality={100}
+              />
+            )}
             {jobInfo ? (
               <div className="flex flex-col">
                 <h2 className="text-[40px] font-medium leading-tight mb-2 text-white">
@@ -208,7 +270,7 @@ export default function JobApplicationForm({
                 </p>
               </div>
             ) : (
-              <div className="h-full flex items-center justify-center">
+              <div className="h-full flex items-center justify-center relative z-10">
                 {/* Default decorative content could go here */}
               </div>
             )}
@@ -224,7 +286,7 @@ export default function JobApplicationForm({
                     type="text"
                     id="nome"
                     name="nome"
-                    placeholder="Nome*"
+                    placeholder={`${formLabels.firstName}*`}
                     value={formData.nome}
                     onChange={handleChange}
                     className="w-full bg-transparent border-b border-gray-300 focus:outline-none focus:border-[#C34069] transition-colors text-black placeholder-[#929292] pl-[15px] pb-[25px]"
@@ -238,7 +300,7 @@ export default function JobApplicationForm({
                     type="text"
                     id="cognome"
                     name="cognome"
-                    placeholder="Cognome*"
+                    placeholder={`${formLabels.lastName}*`}
                     value={formData.cognome}
                     onChange={handleChange}
                     className="w-full bg-transparent border-b border-gray-300 focus:outline-none focus:border-[#C34069] transition-colors text-black placeholder-[#929292] pl-[15px] pb-[25px]"
@@ -252,7 +314,7 @@ export default function JobApplicationForm({
                     type="email"
                     id="email"
                     name="email"
-                    placeholder="Email*"
+                    placeholder={`${formLabels.email}*`}
                     value={formData.email}
                     onChange={handleChange}
                     className="w-full bg-transparent border-b border-gray-300 focus:outline-none focus:border-[#C34069] transition-colors text-black placeholder-[#929292] pl-[15px] pb-[25px]"
@@ -266,7 +328,7 @@ export default function JobApplicationForm({
                     type="tel"
                     id="cellulare"
                     name="cellulare"
-                    placeholder="Numero di cellulare*"
+                    placeholder={`${formLabels.phone}*`}
                     value={formData.cellulare}
                     onChange={handleChange}
                     pattern="[0-9+\s\-()]*"
@@ -278,7 +340,7 @@ export default function JobApplicationForm({
                 {/* Candidatura */}
                 <div className="space-y-4 mb-[30px]">
                   <label className="text-[#C34069] text-base font-medium block mb-[25px]">
-                    Candidatura*
+                    {formLabels.applicationLabel}*
                   </label>
                   <div className="space-y-2">
                     <label className="flex items-center space-x-[10px] cursor-pointer group">
@@ -316,7 +378,7 @@ export default function JobApplicationForm({
                         </div>
                       </div>
                       <span className="text-base text-black group-hover:text-[#C34069] transition-colors">
-                        Mi candido per una posizione specifica
+                        {formLabels.specificPosition}
                       </span>
                     </label>
 
@@ -355,7 +417,7 @@ export default function JobApplicationForm({
                         </div>
                       </div>
                       <span className="text-base text-black group-hover:text-[#C34069] transition-colors">
-                        Autocandidatura
+                        {formLabels.spontaneousApplication}
                       </span>
                     </label>
                   </div>
@@ -366,7 +428,7 @@ export default function JobApplicationForm({
                   <div className="mt-[50px] mb-[50px]">
                     {/* Label "Posizione*" styled like empty input */}
                     <div className="w-full border-b border-gray-300 text-[#929292] pl-[15px] pb-[25px]">
-                      Posizione*
+                      {formLabels.positionLabel}*
                     </div>
 
                     {/* Dropdown Container with 20px margin from label */}
@@ -384,8 +446,8 @@ export default function JobApplicationForm({
                           }`}
                         >
                           {loadingPositions
-                            ? "Caricamento posizioni..."
-                            : formData.posizione || "Seleziona posizione"}
+                            ? formLabels.loadingPositions
+                            : formData.posizione || formLabels.selectPosition}
                         </span>
                         {/* Chevron Arrow */}
                         <svg
@@ -430,7 +492,7 @@ export default function JobApplicationForm({
                 {/* Allega CV */}
                 <div className="mb-[50px]">
                   <div className="w-full text-[#929292] pl-[15px]">
-                    Allega CV*
+                    {formLabels.uploadCv}*
                   </div>
                   <div
                     className="mt-[15px] rounded-[15px] p-8 flex flex-col items-center justify-center bg-[#F5F5F5] cursor-pointer hover:bg-[#eaeaea] transition-all group"
@@ -450,7 +512,7 @@ export default function JobApplicationForm({
                       </span>
                     ) : (
                       <span className="text-xs text-[#929292] group-hover:text-[#C34069] transition-colors">
-                        Fai click o trascina i file qui
+                        {formLabels.uploadCvHint}
                       </span>
                     )}
 
@@ -470,7 +532,7 @@ export default function JobApplicationForm({
                     id="lettera"
                     name="lettera"
                     rows={1}
-                    placeholder="Lettera di presentazione"
+                    placeholder={formLabels.coverLetter}
                     value={formData.lettera}
                     onChange={handleChange}
                     className="w-full bg-transparent border-b border-gray-300 focus:outline-none focus:border-[#C34069] transition-colors text-black placeholder-[#929292] pl-[15px] pb-[25px] resize-y"
@@ -513,12 +575,7 @@ export default function JobApplicationForm({
                       </div>
                     </div>
                     <span className="text-base text-[#929292] leading-tight max-w-[400px]">
-                      Ho letto la{" "}
-                      <a href="#" className="underline hover:text-[#C34069]">
-                        Privacy Policy
-                      </a>{" "}
-                      e accetto il trattamento dei dati personali, in conformità
-                      alla dichiarazione sulla protezione dei dati
+                      {formLabels.privacyText}
                     </span>
                   </label>
                 </div>
@@ -556,7 +613,7 @@ export default function JobApplicationForm({
                   )}
                   {status === "error" && (
                     <p className="text-red-500 mt-2 text-sm">
-                      Errore o campi mancanti.
+                      {formLabels.errorMissingFields}
                     </p>
                   )}
                 </div>

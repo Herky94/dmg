@@ -467,6 +467,40 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAreeTerapeuticheEnAreeTerapeuticheEn
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'aree_terapeutiche_ens';
+  info: {
+    displayName: 'Aree Terapeutiche EN';
+    pluralName: 'aree-terapeutiche-ens';
+    singularName: 'aree-terapeutiche-en';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::aree-terapeutiche-en.aree-terapeutiche-en'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String;
+    prodotti_ens: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::prodotto-en.prodotto-en'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    Slug: Schema.Attribute.UID<'Name'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiAreeTerapeuticheAreeTerapeutiche
   extends Struct.CollectionTypeSchema {
   collectionName: 'aree_terapeutiches';
@@ -492,6 +526,40 @@ export interface ApiAreeTerapeuticheAreeTerapeutiche
     prodottos: Schema.Attribute.Relation<
       'manyToMany',
       'api::prodotto.prodotto'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    Slug: Schema.Attribute.UID<'Name'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiClassificazioniEnClassificazioniEn
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'classificazioni_ens';
+  info: {
+    displayName: 'Classificazioni EN';
+    pluralName: 'classificazioni-ens';
+    singularName: 'classificazioni-en';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::classificazioni-en.classificazioni-en'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String;
+    prodotti_ens: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::prodotto-en.prodotto-en'
     >;
     publishedAt: Schema.Attribute.DateTime;
     Slug: Schema.Attribute.UID<'Name'>;
@@ -535,6 +603,130 @@ export interface ApiClassificazioniClassificazioni
   };
 }
 
+export interface ApiFarmacoEnFarmacoEn extends Struct.CollectionTypeSchema {
+  collectionName: 'farmaci_en';
+  info: {
+    description: 'Drug logos with external links for the products page (English version)';
+    displayName: 'Drug (EN)';
+    pluralName: 'farmaci-en';
+    singularName: 'farmaco-en';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Active: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Description: Schema.Attribute.Text;
+    ExternalLink: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::farmaco-en.farmaco-en'
+    > &
+      Schema.Attribute.Private;
+    Logo: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    Name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    Slug: Schema.Attribute.UID<'Name'>;
+    sortOrder: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 9999;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<999>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiFarmacoFarmaco extends Struct.CollectionTypeSchema {
+  collectionName: 'farmaci';
+  info: {
+    description: 'Loghi dei farmaci con link esterni per la pagina prodotti (versione italiana)';
+    displayName: 'Farmaco (IT)';
+    pluralName: 'farmaci';
+    singularName: 'farmaco';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Attivo: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Descrizione: Schema.Attribute.Text;
+    LinkEsterno: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::farmaco.farmaco'
+    > &
+      Schema.Attribute.Private;
+    Logo: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    Nome: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    Slug: Schema.Attribute.UID<'Nome'>;
+    sortOrder: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 9999;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<999>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiFormulazioneEnFormulazioneEn
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'formulazione_ens';
+  info: {
+    displayName: 'Formulazione EN';
+    pluralName: 'formulazione-ens';
+    singularName: 'formulazione-en';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::formulazione-en.formulazione-en'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String;
+    prodotti_ens: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::prodotto-en.prodotto-en'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    Slug: Schema.Attribute.UID<'Name'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiFormulazioneFormulazione
   extends Struct.CollectionTypeSchema {
   collectionName: 'formulaziones';
@@ -566,6 +758,46 @@ export interface ApiFormulazioneFormulazione
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPosizioneLavorativaEnPosizioneLavorativaEn
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'posizioni_lavorative_en';
+  info: {
+    description: 'Open job positions for the Work with us page (English version)';
+    displayName: 'Job Position (EN)';
+    pluralName: 'posizioni-lavorative-en';
+    singularName: 'posizione-lavorativa-en';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Active: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Description: Schema.Attribute.Text & Schema.Attribute.Required;
+    Image: Schema.Attribute.Media<'images'>;
+    JobTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::posizione-lavorativa-en.posizione-lavorativa-en'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    Slug: Schema.Attribute.UID<'JobTitle'>;
+    Subtitle: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    WorkMode: Schema.Attribute.Enumeration<['remote', 'hybrid', 'on-site']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'on-site'>;
   };
 }
 
@@ -606,6 +838,78 @@ export interface ApiPosizioneLavorativaPosizioneLavorativa
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiProdottoEnProdottoEn extends Struct.CollectionTypeSchema {
+  collectionName: 'prodotto_ens';
+  info: {
+    displayName: 'Prodotto EN';
+    pluralName: 'prodotto-ens';
+    singularName: 'prodotto-en';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    altreFormulazioni: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::prodotto-en.prodotto-en'
+    >;
+    aree_terapeutiche: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::aree-terapeutiche-en.aree-terapeutiche-en'
+    >;
+    classificazioni: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::classificazioni-en.classificazioni-en'
+    >;
+    collegatoA: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::prodotto-en.prodotto-en'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Description: Schema.Attribute.Blocks;
+    formulazioni: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::formulazione-en.formulazione-en'
+    >;
+    Images: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    Indicazione: Schema.Attribute.Blocks;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::prodotto-en.prodotto-en'
+    > &
+      Schema.Attribute.Private;
+    Mercato: Schema.Attribute.String;
+    Name: Schema.Attribute.String;
+    PDF: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    posologiaModoDuso: Schema.Attribute.Blocks;
+    publishedAt: Schema.Attribute.DateTime;
+    Slug: Schema.Attribute.UID<'Name'>;
+    sortOrder: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 9999;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<999>;
+    sottotitolo: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    video: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
   };
 }
 
@@ -661,6 +965,15 @@ export interface ApiProdottoProdotto extends Struct.CollectionTypeSchema {
     posologiaModoDuso: Schema.Attribute.Blocks;
     publishedAt: Schema.Attribute.DateTime;
     Slug: Schema.Attribute.UID<'Name'>;
+    sortOrder: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 9999;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<999>;
     sottotitolo: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1183,10 +1496,17 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::aree-terapeutiche-en.aree-terapeutiche-en': ApiAreeTerapeuticheEnAreeTerapeuticheEn;
       'api::aree-terapeutiche.aree-terapeutiche': ApiAreeTerapeuticheAreeTerapeutiche;
+      'api::classificazioni-en.classificazioni-en': ApiClassificazioniEnClassificazioniEn;
       'api::classificazioni.classificazioni': ApiClassificazioniClassificazioni;
+      'api::farmaco-en.farmaco-en': ApiFarmacoEnFarmacoEn;
+      'api::farmaco.farmaco': ApiFarmacoFarmaco;
+      'api::formulazione-en.formulazione-en': ApiFormulazioneEnFormulazioneEn;
       'api::formulazione.formulazione': ApiFormulazioneFormulazione;
+      'api::posizione-lavorativa-en.posizione-lavorativa-en': ApiPosizioneLavorativaEnPosizioneLavorativaEn;
       'api::posizione-lavorativa.posizione-lavorativa': ApiPosizioneLavorativaPosizioneLavorativa;
+      'api::prodotto-en.prodotto-en': ApiProdottoEnProdottoEn;
       'api::prodotto.prodotto': ApiProdottoProdotto;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

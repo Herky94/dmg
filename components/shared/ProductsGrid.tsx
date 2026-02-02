@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,6 +11,7 @@ import {
   findByNormalizedName,
   getName,
 } from "@/lib/strapi";
+import { useProductFilters } from "@/lib/useProductFilters";
 
 interface Product {
   id: number;
@@ -19,6 +20,7 @@ interface Product {
   Slug: string;
   sottotitolo: string;
   Description: any[];
+  sortOrder?: number;
   Images?: {
     url: string;
     alternativeText?: string;
@@ -28,12 +30,33 @@ interface Product {
   formulazioni?: any[];
 }
 
+interface Drug {
+  id: number;
+  documentId: string;
+  Nome?: string; // IT
+  Name?: string; // EN
+  Slug: string;
+  LinkEsterno?: string; // IT
+  ExternalLink?: string; // EN
+  Descrizione?: string; // IT
+  Description?: string; // EN
+  sortOrder?: number;
+  Attivo?: boolean; // IT
+  Active?: boolean; // EN
+  Logo?: {
+    url: string;
+    alternativeText?: string;
+  };
+}
+
 interface Filters {
   search: string;
   areeTerapeutiche: string[];
   classificazioni: string[];
   formulazioni: string[];
 }
+
+type SortOption = "relevance" | "az" | "za";
 
 const extractTextFromBlocks = (blocks: any[], limit: number = 100): string => {
   if (!blocks || !Array.isArray(blocks)) return "";
@@ -55,28 +78,96 @@ const extractTextFromBlocks = (blocks: any[], limit: number = 100): string => {
   return text.length > limit ? text.substring(0, limit) + "..." : text.trim();
 };
 
+interface FilterSectionProps {
+  title: string;
+  children: React.ReactNode;
+}
+
+const FilterSection = ({ title, children }: FilterSectionProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="mb-6">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex justify-between items-center mb-3 lg:cursor-default focus:outline-none"
+        type="button"
+      >
+        <p className="text-[18px] font-semibold text-[#929292]">{title}</p>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className={`w-5 h-5 text-[#929292] lg:hidden transform transition-transform duration-500 ease-out ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+          />
+        </svg>
+      </button>
+      <div
+        className={`grid transition-[grid-template-rows] duration-500 ease-out lg:!grid-rows-[1fr] ${
+          isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+      >
+        <div className="overflow-hidden">{children}</div>
+      </div>
+    </div>
+  );
+};
+
 export default function ProductsGrid({
   initialProducts = [],
   initialAreas = [],
   initialClassifications = [],
   initialFormulations = [],
+  initialDrugs = [],
   initialClassificazioneFilter,
   initialAreaFilter,
   initialFormulazioneFilter,
   searchLabel = "Ricerca Prodotto",
   searchPlaceholder = "Cerca",
   discoverMore = "Scopri di più",
+  filterProducts = "Filtra Prodotti",
+  resetFiltersLabel = "Resetta Filtri",
+  therapeuticAreas = "Aree Terapeutiche",
+  classification = "Classificazione",
+  formulation = "Formulazione",
+  noProductsFound = "Nessun prodotto trovato con i filtri selezionati.",
+  sortLabel = "Ordina",
+  relevanceLabel = "Rilevanza",
+  drugLeafletText = "Per consultare il foglietto illustrativo o il Riassunto delle Caratteristiche del Prodotto (RCP)",
+  visitSiteLabel = "Visita il sito",
+  noDrugsFound = "Nessun farmaco trovato.",
 }: {
   initialProducts?: Product[];
   initialAreas?: any[];
   initialClassifications?: any[];
   initialFormulations?: any[];
+  initialDrugs?: Drug[];
   initialClassificazioneFilter?: string;
   initialAreaFilter?: string;
   initialFormulazioneFilter?: string;
   searchLabel?: string;
   searchPlaceholder?: string;
   discoverMore?: string;
+  filterProducts?: string;
+  resetFiltersLabel?: string;
+  therapeuticAreas?: string;
+  classification?: string;
+  formulation?: string;
+  noProductsFound?: string;
+  sortLabel?: string;
+  relevanceLabel?: string;
+  drugLeafletText?: string;
+  visitSiteLabel?: string;
+  noDrugsFound?: string;
 }) {
   const pathname = usePathname();
   const currentLocale = pathname.startsWith("/it")
@@ -85,49 +176,34 @@ export default function ProductsGrid({
       ? "en"
       : "it";
 
+  const { saveFilters } = useProductFilters();
+
   const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [drugs] = useState<Drug[]>(initialDrugs);
   const [displayedProducts, setDisplayedProducts] =
     useState<Product[]>(initialProducts);
   const [itemsToShow, setItemsToShow] = useState(12); // Paginazione client-side
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
   const [pendingFilters, setPendingFilters] = useState<Filters | null>(null);
+  const [sortOption, setSortOption] = useState<SortOption>("relevance");
+
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const sortRef = useRef<HTMLDivElement>(null);
+
+  // Close sort dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (sortRef.current && !sortRef.current.contains(event.target as Node)) {
+        setIsSortOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const loaderRef = useRef<HTMLDivElement>(null);
-
-  // Intersection Observer for Infinite Scroll
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const target = entries[0];
-        if (
-          target.isIntersecting &&
-          itemsToShow < displayedProducts.length &&
-          !isAnimatingOut
-        ) {
-          // Add small delay for user experience (optional)
-          const timer = setTimeout(() => {
-            setItemsToShow((prev) => prev + 12);
-          }, 300);
-          return () => clearTimeout(timer);
-        }
-      },
-      {
-        root: null,
-        rootMargin: "100px",
-        threshold: 0.1,
-      },
-    );
-
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
-    }
-
-    return () => {
-      if (loaderRef.current) {
-        observer.unobserve(loaderRef.current);
-      }
-    };
-  }, [itemsToShow, displayedProducts.length, isAnimatingOut]);
 
   // Initialize filters from URL params using normalized name matching
   const [filters, setFilters] = useState<Filters>(() => {
@@ -202,6 +278,127 @@ export default function ProductsGrid({
   );
   const [formulazioni, setFormulazioni] = useState<any[]>(initialFormulations);
 
+  // Check if "Farmaci" classification is among the selected ones
+  const isFarmaciSelected = useMemo(() => {
+    if (filters.classificazioni.length === 0) return false;
+
+    // Check if any of the selected classifications is "Farmaci" or "Drug"
+    return filters.classificazioni.some((classId) => {
+      const selectedClassification = classificazioni.find(
+        (c: any) => c.documentId === classId,
+      );
+
+      if (!selectedClassification) return false;
+
+      const classificationName = getName(selectedClassification).toLowerCase();
+      return (
+        classificationName === "farmaci" ||
+        classificationName === "drug" ||
+        classificationName === "drugs"
+      );
+    });
+  }, [filters.classificazioni, classificazioni]);
+
+  // Show drugs when: no classification filter OR Farmaci is among the selected
+  const shouldShowDrugs = useMemo(() => {
+    // If no classification filter is applied, show all including drugs
+    if (filters.classificazioni.length === 0) return true;
+    // If Farmaci is among the selected classifications, show drugs
+    return isFarmaciSelected;
+  }, [filters.classificazioni.length, isFarmaciSelected]);
+
+  // Filter and sort drugs
+  const displayedDrugs = useMemo(() => {
+    if (!shouldShowDrugs) return [];
+
+    // Filter only active drugs
+    const activeDrugs = drugs.filter((drug) => {
+      const isActive = drug.Attivo ?? drug.Active ?? true;
+      return isActive;
+    });
+
+    // Apply sorting based on sortOption
+    return [...activeDrugs].sort((a, b) => {
+      const nameA = (a.Nome ?? a.Name ?? "").toLowerCase();
+      const nameB = (b.Nome ?? b.Name ?? "").toLowerCase();
+
+      switch (sortOption) {
+        case "az":
+          return nameA.localeCompare(nameB);
+        case "za":
+          return nameB.localeCompare(nameA);
+        case "relevance":
+        default:
+          // Sort by sortOrder, then alphabetically
+          const orderA = a.sortOrder ?? 999;
+          const orderB = b.sortOrder ?? 999;
+          if (orderA !== orderB) {
+            return orderA - orderB;
+          }
+          return nameA.localeCompare(nameB);
+      }
+    });
+  }, [shouldShowDrugs, drugs, sortOption]);
+
+  // Combined items array for pagination - products first, then drugs
+  const combinedItems = useMemo(() => {
+    const items: Array<
+      { type: "product"; data: Product } | { type: "drug"; data: Drug }
+    > = [];
+
+    // Add all displayed products
+    displayedProducts.forEach((product) => {
+      items.push({ type: "product", data: product });
+    });
+
+    // Add drugs if they should be shown
+    if (shouldShowDrugs) {
+      displayedDrugs.forEach((drug) => {
+        items.push({ type: "drug", data: drug });
+      });
+    }
+
+    return items;
+  }, [displayedProducts, displayedDrugs, shouldShowDrugs]);
+
+  // Total items count for infinite scroll
+  const totalItemsCount = combinedItems.length;
+
+  // Intersection Observer for Infinite Scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const target = entries[0];
+        if (
+          target.isIntersecting &&
+          itemsToShow < totalItemsCount &&
+          !isAnimatingOut
+        ) {
+          // Add small delay for user experience (optional)
+          const timer = setTimeout(() => {
+            setItemsToShow((prev) => prev + 12);
+          }, 300);
+          return () => clearTimeout(timer);
+        }
+      },
+      {
+        root: null,
+        rootMargin: "100px",
+        threshold: 0.1,
+      },
+    );
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
+    };
+  }, [itemsToShow, totalItemsCount, isAnimatingOut]);
+
   // Sync filters when URL params change (e.g., navigation from menu)
   useEffect(() => {
     const newFilters: Filters = {
@@ -269,6 +466,33 @@ export default function ProductsGrid({
     // Se c'è un filtro pendente o stiamo già animando, non fare nulla nel flusso normale
     if (isAnimatingOut) return;
 
+    const applySorting = (
+      productsToSort: Product[],
+      sort: SortOption,
+    ): Product[] => {
+      const sorted = [...productsToSort];
+
+      switch (sort) {
+        case "relevance":
+          // Sort by sortOrder (lower = higher priority), then alphabetically
+          return sorted.sort((a, b) => {
+            const orderA = a.sortOrder ?? 999;
+            const orderB = b.sortOrder ?? 999;
+            if (orderA !== orderB) {
+              return orderA - orderB;
+            }
+            // If same order, sort alphabetically
+            return getName(a).localeCompare(getName(b));
+          });
+        case "az":
+          return sorted.sort((a, b) => getName(a).localeCompare(getName(b)));
+        case "za":
+          return sorted.sort((a, b) => getName(b).localeCompare(getName(a)));
+        default:
+          return sorted;
+      }
+    };
+
     const applyFilters = (currentFilters: Filters) => {
       let filtered = [...products];
 
@@ -308,6 +532,10 @@ export default function ProductsGrid({
           ),
         );
       }
+
+      // Apply sorting
+      filtered = applySorting(filtered, sortOption);
+
       return filtered;
     };
 
@@ -320,14 +548,8 @@ export default function ProductsGrid({
 
     // Se i prodotti sono diversi da quelli mostrati, avvia animazione uscita
     // Usiamo stringify per confronto rapido (o lunghezza + id primo elemento)
-    const currentIds = displayedProducts
-      .map((p) => p.documentId)
-      .sort()
-      .join(",");
-    const newIds = newFilteredProducts
-      .map((p) => p.documentId)
-      .sort()
-      .join(",");
+    const currentIds = displayedProducts.map((p) => p.documentId).join(",");
+    const newIds = newFilteredProducts.map((p) => p.documentId).join(",");
 
     if (currentIds !== newIds) {
       setIsAnimatingOut(true);
@@ -339,7 +561,7 @@ export default function ProductsGrid({
         setIsAnimatingOut(false);
       }, 300);
     }
-  }, [filters, products]); // Rimuovi filteredProducts dalla dipendenza per evitare loop se lo usassimo
+  }, [filters, products, sortOption]); // Rimuovi filteredProducts dalla dipendenza per evitare loop se lo usassimo
 
   const toggleFilter = (type: keyof Filters, value: string) => {
     setFilters((prev) => {
@@ -348,7 +570,51 @@ export default function ProductsGrid({
         ? currentArray.filter((v) => v !== value)
         : [...currentArray, value];
 
-      return { ...prev, [type]: newArray };
+      const newFilters = { ...prev, [type]: newArray };
+
+      // Salva i filtri nel sessionStorage per la persistenza (salva i nomi normalizzati)
+      const classificazioneName = newFilters.classificazioni[0]
+        ? normalizeToSlug(
+            getName(
+              classificazioni.find(
+                (c: any) => c.documentId === newFilters.classificazioni[0],
+              ),
+            ),
+          )
+        : undefined;
+
+      const areaName = newFilters.areeTerapeutiche[0]
+        ? normalizeToSlug(
+            getName(
+              areeTerapeutiche.find(
+                (a: any) => a.documentId === newFilters.areeTerapeutiche[0],
+              ),
+            ),
+          )
+        : undefined;
+
+      const formulazioneName = newFilters.formulazioni[0]
+        ? (
+            formulazioni.find(
+              (f: any) => f.documentId === newFilters.formulazioni[0],
+            ) as any
+          )?.Slug ||
+          normalizeToSlug(
+            getName(
+              formulazioni.find(
+                (f: any) => f.documentId === newFilters.formulazioni[0],
+              ),
+            ),
+          )
+        : undefined;
+
+      saveFilters({
+        classificazione: classificazioneName,
+        area: areaName,
+        formulazione: formulazioneName,
+      });
+
+      return newFilters;
     });
   };
 
@@ -359,13 +625,55 @@ export default function ProductsGrid({
       classificazioni: [],
       formulazioni: [],
     });
+    setSortOption("relevance");
+    saveFilters({});
+  };
+
+  // Helper to build query string from current filters
+  const buildFilterQueryString = (): string => {
+    const params = new URLSearchParams();
+
+    if (filters.classificazioni.length > 0) {
+      const classification = classificazioni.find(
+        (c: any) => c.documentId === filters.classificazioni[0],
+      );
+      if (classification) {
+        params.append(
+          "classificazione",
+          normalizeToSlug(getName(classification)),
+        );
+      }
+    }
+
+    if (filters.areeTerapeutiche.length > 0) {
+      const area = areeTerapeutiche.find(
+        (a: any) => a.documentId === filters.areeTerapeutiche[0],
+      );
+      if (area) {
+        params.append("area", normalizeToSlug(getName(area)));
+      }
+    }
+
+    if (filters.formulazioni.length > 0) {
+      const formulazione = formulazioni.find(
+        (f: any) => f.documentId === filters.formulazioni[0],
+      );
+      if (formulazione) {
+        params.append(
+          "formulazione",
+          formulazione.Slug || normalizeToSlug(getName(formulazione)),
+        );
+      }
+    }
+
+    return params.toString() ? `?${params.toString()}` : "";
   };
 
   return (
     <section className="py-20 bg-[#F5F5F5]">
       <div className="container-dmg">
         <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {/* Sidebar Filters */}
             <aside className="lg:col-span-1 space-y-6 h-fit">
               {/* Search Box */}
@@ -403,43 +711,129 @@ export default function ProductsGrid({
               <div className="bg-white rounded-[13px] p-[30px]">
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="text-[12px] font-medium text-[#E6E6EA] uppercase tracking-wider">
-                    Filtra Prodotti
+                    {filterProducts}
                   </h3>
-                  <button
-                    onClick={resetFilters}
-                    className="relative group w-8 h-8 rounded-full border border-[#E6E6EA] flex items-center justify-center hover:bg-black hover:border-black hover:text-white transition-all duration-300 text-gray-400 cursor-pointer"
-                    aria-label="Resetta filtri"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-4 h-4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
-                      />
-                    </svg>
+                  <div className="flex items-center gap-2">
+                    {/* Sort Dropdown (Custom) */}
+                    <div ref={sortRef} className="relative">
+                      <button
+                        onClick={() => setIsSortOpen(!isSortOpen)}
+                        className="flex items-center justify-between gap-3 bg-white border border-[#E6E6EA] rounded-full px-4 py-2 min-w-[100px] text-xs text-black hover:border-black transition-all duration-200"
+                        title="Ordina prodotti"
+                      >
+                        <span className="select-none font-medium">
+                          {sortOption === "relevance"
+                            ? relevanceLabel
+                            : sortOption === "az"
+                              ? "A-Z"
+                              : "Z-A"}
+                        </span>
+                        <svg
+                          className={`w-3 h-3 text-black transform transition-transform duration-200 ${
+                            isSortOpen ? "rotate-180" : ""
+                          }`}
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </button>
 
-                    {/* Tooltip */}
-                    <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10 whitespace-nowrap">
-                      <div className="bg-black text-white text-xs px-3 py-1.5 rounded-full shadow-lg">
-                        Resetta Filtri
-                      </div>
-                      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-black rotate-45"></div>
+                      {/* Dropdown Menu */}
+                      {isSortOpen && (
+                        <div className="absolute top-full right-0 mt-2 w-32 bg-white border border-[#E6E6EA] rounded-[15px] p-2 z-20 shadow-lg flex flex-col gap-1">
+                          <button
+                            onClick={() => {
+                              setSortOption("relevance");
+                              setIsSortOpen(false);
+                            }}
+                            className={`px-3 py-2 rounded-[10px] text-left text-xs font-medium transition-colors duration-200 w-full flex items-center justify-between ${
+                              sortOption === "relevance"
+                                ? "bg-[#C34069] text-white"
+                                : "text-black hover:bg-gray-50 hover:text-[#C34069]"
+                            }`}
+                          >
+                            <span>{relevanceLabel}</span>
+                            {sortOption === "relevance" && (
+                              <span className="text-[10px]">✓</span>
+                            )}
+                          </button>
+                          <button
+                            onClick={() => {
+                              setSortOption("az");
+                              setIsSortOpen(false);
+                            }}
+                            className={`px-3 py-2 rounded-[10px] text-left text-xs font-medium transition-colors duration-200 w-full flex items-center justify-between ${
+                              sortOption === "az"
+                                ? "bg-[#C34069] text-white"
+                                : "text-black hover:bg-gray-50 hover:text-[#C34069]"
+                            }`}
+                          >
+                            <span>A-Z</span>
+                            {sortOption === "az" && (
+                              <span className="text-[10px]">✓</span>
+                            )}
+                          </button>
+                          <button
+                            onClick={() => {
+                              setSortOption("za");
+                              setIsSortOpen(false);
+                            }}
+                            className={`px-3 py-2 rounded-[10px] text-left text-xs font-medium transition-colors duration-200 w-full flex items-center justify-between ${
+                              sortOption === "za"
+                                ? "bg-[#C34069] text-white"
+                                : "text-black hover:bg-gray-50 hover:text-[#C34069]"
+                            }`}
+                          >
+                            <span>Z-A</span>
+                            {sortOption === "za" && (
+                              <span className="text-[10px]">✓</span>
+                            )}
+                          </button>
+                        </div>
+                      )}
                     </div>
-                  </button>
+
+                    {/* Reset Button */}
+                    <button
+                      onClick={resetFilters}
+                      className="relative group w-8 h-8 rounded-full border border-[#E6E6EA] flex items-center justify-center hover:bg-black hover:border-black hover:text-white transition-all duration-300 text-gray-400 cursor-pointer"
+                      aria-label={resetFiltersLabel}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                        />
+                      </svg>
+
+                      {/* Tooltip */}
+                      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10 whitespace-nowrap">
+                        <div className="bg-black text-white text-xs px-3 py-1.5 rounded-full shadow-lg">
+                          {resetFiltersLabel}
+                        </div>
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-black rotate-45"></div>
+                      </div>
+                    </button>
+                  </div>
                 </div>
 
                 {/* Aree Terapeutiche */}
-                <div className="mb-6">
-                  <p className="text-[18px] font-semibold text-[#929292] mb-3">
-                    Aree Terapeutiche
-                  </p>
+                <FilterSection title={therapeuticAreas}>
                   <div className="grid grid-cols-2 gap-2">
                     {areeTerapeutiche.map((area) => (
                       <button
@@ -450,23 +844,20 @@ export default function ProductsGrid({
                         className={`w-full py-2 rounded-full text-[13px] font-normal transition-all duration-300 border-[0.75px] cursor-pointer ${
                           filters.areeTerapeutiche.includes(area.documentId)
                             ? "bg-black text-white border-black"
-                            : "bg-white text-gray-700 border-[#E6E6EA] hover:bg-black hover:text-white hover:border-black"
+                            : "bg-white text-black border-[#E6E6EA] hover:bg-black hover:text-white hover:border-black"
                         }`}
                       >
                         {getName(area)}
                       </button>
                     ))}
                   </div>
-                </div>
+                </FilterSection>
 
                 {/* Divider */}
-                <div className="h-[1px] bg-[#E6E6EA] mb-6"></div>
+                <div className="h-[1px] bg-[#E6E6EA] mb-6 hidden lg:block"></div>
 
                 {/* Classificazione */}
-                <div className="mb-6">
-                  <p className="text-[18px] font-semibold text-[#929292] mb-3">
-                    Classificazione
-                  </p>
+                <FilterSection title={classification}>
                   <div className="grid grid-cols-2 gap-2">
                     {classificazioni.map((classe) => (
                       <button
@@ -477,23 +868,20 @@ export default function ProductsGrid({
                         className={`w-full py-2 rounded-full text-[13px] font-normal transition-all duration-300 border-[0.75px] cursor-pointer ${
                           filters.classificazioni.includes(classe.documentId)
                             ? "bg-black text-white border-black"
-                            : "bg-white text-gray-700 border-[#E6E6EA] hover:bg-black hover:text-white hover:border-black"
+                            : "bg-white text-black border-[#E6E6EA] hover:bg-black hover:text-white hover:border-black"
                         }`}
                       >
                         {getName(classe)}
                       </button>
                     ))}
                   </div>
-                </div>
+                </FilterSection>
 
                 {/* Divider */}
-                <div className="h-[1px] bg-[#E6E6EA] mb-6"></div>
+                <div className="h-[1px] bg-[#E6E6EA] mb-6 hidden lg:block"></div>
 
                 {/* Formulazione */}
-                <div className="mb-6">
-                  <p className="text-[18px] font-semibold text-[#929292] mb-3">
-                    Formulazione
-                  </p>
+                <FilterSection title={formulation}>
                   <div className="grid grid-cols-2 gap-2">
                     {formulazioni.map((form) => (
                       <button
@@ -504,110 +892,192 @@ export default function ProductsGrid({
                         className={`w-full py-2 rounded-full text-[13px] font-normal transition-all duration-300 border-[0.75px] cursor-pointer ${
                           filters.formulazioni.includes(form.documentId)
                             ? "bg-black text-white border-black"
-                            : "bg-white text-gray-700 border-[#E6E6EA] hover:bg-black hover:text-white hover:border-black"
+                            : "bg-white text-black border-[#E6E6EA] hover:bg-black hover:text-white hover:border-black"
                         }`}
                       >
                         {getName(form)}
                       </button>
                     ))}
                   </div>
-                </div>
+                </FilterSection>
               </div>
             </aside>
 
-            {/* Products Grid */}
-            <div className="lg:col-span-3">
+            {/* Products/Drugs Grid */}
+            <div className="lg:col-span-2 xl:col-span-3">
+              {/* Combined Grid: Products + Drugs with unified pagination */}
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {displayedProducts
-                  .slice(0, itemsToShow)
-                  .map((product, index) => (
-                    <div
-                      key={product.documentId}
-                      className={`bg-white h-full rounded-[12px] overflow-hidden flex flex-col shadow-lg transform transition-all duration-500 hover:scale-[1.02] ${
-                        isAnimatingOut
-                          ? "animate-fade-out-down"
-                          : "animate-fade-in-up opacity-0"
-                      }`}
-                      style={{
-                        animationDelay: isAnimatingOut
-                          ? "0ms"
-                          : `${(index % 12) * 50}ms`, // Stagger reset per ogni batch, più veloce
-                      }}
-                    >
-                      {/* Product Image */}
-                      <Link
-                        href={`/${currentLocale}/prodotti/${product.Slug}`}
-                        className="relative w-full aspect-[285/220] bg-white overflow-hidden group flex-shrink-0 block cursor-pointer"
+                {combinedItems.slice(0, itemsToShow).map((item, index) => {
+                  if (item.type === "product") {
+                    const product = item.data as Product;
+                    return (
+                      <div
+                        key={product.documentId}
+                        className={`bg-white h-full rounded-[12px] overflow-hidden flex flex-col shadow-lg transform transition-all duration-500 hover:scale-[1.02] ${
+                          isAnimatingOut
+                            ? "animate-fade-out-down"
+                            : "animate-fade-in-up opacity-0"
+                        }`}
+                        style={{
+                          animationDelay: isAnimatingOut
+                            ? "0ms"
+                            : `${(index % 12) * 50}ms`,
+                        }}
                       >
-                        {product.Images && product.Images[0] ? (
-                          <Image
-                            src={getStrapiURL(product.Images[0].url)}
-                            alt={
-                              product.Images[0].alternativeText ||
-                              "Immagine prodotto"
-                            }
-                            fill
-                            quality={100}
-                            className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-gray-300">
-                            No Image
-                          </div>
-                        )}
-                      </Link>
-
-                      {/* Product Info */}
-                      <div className="px-[55px] py-[25px] flex flex-col flex-1">
-                        {/* Title */}
-                        <h3 className="text-[18px] font-semibold text-black leading-[1.2] text-left mb-3 transition-colors duration-200">
-                          {getName(product)}
-                        </h3>
-
-                        {/* Description */}
-                        <p className="text-[14px] font-thin text-black leading-[1.5] text-left transition-colors duration-200 mb-4">
-                          {extractTextFromBlocks(product.Description, 100)}
-                        </p>
-
-                        {/* Button */}
+                        {/* Product Image */}
                         <Link
-                          href={`/${currentLocale}/prodotti/${product.Slug}`}
-                          className="mb-8 flex items-center gap-3 bg-[#C34069]/16 text-[#C34069] px-6 py-3 rounded-full hover:bg-[#C34069] hover:text-white transition-all duration-300 cursor-pointer w-fit group"
+                          href={`/${currentLocale}/prodotti/${product.Slug}${buildFilterQueryString()}`}
+                          className="relative w-full aspect-[285/220] bg-white overflow-hidden group flex-shrink-0 block cursor-pointer"
                         >
-                          <span className="text-[12px] font-normal">
-                            {discoverMore}
-                          </span>
-                          <div className="bg-[#C34069] rounded-full w-6 h-6 flex items-center justify-center group-hover:bg-white transition-colors duration-300">
-                            <svg
-                              className="w-3 h-3 text-white transition-colors duration-300 group-hover:text-[#C34069]"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                              />
-                            </svg>
-                          </div>
+                          {product.Images && product.Images[0] ? (
+                            <Image
+                              src={getStrapiURL(product.Images[0].url)}
+                              alt={
+                                product.Images[0].alternativeText ||
+                                "Immagine prodotto"
+                              }
+                              fill
+                              quality={100}
+                              className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-gray-300">
+                              No Image
+                            </div>
+                          )}
                         </Link>
+
+                        {/* Product Info */}
+                        <div className="px-[55px] py-[25px] flex flex-col flex-1">
+                          {/* Title */}
+                          <h3 className="text-[18px] font-semibold text-black leading-[1.2] text-left mb-3 transition-colors duration-200">
+                            {getName(product)}
+                          </h3>
+
+                          {/* Description */}
+                          <p className="text-[14px] font-thin text-black leading-[1.5] text-left transition-colors duration-200 mb-4">
+                            {extractTextFromBlocks(product.Description, 100)}
+                          </p>
+
+                          {/* Button */}
+                          <Link
+                            href={`/${currentLocale}/prodotti/${product.Slug}${buildFilterQueryString()}`}
+                            className="mb-8 flex items-center gap-3 bg-[#C34069]/16 text-[#C34069] px-6 py-3 rounded-full hover:bg-[#C34069] hover:text-white transition-all duration-300 cursor-pointer w-fit group"
+                          >
+                            <span className="text-[12px] font-normal">
+                              {discoverMore}
+                            </span>
+                            <div className="bg-[#C34069] rounded-full w-6 h-6 flex items-center justify-center group-hover:bg-white transition-colors duration-300">
+                              <svg
+                                className="w-3 h-3 text-white transition-colors duration-300 group-hover:text-[#C34069]"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                />
+                              </svg>
+                            </div>
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  } else {
+                    // Drug card
+                    const drug = item.data as Drug;
+                    const drugName = drug.Nome ?? drug.Name ?? "";
+                    const drugLink =
+                      drug.LinkEsterno ?? drug.ExternalLink ?? "";
+
+                    return (
+                      <div
+                        key={`drug-${drug.documentId}`}
+                        className={`bg-white h-full rounded-[12px] overflow-hidden flex flex-col shadow-lg transform transition-all duration-500 hover:scale-[1.02] ${
+                          isAnimatingOut
+                            ? "animate-fade-out-down"
+                            : "animate-fade-in-up opacity-0"
+                        }`}
+                        style={{
+                          animationDelay: isAnimatingOut
+                            ? "0ms"
+                            : `${(index % 12) * 50}ms`,
+                        }}
+                      >
+                        {/* Drug Logo - Clickable */}
+                        <a
+                          href={drugLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative w-full aspect-[285/220] bg-white overflow-hidden group flex-shrink-0 flex items-center justify-center cursor-pointer"
+                        >
+                          {drug.Logo?.url ? (
+                            <Image
+                              src={getStrapiURL(drug.Logo.url)}
+                              alt={drug.Logo.alternativeText || drugName}
+                              fill
+                              quality={100}
+                              className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-gray-300">
+                              No Image
+                            </div>
+                          )}
+                        </a>
+
+                        {/* Drug Info */}
+                        <div className="px-[55px] py-[25px] flex flex-col flex-1">
+                          {/* Fixed Description Text */}
+                          <p className="text-[14px] font-thin text-black leading-[1.5] text-left transition-colors duration-200 mb-4">
+                            {drugLeafletText}
+                          </p>
+
+                          {/* External Link Button */}
+                          <a
+                            href={drugLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mb-8 flex items-center gap-3 bg-[#C34069]/16 text-[#C34069] px-6 py-3 rounded-full hover:bg-[#C34069] hover:text-white transition-all duration-300 cursor-pointer w-fit group"
+                          >
+                            <span className="text-[12px] font-normal">
+                              {visitSiteLabel}
+                            </span>
+                            <div className="bg-[#C34069] rounded-full w-6 h-6 flex items-center justify-center group-hover:bg-white transition-colors duration-300">
+                              <svg
+                                className="w-3 h-3 text-white transition-colors duration-300 group-hover:text-[#C34069]"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                />
+                              </svg>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    );
+                  }
+                })}
               </div>
 
-              {!isAnimatingOut && displayedProducts.length === 0 && (
+              {/* No results message */}
+              {!isAnimatingOut && combinedItems.length === 0 && (
                 <div className="text-center py-20 animate-fade-in-up">
-                  <p className="text-gray-500 text-lg">
-                    Nessun prodotto trovato con i filtri selezionati.
-                  </p>
+                  <p className="text-gray-500 text-lg">{noProductsFound}</p>
                 </div>
               )}
 
               {/* Infinite Scroll Loader */}
-              {!isAnimatingOut && itemsToShow < displayedProducts.length && (
+              {!isAnimatingOut && itemsToShow < totalItemsCount && (
                 <div ref={loaderRef} className="flex justify-center mt-12 py-4">
                   <Loader2 className="w-8 h-8 text-[#C34069] animate-spin" />
                 </div>

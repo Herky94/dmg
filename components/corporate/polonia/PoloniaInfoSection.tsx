@@ -2,14 +2,25 @@
 
 import Link from "next/link";
 
-export default function PoloniaInfoSection() {
+interface PoloniaInfoSectionProps {
+  locale?: string;
+  contactLabel?: string;
+}
+
+export default function PoloniaInfoSection({
+  locale = "it",
+  contactLabel = "CONTATTACI",
+}: PoloniaInfoSectionProps) {
   return (
     <>
       {/* Breadcrumb Navigation */}
       <div className="bg-white py-[20px] pb-[15px]">
         <div className="container-dmg text-[20px] font-light">
           <span className="text-[#919191]">
-            <Link href="/" className="hover:text-[#C34069] transition-colors">
+            <Link
+              href={`/${locale}`}
+              className="hover:text-[#C34069] transition-colors"
+            >
               Home
             </Link>{" "}
             &gt; Corporate &gt;{" "}
@@ -67,10 +78,10 @@ export default function PoloniaInfoSection() {
             {/* Button */}
             <div className="pt-2">
               <Link
-                href="/contatti"
+                href={`/${locale}/contatti`}
                 className="group inline-flex items-center gap-4 bg-[#C34069] border border-[#C34069] text-white px-8 py-3 rounded-full text-sm font-medium hover:bg-white hover:text-[#C34069] transition-all duration-300"
               >
-                <span className="uppercase tracking-wider">CONTATTACI</span>
+                <span className="uppercase tracking-wider">{contactLabel}</span>
                 <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-[#C34069] transition-colors duration-300">
                   <svg
                     className="w-4 h-4 text-[#C34069] transform transition-transform duration-300 group-hover:rotate-45 group-hover:text-white"

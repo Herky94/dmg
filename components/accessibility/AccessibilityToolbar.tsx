@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 import { getTranslations, type Locale } from "@/lib/translations";
 
 // Icone SVG minimali
@@ -145,14 +145,19 @@ const Icons = {
   ),
 };
 
-export default function AccessibilityToolbar() {
-  const pathname = usePathname();
-  const currentLocale: Locale = pathname.startsWith("/it")
-    ? "it"
-    : pathname.startsWith("/en")
-      ? "en"
-      : "it";
-  const t = getTranslations(currentLocale);
+export default function AccessibilityToolbar({
+  locale = "it",
+}: {
+  locale?: Locale;
+}) {
+  const t = getTranslations(locale);
+  // const pathname = usePathname();
+  // const currentLocale: Locale = pathname.startsWith("/it")
+  //   ? "it"
+  //   : pathname.startsWith("/en")
+  //     ? "en"
+  //     : "it";
+  // const t = getTranslations(currentLocale);
 
   const [isOpen, setIsOpen] = useState(false);
   const [settings, setSettings] = useState({
@@ -262,7 +267,9 @@ export default function AccessibilityToolbar() {
         // Create badge
         const badge = document.createElement("div");
         badge.className = isMissing ? "alt-warning-badge" : "alt-info-badge";
-        badge.textContent = isMissing ? "⚠ Manca ALT" : `✓ ALT: "${altAttr}"`;
+        badge.textContent = isMissing
+          ? t.accessibility.missingAlt
+          : `${t.accessibility.foundAlt} "${altAttr}"`;
 
         Object.assign(badge.style, {
           position: "absolute",
@@ -376,8 +383,8 @@ export default function AccessibilityToolbar() {
           <button
             onClick={() => setIsOpen(false)}
             className="text-white hover:bg-white/10 transition-colors p-2 rounded"
-            title="Chiudi"
-            aria-label="Chiudi"
+            title={t.accessibility.close}
+            aria-label={t.accessibility.close}
           >
             <svg
               className="w-5 h-5"
@@ -402,7 +409,7 @@ export default function AccessibilityToolbar() {
               onClick={() =>
                 setSettings((s) => ({ ...s, keyboardNav: !s.keyboardNav }))
               }
-              label="Navigazione tastiera"
+              label={t.accessibility.keyboardNav}
               icon={<Icons.Keyboard />}
             />
             <ToolButton
@@ -413,12 +420,12 @@ export default function AccessibilityToolbar() {
                   disableAnimations: !s.disableAnimations,
                 }))
               }
-              label="Blocca animazioni"
+              label={t.accessibility.disableAnimations}
               icon={<Icons.Pause />}
             />
           </div>
 
-          <Section title="Contrasto Cromatico">
+          <Section title={t.accessibility.contrast}>
             <div className="grid grid-cols-3 gap-2">
               <ToolCard
                 active={settings.contrast === "monochrome"}
@@ -429,7 +436,7 @@ export default function AccessibilityToolbar() {
                       s.contrast === "monochrome" ? "normal" : "monochrome",
                   }))
                 }
-                label="Bianco e Nero"
+                label={t.accessibility.monochrome}
                 icon="Bk"
               />
               <ToolCard
@@ -440,7 +447,7 @@ export default function AccessibilityToolbar() {
                     contrast: s.contrast === "soft" ? "normal" : "soft",
                   }))
                 }
-                label="Contrasto Luminoso"
+                label={t.accessibility.brightContrast}
                 icon="Lc"
               />
               <ToolCard
@@ -451,20 +458,20 @@ export default function AccessibilityToolbar() {
                     contrast: s.contrast === "hard" ? "normal" : "hard",
                   }))
                 }
-                label="Contrasto Negativo"
+                label={t.accessibility.negativeContrast}
                 icon="Nc"
               />
             </div>
           </Section>
 
-          <Section title="Testo e Zoom">
+          <Section title={t.accessibility.textAndZoom}>
             <div className="grid grid-cols-2 gap-2">
               <div className="grid grid-cols-2 gap-1 bg-white border border-gray-300 rounded-md p-1">
                 <button
                   onClick={() => handleZoom("out")}
                   disabled={settings.zoomValue <= 1}
                   className="flex items-center justify-center hover:bg-gray-100 rounded disabled:opacity-30"
-                  title="Diminuisci Zoom"
+                  title={t.accessibility.zoomOut}
                 >
                   <Icons.ZoomOut />
                 </button>
@@ -472,7 +479,7 @@ export default function AccessibilityToolbar() {
                   onClick={() => handleZoom("in")}
                   disabled={settings.zoomValue >= 1.6}
                   className="flex items-center justify-center hover:bg-gray-100 rounded disabled:opacity-30"
-                  title="Aumenta Zoom"
+                  title={t.accessibility.zoomIn}
                 >
                   <Icons.ZoomIn />
                 </button>
@@ -485,13 +492,13 @@ export default function AccessibilityToolbar() {
                 onClick={() =>
                   setSettings((s) => ({ ...s, readableFont: !s.readableFont }))
                 }
-                label="Font Leggibile"
+                label={t.accessibility.readableFont}
                 icon="Aa"
               />
             </div>
           </Section>
 
-          <Section title="Evidenzia Contenuto">
+          <Section title={t.accessibility.highlightContent}>
             <div className="grid grid-cols-2 gap-2">
               <ToolCard
                 active={settings.highlightLinks}
@@ -501,7 +508,7 @@ export default function AccessibilityToolbar() {
                     highlightLinks: !s.highlightLinks,
                   }))
                 }
-                label="Links"
+                label={t.accessibility.links}
                 icon={<Icons.Link />}
               />
               <ToolCard
@@ -512,20 +519,20 @@ export default function AccessibilityToolbar() {
                     highlightHeaders: !s.highlightHeaders,
                   }))
                 }
-                label="Titoli"
+                label={t.accessibility.headers}
                 icon="H"
               />
             </div>
           </Section>
 
-          <Section title="Leggibilità">
+          <Section title={t.accessibility.readability}>
             <div className="grid grid-cols-2 gap-2">
               <ToolCard
                 active={settings.textSpacing}
                 onClick={() =>
                   setSettings((s) => ({ ...s, textSpacing: !s.textSpacing }))
                 }
-                label="Spaziatura Testo"
+                label={t.accessibility.textSpacing}
                 icon={<Icons.Spacing />}
               />
               <ToolCard
@@ -536,13 +543,13 @@ export default function AccessibilityToolbar() {
                     textAlign: s.textAlign === "left" ? "default" : "left",
                   }))
                 }
-                label="Allinea Sinistra"
+                label={t.accessibility.alignLeft}
                 icon={<Icons.AlignLeft />}
               />
             </div>
           </Section>
 
-          <Section title="Colori">
+          <Section title={t.accessibility.colors}>
             <div className="grid grid-cols-1 gap-2">
               <ToolCard
                 active={settings.lowSaturation}
@@ -552,13 +559,13 @@ export default function AccessibilityToolbar() {
                     lowSaturation: !s.lowSaturation,
                   }))
                 }
-                label="Riduzione Saturazione"
+                label={t.accessibility.lowSaturation}
                 icon={<Icons.Saturation />}
               />
             </div>
           </Section>
 
-          <Section title="Immagini">
+          <Section title={t.accessibility.images}>
             <div className="grid grid-cols-1 gap-2">
               <ToolCard
                 active={settings.highlightImagesNoAlt}
@@ -568,13 +575,13 @@ export default function AccessibilityToolbar() {
                     highlightImagesNoAlt: !s.highlightImagesNoAlt,
                   }))
                 }
-                label="Mostra testo ALT"
+                label={t.accessibility.showAltText}
                 icon={<Icons.Image />}
               />
             </div>
           </Section>
 
-          <Section title="Cursore">
+          <Section title={t.accessibility.cursor}>
             <div className="grid grid-cols-2 gap-2">
               <ToolCard
                 active={settings.cursor === "white"}
@@ -584,7 +591,7 @@ export default function AccessibilityToolbar() {
                     cursor: s.cursor === "white" ? "normal" : "white",
                   }))
                 }
-                label="Cursore Bianco"
+                label={t.accessibility.whiteCursor}
                 icon="Cw"
               />
               <ToolCard
@@ -595,7 +602,7 @@ export default function AccessibilityToolbar() {
                     cursor: s.cursor === "black" ? "normal" : "black",
                   }))
                 }
-                label="Cursore Nero"
+                label={t.accessibility.blackCursor}
                 icon="Cb"
               />
             </div>
@@ -606,7 +613,7 @@ export default function AccessibilityToolbar() {
             className="w-full py-2.5 bg-white text-gray-600 rounded-lg hover:bg-gray-50 border border-gray-300 transition-colors text-xs flex items-center justify-center gap-2"
           >
             <Icons.Reset />
-            Ripristina impostazioni
+            {t.accessibility.reset}
           </button>
         </div>
       </div>

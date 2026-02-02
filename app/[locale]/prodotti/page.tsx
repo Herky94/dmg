@@ -8,6 +8,7 @@ import {
   getAreasEndpoint,
   getClassificationsEndpoint,
   getFormulationsEndpoint,
+  getDrugsEndpoint,
 } from "@/lib/strapi";
 import { getTranslations, Locale } from "@/lib/translations";
 import type { Metadata } from "next";
@@ -48,6 +49,11 @@ function getHeroConfigs(t: ReturnType<typeof getTranslations>) {
       backgroundImage: "/images/integratori-alimentari-bg.jpg",
     },
     farmaci: {
+      title: t.pages.prodotti.farmaci.title,
+      description: t.pages.prodotti.farmaci.description,
+      backgroundImage: "/images/dispositivi-medici-bg.jpg",
+    },
+    drug: {
       title: t.pages.prodotti.farmaci.title,
       description: t.pages.prodotti.farmaci.description,
       backgroundImage: "/images/dispositivi-medici-bg.jpg",
@@ -97,39 +103,47 @@ async function getData(locale: "it" | "en" = "it") {
     const areasEndpoint = getAreasEndpoint(locale);
     const classificationsEndpoint = getClassificationsEndpoint(locale);
     const formulationsEndpoint = getFormulationsEndpoint(locale);
+    const drugsEndpoint = getDrugsEndpoint(locale);
 
-    const [productsRes, areasRes, classificationsRes, formulationsRes] =
-      await Promise.all([
-        fetch(
-          getAPIURL(`${productsEndpoint}?populate=*&pagination[pageSize]=1000`),
-          {
-            next: { revalidate: REVALIDATE_TIME },
-          },
-        ),
-        fetch(getAPIURL(`${areasEndpoint}?pagination[pageSize]=100`), {
+    const [
+      productsRes,
+      areasRes,
+      classificationsRes,
+      formulationsRes,
+      drugsRes,
+    ] = await Promise.all([
+      fetch(
+        getAPIURL(`${productsEndpoint}?populate=*&pagination[pageSize]=1000`),
+        {
           next: { revalidate: REVALIDATE_TIME },
-        }),
-        fetch(
-          getAPIURL(`${classificationsEndpoint}?pagination[pageSize]=100`),
-          {
-            next: { revalidate: REVALIDATE_TIME },
-          },
-        ),
-        fetch(getAPIURL(`${formulationsEndpoint}?pagination[pageSize]=100`), {
-          next: { revalidate: REVALIDATE_TIME },
-        }),
-      ]);
+        },
+      ),
+      fetch(getAPIURL(`${areasEndpoint}?pagination[pageSize]=100`), {
+        next: { revalidate: REVALIDATE_TIME },
+      }),
+      fetch(getAPIURL(`${classificationsEndpoint}?pagination[pageSize]=100`), {
+        next: { revalidate: REVALIDATE_TIME },
+      }),
+      fetch(getAPIURL(`${formulationsEndpoint}?pagination[pageSize]=100`), {
+        next: { revalidate: REVALIDATE_TIME },
+      }),
+      fetch(getAPIURL(`${drugsEndpoint}?populate=*&pagination[pageSize]=100`), {
+        next: { revalidate: REVALIDATE_TIME },
+      }),
+    ]);
 
     const products = await productsRes.json();
     const areas = await areasRes.json();
     const classifications = await classificationsRes.json();
     const formulations = await formulationsRes.json();
+    const drugs = await drugsRes.json();
 
     return {
       products: products.data || [],
       areas: areas.data || [],
       classifications: classifications.data || [],
       formulations: formulations.data || [],
+      drugs: drugs.data || [],
     };
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -138,6 +152,7 @@ async function getData(locale: "it" | "en" = "it") {
       areas: [],
       classifications: [],
       formulations: [],
+      drugs: [],
     };
   }
 }
@@ -157,7 +172,7 @@ export default async function ProdottiPage({
   const t = getTranslations(locale);
   const heroConfigs = getHeroConfigs(t);
 
-  const { products, areas, classifications, formulations } =
+  const { products, areas, classifications, formulations, drugs } =
     await getData(locale);
   const searchParamsResolved = await searchParams;
 
@@ -165,11 +180,14 @@ export default async function ProdottiPage({
   const classificazioneFilter = searchParamsResolved.classificazione;
   const areaFilter = searchParamsResolved.area;
   const formulazioneFilter = searchParamsResolved.formulazione;
+  type HeroKey = keyof typeof heroConfigs;
+  const isHeroKey = (k: string): k is HeroKey => k in heroConfigs;
 
   // Get hero config based on classification filter (hero changes only for classification)
-  const heroConfig = classificazioneFilter
-    ? heroConfigs[classificazioneFilter] || heroConfigs.default
-    : heroConfigs.default;
+  const heroConfig =
+    classificazioneFilter && isHeroKey(classificazioneFilter)
+      ? heroConfigs[classificazioneFilter]
+      : heroConfigs.default;
 
   return (
     <div className="min-h-screen bg-white">
@@ -188,12 +206,24 @@ export default async function ProdottiPage({
         initialAreas={areas}
         initialClassifications={classifications}
         initialFormulations={formulations}
+        initialDrugs={drugs}
         initialClassificazioneFilter={classificazioneFilter}
         initialAreaFilter={areaFilter}
         initialFormulazioneFilter={formulazioneFilter}
         searchLabel={t.common.searchProduct}
         searchPlaceholder={t.common.search}
         discoverMore={t.common.discoverMore}
+        filterProducts={t.common.filterProducts}
+        resetFiltersLabel={t.common.resetFilters}
+        therapeuticAreas={t.common.therapeuticAreas}
+        classification={t.common.classification}
+        formulation={t.common.formulation}
+        noProductsFound={t.common.noProductsFound}
+        sortLabel={t.common.sort}
+        relevanceLabel={t.common.relevance}
+        drugLeafletText={t.common.drugLeafletText}
+        visitSiteLabel={t.common.visitSite}
+        noDrugsFound={t.common.noDrugsFound}
       />
 
       <Footer />

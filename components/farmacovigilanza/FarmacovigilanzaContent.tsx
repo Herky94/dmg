@@ -4,11 +4,47 @@ import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import FarmacovigilanzaForm from "./FarmacovigilanzaForm";
 
+interface FormLabels {
+  adverseEventTitle?: string;
+  adverseEventDescription?: string;
+  aifaLinkText?: string;
+  channelsIntro?: string;
+  requestsAndReports?: string;
+  requestTypeLabel?: string;
+  requestTypeHint?: string;
+  adverseEventReport?: string;
+  informationRequest?: string;
+  other?: string;
+  reporterDataLabel?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  productInfoLabel?: string;
+  productInfoHint?: string;
+  drugName?: string;
+  batchNumber?: string;
+  startDate?: string;
+  endDate?: string;
+  detailedDescriptionLabel?: string;
+  detailedDescriptionHint?: string;
+  descriptionPlaceholder?: string;
+  privacyDeclaration?: string;
+  infoDeclaration?: string;
+  errorSubmitting?: string;
+}
+
 interface FarmacovigilanzaContentProps {
   subtitle: string;
   description: string;
   cards: string[];
   bottomText: string;
+  formLabels?: FormLabels;
+  sendLabel?: string;
+  sendingLabel?: string;
+  sentLabel?: string;
+  successMessage?: string;
+  declarationsRequired?: string;
+  locale?: string;
 }
 
 export default function FarmacovigilanzaContent({
@@ -16,6 +52,13 @@ export default function FarmacovigilanzaContent({
   description,
   cards,
   bottomText,
+  formLabels = {},
+  sendLabel,
+  sendingLabel,
+  sentLabel,
+  successMessage,
+  declarationsRequired,
+  locale = "it",
 }: FarmacovigilanzaContentProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -220,18 +263,16 @@ export default function FarmacovigilanzaContent({
       {/* Form Section */}
       <div className="pb-[100px] container-dmg">
         <div className="max-w-[1400px] mx-auto">
-          <FarmacovigilanzaForm />
+          <FarmacovigilanzaForm
+            labels={formLabels}
+            sendLabel={sendLabel}
+            sendingLabel={sendingLabel}
+            sentLabel={sentLabel}
+            successMessage={successMessage}
+            declarationsRequired={declarationsRequired}
+            locale={locale}
+          />
         </div>
-      </div>
-
-      {/* Full Width Image */}
-      <div className="w-full h-[575px] relative overflow-hidden">
-        <div
-          className="w-full h-full bg-cover bg-center"
-          style={{
-            backgroundImage: "url('/images/bg-contatti.png')",
-          }}
-        />
       </div>
     </section>
   );

@@ -12,6 +12,22 @@ import {
 import Achievements3DCarousel from "@/components/storia/Achievements3DCarousel";
 import EcoMode from "@/components/ui/EcoMode";
 import { getTranslations, Locale } from "@/lib/translations";
+import { getAPIURL, getProductsEndpoint, REVALIDATE_TIME } from "@/lib/strapi";
+
+async function getFeaturedProducts(locale: "it" | "en") {
+  try {
+    const productsEndpoint = getProductsEndpoint(locale);
+    const res = await fetch(
+      getAPIURL(`${productsEndpoint}?populate=*&pagination[pageSize]=10`),
+      { next: { revalidate: REVALIDATE_TIME } },
+    );
+    const data = await res.json();
+    return data.data || [];
+  } catch (error) {
+    console.error("Error fetching featured products:", error);
+    return [];
+  }
+}
 
 export default async function Home({
   params,
@@ -20,6 +36,7 @@ export default async function Home({
 }) {
   const { locale } = await params;
   const t = getTranslations(locale);
+  const featuredProducts = await getFeaturedProducts(locale);
 
   return (
     <div className="min-h-screen">
@@ -64,6 +81,7 @@ export default async function Home({
           cta={t.home.featuredProducts.cta}
           description={t.home.featuredProducts.description}
           productCta={t.home.featuredProducts.productCta}
+          products={featuredProducts}
         />
         <InternationalSection
           title={t.home.international.title}

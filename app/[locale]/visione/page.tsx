@@ -1,6 +1,7 @@
 import { Header, Footer } from "@/components/layout";
 import { PageHero } from "@/components/shared";
 import { LeadershipSection } from "@/components/home";
+import VisionGallery from "@/components/visione/VisionGallery";
 import EcoMode from "@/components/ui/EcoMode";
 import type { Metadata } from "next";
 import { getTranslations, Locale } from "@/lib/translations";
@@ -57,6 +58,8 @@ export default async function VisionePage({
         playVideoAlt={t.home.leadership.playVideoAlt}
         videoNotSupported={t.home.leadership.videoNotSupported}
       />
+
+      <VisionGallery />
 
       <Footer />
       <EcoMode />

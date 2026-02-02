@@ -59,6 +59,7 @@ export default async function CertificazioniPage({
         title={t.certificazioni.departments.title}
         subtitle={t.certificazioni.departments.subtitle}
         departments={t.certificazioni.departments.list}
+        regulationLink={t.certificazioni.mdr.regulationLink}
       />
       <MdrRegulationSection
         paragraph1={t.certificazioni.mdr.paragraph1}

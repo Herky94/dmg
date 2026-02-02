@@ -5,7 +5,8 @@ import Image from "next/image";
 interface PageHeroProps {
   title: React.ReactNode;
   description?: string;
-  backgroundImage: string;
+  backgroundImage?: string;
+  backgroundVideo?: string;
   enableBlur?: boolean;
   actionButton?: React.ReactNode;
   className?: string; // Allow custom classes (e.g. for height)
@@ -17,6 +18,7 @@ export default function PageHero({
   title,
   description,
   backgroundImage,
+  backgroundVideo,
   enableBlur = true,
   actionButton,
   className,
@@ -39,8 +41,18 @@ export default function PageHero({
         className || "h-screen"
       }`}
     >
-      {/* Background Image with Blur */}
-      {backgroundImage ? (
+      {/* Background Video */}
+      {backgroundVideo ? (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src={backgroundVideo} type="video/mp4" />
+        </video>
+      ) : backgroundImage ? (
         <div
           className={`absolute inset-0 bg-cover bg-center z-0 scale-105 ${
             enableBlur ? "blur-[2px]" : ""
@@ -78,9 +90,11 @@ export default function PageHero({
         }`}
       >
         <div
-          className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center ${
-            contentAlignment === "center" ? "lg:items-center" : "lg:items-end"
-          }`}
+          className={`${
+            description || actionButton
+              ? "grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center"
+              : "flex flex-col"
+          } `}
         >
           {/* Title */}
           <h1 className="text-5xl md:text-6xl lg:text-[70px] xl:text-[110px] 2xl:text-[150px] font-thin text-white leading-[1.1]">
@@ -88,18 +102,20 @@ export default function PageHero({
           </h1>
 
           {/* Description */}
-          <div>
-            {description && (
-              <p
-                className={`text-white/90 text-base md:text-lg lg:text-base xl:text-xl 2xl:text-[20px] font-light leading-relaxed max-w-xl lg:max-w-md xl:max-w-xl ${
-                  actionButton ? "mb-8" : ""
-                }`}
-              >
-                {description}
-              </p>
-            )}
-            {actionButton}
-          </div>
+          {(description || actionButton) && (
+            <div>
+              {description && (
+                <p
+                  className={`text-white/90 text-base md:text-lg lg:text-base xl:text-xl 2xl:text-[20px] font-light leading-relaxed max-w-xl lg:max-w-md xl:max-w-xl ${
+                    actionButton ? "mb-8" : ""
+                  }`}
+                >
+                  {description}
+                </p>
+              )}
+              {actionButton}
+            </div>
+          )}
         </div>
       </div>
     </section>

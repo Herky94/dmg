@@ -6,7 +6,11 @@ import {
 } from "@/components/home";
 import JobPositionsGrid from "@/components/lavora-con-noi/JobPositionsGrid";
 import EcoMode from "@/components/ui/EcoMode";
-import { getAPIURL, REVALIDATE_TIME } from "@/lib/strapi";
+import {
+  getAPIURL,
+  REVALIDATE_TIME,
+  getJobPositionsEndpoint,
+} from "@/lib/strapi";
 import { getTranslations, Locale } from "@/lib/translations";
 import type { Metadata } from "next";
 
@@ -24,12 +28,15 @@ export async function generateMetadata({
   };
 }
 
-async function getJobPositions() {
+async function getJobPositions(locale: "it" | "en" = "it") {
   try {
+    const endpoint = getJobPositionsEndpoint(locale);
+    const activeFilter =
+      locale === "en"
+        ? "filters[Active][$eq]=true"
+        : "filters[Attiva][$eq]=true";
     const res = await fetch(
-      getAPIURL(
-        "posizioni-lavoratives?populate=*&filters[Attiva][$eq]=true&sort=publishedAt:desc",
-      ),
+      getAPIURL(`${endpoint}?populate=*&${activeFilter}&sort=publishedAt:desc`),
       {
         next: { revalidate: REVALIDATE_TIME },
       },
@@ -49,7 +56,7 @@ export default async function PosizioniApertePage({
 }) {
   const { locale } = await params;
   const t = getTranslations(locale);
-  const positions = await getJobPositions();
+  const positions = await getJobPositions(locale);
 
   return (
     <div className="min-h-screen bg-white">
@@ -69,7 +76,7 @@ export default async function PosizioniApertePage({
           </>
         }
         description={t.pages.posizioniAperte.description}
-        backgroundImage=""
+        backgroundImage="/images/at.webp"
         showScrollIndicator={true}
       />
 
@@ -77,7 +84,13 @@ export default async function PosizioniApertePage({
       <LogosHorizontalSection />
 
       {/* Grid Posizioni */}
-      <JobPositionsGrid positions={positions} applyLabel={t.common.apply} />
+      <JobPositionsGrid
+        positions={positions}
+        applyLabel={t.common.apply}
+        locale={locale}
+        noPositionsMessage={t.pages.posizioniAperte.noPositions}
+        publishedLabel={t.pages.posizioniAperte.published}
+      />
 
       {/* Sezione Zoom Immagine */}
       <ParallaxBuildingSection />

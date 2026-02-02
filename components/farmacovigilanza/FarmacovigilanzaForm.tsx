@@ -25,6 +25,35 @@ interface FarmacovigilanzaFormProps {
   sentLabel?: string;
   successMessage?: string;
   declarationsRequired?: string;
+  locale?: string;
+  labels?: {
+    adverseEventTitle?: string;
+    adverseEventDescription?: string;
+    aifaLinkText?: string;
+    channelsIntro?: string;
+    requestsAndReports?: string;
+    requestTypeLabel?: string;
+    requestTypeHint?: string;
+    adverseEventReport?: string;
+    informationRequest?: string;
+    other?: string;
+    reporterDataLabel?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    productInfoLabel?: string;
+    productInfoHint?: string;
+    drugName?: string;
+    batchNumber?: string;
+    startDate?: string;
+    endDate?: string;
+    detailedDescriptionLabel?: string;
+    detailedDescriptionHint?: string;
+    descriptionPlaceholder?: string;
+    privacyDeclaration?: string;
+    infoDeclaration?: string;
+    errorSubmitting?: string;
+  };
 }
 
 export default function FarmacovigilanzaForm({
@@ -33,7 +62,57 @@ export default function FarmacovigilanzaForm({
   sentLabel = "Inviato!",
   successMessage = "Segnalazione inviata con successo!",
   declarationsRequired = "Devi accettare entrambe le dichiarazioni per continuare.",
+  locale = "it",
+  labels = {},
 }: FarmacovigilanzaFormProps = {}) {
+  // Default labels with fallbacks
+  const formLabels = {
+    adverseEventTitle:
+      labels.adverseEventTitle || "Segnalazione evento avverso",
+    adverseEventDescription:
+      labels.adverseEventDescription ||
+      "Per la segnalazione di sospette reazioni avverse (adverse drug reaction - adr) da parte degli operatori sanitari o cittadini, è possibile",
+    aifaLinkText:
+      labels.aifaLinkText ||
+      "collegarsi al sito dell'Aifa (Agenzia Italiana del Farmaco).",
+    channelsIntro:
+      labels.channelsIntro ||
+      "D.M.G. Italia mette a disposizione i seguenti canali per segnalare un evento avverso legato all'impiego di un nostro farmaco:",
+    requestsAndReports: labels.requestsAndReports || "Richieste e Segnalazioni",
+    requestTypeLabel: labels.requestTypeLabel || "Tipo di richiesta",
+    requestTypeHint: labels.requestTypeHint || "lorem ipsum",
+    adverseEventReport:
+      labels.adverseEventReport || "Segnalazione evento avverso",
+    informationRequest:
+      labels.informationRequest || "Richiesta di informazioni",
+    other: labels.other || "Altro",
+    reporterDataLabel: labels.reporterDataLabel || "Dati del Segnalatore",
+    firstName: labels.firstName || "Nome",
+    lastName: labels.lastName || "Cognome",
+    email: labels.email || "Email",
+    productInfoLabel: labels.productInfoLabel || "Informazioni sul prodotto",
+    productInfoHint: labels.productInfoHint || "lorem ipsum",
+    drugName: labels.drugName || "Nome del farmaco",
+    batchNumber: labels.batchNumber || "Lotto (se disponibile)",
+    startDate: labels.startDate || "Data di inizio assunzione",
+    endDate: labels.endDate || "Data di fine assunzione (se conclusa)",
+    detailedDescriptionLabel:
+      labels.detailedDescriptionLabel || "Descrizione dettagliata",
+    detailedDescriptionHint:
+      labels.detailedDescriptionHint ||
+      "(Sintomi, tempistica, eventuali terapie concomitanti, esito dell'evento, ecc.)",
+    descriptionPlaceholder:
+      labels.descriptionPlaceholder ||
+      "Descrivici in modo chiaro l'evento o la richiesta",
+    privacyDeclaration:
+      labels.privacyDeclaration ||
+      "Dichiaro di aver letto l'informativa Privacy e autorizzo il trattamento dei dati personali ai sensi del Reg. UE n. 679 del 2016.",
+    infoDeclaration:
+      labels.infoDeclaration ||
+      "Dichiaro che le informazioni fornite sono corrette e complete al meglio delle mie conoscenze.",
+    errorSubmitting: labels.errorSubmitting || "Errore nell'invio. Riprova.",
+  };
+
   const [formData, setFormData] = useState<FormDataState>({
     tipoSegnalazione: "segnalazione",
     richiesta: "",
@@ -82,21 +161,14 @@ export default function FarmacovigilanzaForm({
       return;
     }
 
-    // Simulate API call
     try {
-      // const res = await fetch("/api/farmacovigilanza", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(formData),
-      // });
+      const res = await fetch("/api/farmacovigilanza", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, locale }),
+      });
 
-      // if (res.ok) {
-      //   setStatus("success");
-      //   // Reset form
-      // }
-
-      // For now, simulate success
-      setTimeout(() => {
+      if (res.ok) {
         setStatus("success");
         setFormData({
           tipoSegnalazione: "segnalazione",
@@ -113,7 +185,9 @@ export default function FarmacovigilanzaForm({
           privacy: false,
           consenso: false,
         });
-      }, 1000);
+      } else {
+        setStatus("error");
+      }
     } catch (error) {
       console.error(error);
       setStatus("error");
@@ -126,27 +200,24 @@ export default function FarmacovigilanzaForm({
         {/* Left Column */}
         <div>
           <h2 className="text-[28px] lg:text-[33px] font-light text-black mb-[30px]">
-            Segnalazione evento avverso
+            {formLabels.adverseEventTitle}
           </h2>
 
           <p className="text-[14px] lg:text-[17px] text-black/80 leading-relaxed mb-[50px]">
-            Per la segnalazione di sospette reazioni avverse (adverse drug
-            reaction - adr) da parte degli operatori sanitari o cittadini, è
-            possibile{" "}
+            {formLabels.adverseEventDescription}{" "}
             <a
               href="https://www.aifa.gov.it/content/segnalazioni-reazioni-avverse"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#C34069] underline hover:no-underline"
             >
-              collegarsi al sito dell'Aifa (Agenzia Italiana del Farmaco).
+              {formLabels.aifaLinkText}
             </a>
           </p>
 
           <div>
             <p className="text-[14px] lg:text-[17px] text-black/90 leading-relaxed mb-[25px] font-semibold">
-              D.M.G. Italia mette a disposizione i seguenti canali per segnalare
-              un evento avverso legato all'impiego di un nostro farmaco:
+              {formLabels.channelsIntro}
             </p>
 
             <div className="space-y-2">
@@ -158,7 +229,7 @@ export default function FarmacovigilanzaForm({
                   height={20}
                 />
                 <span className="text-[#C34069] underline">
-                  Richieste e Segnalazioni
+                  {formLabels.requestsAndReports}
                 </span>
               </p>
               <p className="text-[14px] lg:text-[20px] text-black flex items-center gap-[10px] font-semibold">
@@ -199,9 +270,11 @@ export default function FarmacovigilanzaForm({
             {/* Tipo di richiesta */}
             <div>
               <label className="text-[#C34069] text-base font-medium block mb-[15px]">
-                Tipo di richiesta*
+                {formLabels.requestTypeLabel}*
               </label>
-              <p className="text-[12px] text-gray-500 mb-[20px]">lorem ipsum</p>
+              <p className="text-[12px] text-gray-500 mb-[20px]">
+                {formLabels.requestTypeHint}
+              </p>
               <div className="space-y-3">
                 <label className="flex items-center space-x-[10px] cursor-pointer group">
                   <div className="relative">
@@ -240,7 +313,7 @@ export default function FarmacovigilanzaForm({
                     </div>
                   </div>
                   <span className="text-base text-black group-hover:text-[#C34069] transition-colors">
-                    Segnalazione evento avverso
+                    {formLabels.adverseEventReport}
                   </span>
                 </label>
 
@@ -281,7 +354,7 @@ export default function FarmacovigilanzaForm({
                     </div>
                   </div>
                   <span className="text-base text-black group-hover:text-[#C34069] transition-colors">
-                    Richiesta di informazioni
+                    {formLabels.informationRequest}
                   </span>
                 </label>
 
@@ -322,7 +395,7 @@ export default function FarmacovigilanzaForm({
                     </div>
                   </div>
                   <span className="text-base text-black group-hover:text-[#C34069] transition-colors">
-                    Altro
+                    {formLabels.other}
                   </span>
                 </label>
               </div>
@@ -331,14 +404,14 @@ export default function FarmacovigilanzaForm({
             {/* Dati del Segnalatore */}
             <div className="mt-[70px]">
               <label className="text-[#C34069] text-base font-medium block mb-[35px]">
-                Dati del Segnalatore*
+                {formLabels.reporterDataLabel}*
               </label>
 
               <div className="space-y-[35px]">
                 <input
                   type="text"
                   name="nome"
-                  placeholder="Nome*"
+                  placeholder={`${formLabels.firstName}*`}
                   value={formData.nome}
                   onChange={handleChange}
                   className="w-full bg-transparent border-b border-gray-300 focus:outline-none focus:border-[#C34069] transition-colors text-black placeholder-[#929292] pl-[15px] pb-[25px]"
@@ -347,7 +420,7 @@ export default function FarmacovigilanzaForm({
                 <input
                   type="text"
                   name="cognome"
-                  placeholder="Cognome*"
+                  placeholder={`${formLabels.lastName}*`}
                   value={formData.cognome}
                   onChange={handleChange}
                   className="w-full bg-transparent border-b border-gray-300 focus:outline-none focus:border-[#C34069] transition-colors text-black placeholder-[#929292] pl-[15px] pb-[25px]"
@@ -356,7 +429,7 @@ export default function FarmacovigilanzaForm({
                 <input
                   type="email"
                   name="email"
-                  placeholder="Email*"
+                  placeholder={`${formLabels.email}*`}
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full bg-transparent border-b border-gray-300 focus:outline-none focus:border-[#C34069] transition-colors text-black placeholder-[#929292] pl-[15px] pb-[25px]"
@@ -368,15 +441,17 @@ export default function FarmacovigilanzaForm({
             {/* Informazioni sul prodotto */}
             <div className="mt-[70px]">
               <label className="text-[#C34069] text-base font-medium block mb-[15px]">
-                Informazioni sul prodotto *
+                {formLabels.productInfoLabel} *
               </label>
-              <p className="text-[12px] text-gray-500 mb-[20px]">lorem ipsum</p>
+              <p className="text-[12px] text-gray-500 mb-[20px]">
+                {formLabels.productInfoHint}
+              </p>
 
               <div className="space-y-[20px]">
                 <input
                   type="text"
                   name="nomeFarmaco"
-                  placeholder="Nome del farmaco *"
+                  placeholder={`${formLabels.drugName} *`}
                   value={formData.nomeFarmaco}
                   onChange={handleChange}
                   className="w-full bg-transparent border-b border-gray-300 focus:outline-none focus:border-[#C34069] transition-colors text-black placeholder-[#929292] pl-[15px] pb-[25px]"
@@ -385,7 +460,7 @@ export default function FarmacovigilanzaForm({
                 <input
                   type="text"
                   name="lottoDisponibile"
-                  placeholder="Lotto (se disponibile)"
+                  placeholder={formLabels.batchNumber}
                   value={formData.lottoDisponibile}
                   onChange={handleChange}
                   className="w-full bg-transparent border-b border-gray-300 focus:outline-none focus:border-[#C34069] transition-colors text-black placeholder-[#929292] pl-[15px] pb-[25px]"
@@ -393,7 +468,7 @@ export default function FarmacovigilanzaForm({
                 <input
                   type="text"
                   name="dataInizio"
-                  placeholder="Data di inizio assunzione"
+                  placeholder={formLabels.startDate}
                   value={formData.dataInizio}
                   onChange={handleChange}
                   className="w-full bg-transparent border-b border-gray-300 focus:outline-none focus:border-[#C34069] transition-colors text-black placeholder-[#929292] pl-[15px] pb-[25px]"
@@ -401,7 +476,7 @@ export default function FarmacovigilanzaForm({
                 <input
                   type="text"
                   name="dataFine"
-                  placeholder="Data di fine assunzione (se conclusa)"
+                  placeholder={formLabels.endDate}
                   value={formData.dataFine}
                   onChange={handleChange}
                   className="w-full bg-transparent border-b border-gray-300 focus:outline-none focus:border-[#C34069] transition-colors text-black placeholder-[#929292] pl-[15px] pb-[25px]"
@@ -412,16 +487,15 @@ export default function FarmacovigilanzaForm({
             {/* Descrizione dettagliata */}
             <div className="mt-[70px]">
               <label className="text-[#C34069] text-base font-medium block mb-[15px]">
-                Descrizione dettagliata *
+                {formLabels.detailedDescriptionLabel} *
               </label>
               <p className="text-[12px] text-gray-500 mb-[20px]">
-                (Sintomi, tempistica, eventuali terapie concomitanti, esito
-                dell'evento, ecc.)
+                {formLabels.detailedDescriptionHint}
               </p>
 
               <textarea
                 name="descrizione"
-                placeholder="Descrivici in modo chiaro l'evento o la richiesta"
+                placeholder={formLabels.descriptionPlaceholder}
                 value={formData.descrizione}
                 onChange={handleChange}
                 rows={1}
@@ -466,9 +540,7 @@ export default function FarmacovigilanzaForm({
                   </div>
                 </div>
                 <span className="text-base text-[#929292] leading-tight">
-                  Dichiaro di aver letto l'informativa Privacy e autorizzo il
-                  trattamento dei dati personali ai sensi del Reg. UE n. 679 del
-                  2016.
+                  {formLabels.privacyDeclaration}
                 </span>
               </label>
 
@@ -506,8 +578,7 @@ export default function FarmacovigilanzaForm({
                   </div>
                 </div>
                 <span className="text-base text-[#929292] leading-tight">
-                  Dichiaro che le informazioni fornite sono corrette e complete
-                  al meglio delle mie conoscenze.
+                  {formLabels.infoDeclaration}
                 </span>
               </label>
             </div>
@@ -549,7 +620,7 @@ export default function FarmacovigilanzaForm({
             )}
             {status === "error" && (
               <p className="text-red-600 text-sm mt-4">
-                Errore nell'invio. Riprova.
+                {formLabels.errorSubmitting}
               </p>
             )}
           </form>

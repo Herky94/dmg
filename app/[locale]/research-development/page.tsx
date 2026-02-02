@@ -1,5 +1,6 @@
 import { Header, Footer } from "@/components/layout";
 import { PageHero } from "@/components/shared";
+import ResearchDevelopmentContent from "@/components/research-development/ResearchDevelopmentContent";
 import EcoMode from "@/components/ui/EcoMode";
 import type { Metadata } from "next";
 import { getTranslations, Locale } from "@/lib/translations";
@@ -35,8 +36,14 @@ export default async function RDPage({
           </>
         }
         description={t.pages.researchDevelopment.description}
-        backgroundImage=""
+        backgroundVideo="/images/dmg-laboratori.mp4"
         showScrollIndicator={true}
+      />
+
+      <ResearchDevelopmentContent
+        subtitle={t.pages.researchDevelopment.subtitle}
+        heading={t.pages.researchDevelopment.heading}
+        paragraphs={t.pages.researchDevelopment.paragraphs}
       />
 
       <Footer />

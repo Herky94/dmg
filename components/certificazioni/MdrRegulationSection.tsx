@@ -17,39 +17,10 @@ export default function MdrRegulationSection({
   paragraph3 = "D.M.G. ITALIA, in qualità di Legal Manufacturer, garantisce la conformità dei propri Dispositivi Medici secondo quanto previsto sia dalla Direttiva sia dal Regolamento Europeo.",
 }: MdrRegulationSectionProps = {}) {
   return (
-    <section className="bg-white py-[125px]">
+    <section className="bg-white py-[80px]">
       <div className="container-dmg">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-[100px] items-start">
-          {/* Left: Image */}
-          <div className="relative w-full max-w-[515px] mx-auto lg:mx-0">
-            <div
-              className="relative w-full overflow-hidden rounded-[50px] bg-black"
-              style={{ aspectRatio: "515/655" }}
-            >
-              {/* Placeholder for the dark striped image seen in screenshot */}
-              <div className="absolute inset-0 bg-[url('/images/pattern-stripes.png')] opacity-50 bg-cover bg-center" />
-              {/* If real image is available:
-              <Image 
-                src="/path/to/image.jpg" 
-                alt="MDR Regulation" 
-                fill 
-                className="object-cover" 
-              /> 
-              */}
-              {/* Fallback visual to match screenshot roughly */}
-              <div className="absolute inset-0 flex gap-4 justify-center bg-black/90">
-                {/* Simulating stripes if no image */}
-                {[...Array(5)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="h-full w-4 bg-white/5 skew-x-12"
-                  ></div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Right: Text */}
+        <div className="max-w-full">
+          {/* Text */}
           <div className="text-[15px] lg:text-[20px] font-extralight text-black leading-relaxed space-y-8">
             <p>{paragraph1}</p>
 

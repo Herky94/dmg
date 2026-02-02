@@ -247,6 +247,7 @@ export default async function ProductPage({
         relatedProducts={relatedProducts}
         discoverMore={t.common.discoverMore}
         title={t.relatedProducts.title}
+        subtitle={t.relatedProducts.subtitle}
       />
 
       <Footer />

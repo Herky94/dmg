@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 interface HeroProps {
   tagline: string;
@@ -14,8 +15,13 @@ export default function Hero({
   tagline,
   description,
   ctaText,
-  ctaLink = "/azienda",
+  ctaLink,
 }: HeroProps) {
+  const params = useParams();
+  const locale = (params?.locale as string) || "it";
+  const defaultCtaLink = `/${locale}/prodotti`;
+  const finalCtaLink = ctaLink || defaultCtaLink;
+
   const [virtualScroll, setVirtualScroll] = useState(0);
   const [isScrollDisabled, setIsScrollDisabled] = useState(true);
   const [videoStarted, setVideoStarted] = useState(false);
@@ -165,6 +171,10 @@ export default function Hero({
     return index < scrollProgress ? "text-white" : "text-gray-700/50";
   };
 
+  // "Quando serve cura." -> break after "Quando" (index 5)
+  // "When care is needed." -> break after "When care" (index 8)
+  const breakIndex = tagline.includes("care is needed") ? 8 : 5;
+
   return (
     <>
       <section
@@ -207,7 +217,7 @@ export default function Hero({
                     >
                       {letter}
                     </span>
-                    {index === 6 && <br />}
+                    {index === breakIndex && <br />}
                   </span>
                 ))}
               </h2>
@@ -220,8 +230,8 @@ export default function Hero({
               {/* CTA Button */}
               <div>
                 <Link
-                  href={ctaLink}
-                  className="group inline-flex items-center gap-3 bg-transparent border border-white text-white px-6 py-3 rounded-full text-base font-medium hover:bg-[#C34069] hover:text-white hover:border-[#C34069] transition-all duration-300"
+                  href={finalCtaLink}
+                  className="group inline-flex items-center gap-3 bg-transparent border border-white text-white px-6 py-3 rounded-full text-base font-extralight hover:bg-[#C34069] hover:text-white hover:border-[#C34069] transition-all duration-300"
                 >
                   <span>{ctaText}</span>
                   <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-white transition-all duration-300">

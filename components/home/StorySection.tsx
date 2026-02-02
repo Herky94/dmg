@@ -282,7 +282,10 @@ export default function StorySection({
                     style={{ width: "0%" }}
                   >
                     {/* Circle Pointer at the end of the bar */}
-                    <div className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[#C34069] border-2 border-white shadow-sm" />
+                    <div
+                      className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-[#C34069] border-[3px] border-white shadow-sm"
+                      style={{ boxShadow: "0 0 0 2px #C34069" }}
+                    />
                   </div>
                 </div>
               </div>
